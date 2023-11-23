@@ -1,0 +1,13 @@
+{% extends 'hospitals/map_base.html' %}
+{% block list_block %}
+    <div class="list-group pl-2 pr-2">
+        {% for h in hospital_list %}
+            <a class="list-group-item list-group-item-action" href="{{ h.get_absolute_url }}">
+                <div class="container">
+                    <strong class="row">{{ h.place_name }}</strong>
+                    <span class="row mb-0" style="font-size: 14px;">{{ h.address_name }}</span>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}
