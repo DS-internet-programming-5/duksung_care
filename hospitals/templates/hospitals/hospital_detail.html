@@ -1,33 +1,76 @@
 {#{% extends 'hospitals/map_base.html' %}#}
 {#{% block list_block %}#}
+{#<div class="offcanvas-header justify-content-end">#}
+{#    <button type="button" class="btn-close " data-bs-dismiss="offcanvas" aria-label="Close" id="offcanvasCloseBtn"></button>#}
+{#</div>#}
+{##}
+{#<div class="div-detail pt-2 pl-2 pr-2" data-latitude="{{ hospital.y }}" data-longitude="{{ hospital.x }}">#}
+{#    <div class="container">#}
+        {#            <a href="/hospital/"><i class="fa-solid fa-arrow-left text-black" style="font-size: 20px;"></i></a>#}
+{#        <h3 class="text-center">{{ hospital.place_name }}</h3>#}
+{#        <p class="text-center" style="font-size: 16px; color: gray">{{ hospital.category_name }}</p>#}
+{#        <div class="row m-auto">#}
+{#            <p class="text-start" style="font-size: 16px;"><i#}
+{#                    class="fa-solid fa-location-dot m-lg-2"></i>{{ hospital.address_name }}</p>#}
+{#            <p class="text-start" style="font-size: 16px;"><i class="fa-regular fa-clock m-lg-2"></i>영업시간</p>#}
+{#            <p class="text-start" style="font-size: 16px;"><i class="fa-solid fa-phone m-lg-2"#}
+{#                                                              style="color: #000000;"></i>{{ hospital.hospital_phone }}#}
+{#            </p>#}
+{#        </div>#}
+{#    </div>#}
+{#    <hr>#}
+{#    <div class="container">#}
+{#        <p>리뷰</p>#}
+{#        <form class="review-input-form d-flex mb-3" role="input">#}
+{#            <input class="form-control me-2" type="input" placeholder="리뷰 작성" aria-label="Review">#}
+{#            <button class="btn btn-outline-primary" type="submit" style="width: 100px">작성</button>#}
+{#        </form>#}
+{##}
+{#    </div>#}
+{#</div>#}
+{#{% endblock %}#}
+{#<script>#}
+{#    document.addEventListener("DOMContentLoaded", function () {#}
+{#        const element = document.querySelector('.div-detail');#}
+{#        const latitude = element.getAttribute('data-latitude');#}
+{#        const longitude = element.getAttribute('data-longitude');#}
+{##}
+{#        panTo(latitude, longitude);#}
+{#    });#}
+{#</script>#}
+
+
 <div class="offcanvas-header justify-content-end">
-    <button type="button" class="btn-close " data-bs-dismiss="offcanvas" aria-label="Close" id="offcanvasCloseBtn"></button>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" id="offcanvasCloseBtn"></button>
 </div>
 
 <div class="div-detail pt-2 pl-2 pr-2" data-latitude="{{ hospital.y }}" data-longitude="{{ hospital.x }}">
-    <div class="container">
-        {#            <a href="/hospital/"><i class="fa-solid fa-arrow-left text-black" style="font-size: 20px;"></i></a>#}
-        <h3 class="text-center">{{ hospital.place_name }}</h3>
-        <p class="text-center" style="font-size: 16px; color: gray">{{ hospital.category_name }}</p>
-        <div class="row m-auto">
-            <p class="text-start" style="font-size: 16px;"><i
-                    class="fa-solid fa-location-dot m-lg-2"></i>{{ hospital.address_name }}</p>
-            <p class="text-start" style="font-size: 16px;"><i class="fa-regular fa-clock m-lg-2"></i>영업시간</p>
-            <p class="text-start" style="font-size: 16px;"><i class="fa-solid fa-phone m-lg-2"
-                                                              style="color: #000000;"></i>{{ hospital.hospital_phone }}
-            </p>
+    <h3 class="text-center">{{ hospital.place_name }}</h3>
+    <p class="text-center" style="font-size: 16px; color: gray">{{ hospital.category_name }}</p>
+    <ul class="nav nav-tabs justify-content-center" id="reviewTab" role="tablist">
+        <li class="nav-item m-0" role="presentation">
+            <button class="nav-link active" id="detail-tab" data-bs-toggle="tab" data-bs-target="#detail-tab-pane" type="button" role="tab" aria-controls="detail-tab-pane" aria-selected="true">정보</button>
+        </li>
+        <li class="nav-item m-0" role="presentation">
+            <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review-tab-pane" type="button" role="tab" aria-controls="review-tab-pane" aria-selected="false">리뷰</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active p-3 pt-3" id="detail-tab-pane" role="tabpanel" aria-labelledby="detail-tab" tabindex="0">
+            <p class="text-start" style="font-size: 16px;"><i class="fa-solid fa-location-dot mb-2 mt-3"></i>{{ hospital.address_name }}</p>
+            <p class="text-start" style="font-size: 16px;"><i class="fa-regular fa-clock mb-2"></i>영업시간</p>
+            <p class="text-start" style="font-size: 16px;"><i class="fa-solid fa-phone mb-2" style="color: #000000;"></i>{{ hospital.hospital_phone }}</p>
+        </div>
+        <div class="tab-pane fade pt-3" id="review-tab-pane" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
+            <form class="review-input-form d-flex m-3" role="input">
+                <input class="form-control me-2" type="input" placeholder="리뷰 작성" aria-label="Review">
+                <button class="btn btn-outline-primary" type="submit" style="width: 100px">작성</button>
+            </form>
         </div>
     </div>
-    <hr>
-    <div class="container">
-        <p>리뷰</p>
-        <form class="review-input-form d-flex mb-3" role="input">
-            <input class="form-control me-2" type="input" placeholder="리뷰 작성" aria-label="Review">
-            <button class="btn btn-outline-primary" type="submit" style="width: 100px">작성</button>
-        </form>
-    </div>
 </div>
-{#{% endblock %}#}
+
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const element = document.querySelector('.div-detail');
@@ -35,5 +78,9 @@
         const longitude = element.getAttribute('data-longitude');
 
         panTo(latitude, longitude);
+
+        // Bootstrap 탭 활성화
+        var tab = new bootstrap.Tab(document.getElementById('myTab'));
+        tab.show();
     });
 </script>
