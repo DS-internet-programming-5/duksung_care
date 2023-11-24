@@ -3,7 +3,7 @@ from django.db import models
 from accounts.models import User
 
 class Category(models.Model):
-    category_name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=True)
     # SlugField : 숫자인 pk 대신, 읽을 수 있는 텍스트로 URL을 만들고 싶을 때 주로 사용
     slug = models.SlugField(max_length=200, unique=True, allow_unicode=True)
 
@@ -45,8 +45,8 @@ class Hospital(models.Model):
 
 class Review(models.Model):
     hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE)
-    review_content = models.TextField() # 리뷰 내용
-    review_author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL) # 리뷰 작성자
+    content = models.TextField() # 리뷰 내용
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL) # 리뷰 작성자
     created_at = models.DateTimeField(auto_now_add=True) # 작성일
     updated_at = models.DateTimeField(auto_now=True) # 수정일
     likes = models.ManyToManyField(User, related_name='like_reviews') # 리뷰 좋아요
