@@ -26,6 +26,22 @@
     margin: 0 20px;
 }
 
+.detail-canvas {
+    margin-left: 350px;
+    margin-top: 63px;
+    z-index: 0;
+}
+
+#hospital_list {
+    font-family: 'NEXON Lv2 Gothic', sans-serif;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding-top: 60px;
+    z-index: 2; /* hospital_list를 오프캔버스 위에 표시 */
+}
+
 .map_wrap, .map_wrap * {
     margin: 0;
     padding: 0;
@@ -187,20 +203,4 @@
     color: #999;
     font-size: 11px;
     margin-top: 0;
-}
-
-.offcanvas {
-    margin-left: 24%;
-    /* 다른 스타일링 속성들... */
-    z-index: 0;
-}
-
-#hospital_list {
-    font-family: 'NEXON Lv2 Gothic', sans-serif;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    padding-top: 60px;
-    z-index: 1; /* hospital_list를 오프캔버스 위에 표시 */
 }

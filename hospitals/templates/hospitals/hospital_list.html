@@ -1,9 +1,9 @@
 {% extends 'hospitals/map_base.html' %}
 {% block list_block %}
-    <div class="list-group pl-2 pr-2">
+    <div class="list-group pl-2 pr-2 z-2">
         {% for h in hospital_list %}
-            <a class="list-group-item list-group-item-action" href="{{ h.get_absolute_url }}">
-                <div class="container">
+            <a class="list-group-item list-group-item-action hospital-detail-link z-2" data-bs-toggle="offcanvas" href="#offcanvasScrolling" aria-controls="offcanvasScrolling" data-hospital-pk="{{ h.pk }}">
+                <div class="container z-2">
                     <strong class="row">{{ h.place_name }}</strong>
                     <span class="row mb-0" style="font-size: 14px;">{{ h.address_name }}</span>
                 </div>
@@ -11,3 +11,4 @@
         {% endfor %}
     </div>
 {% endblock %}
+

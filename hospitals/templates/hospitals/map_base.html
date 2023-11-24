@@ -16,15 +16,17 @@
 <!-- NavBar -->
 {% include 'navbar.html' %}
 <div class="row">
-    <div id="hospital_list" class="col-md-3 pr-0" style="background-color: white; width: 400px;">
+    <div id="hospital_list" class="col-md-3 pr-0 z-3" style="background-color: white; width: 350px;">
         <!-- 검색 -->
-        <form class="search-form d-flex mb-3 pt-3" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit" style="width: 100px">검색</button>
+        <form class="search-form d-flex mb-3 pt-3 z-2" role="search">
+            <input class="form-control me-2 z-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success z-2" type="submit" style="width: 100px">검색</button>
         </form>
         <!-- 병원 목록 & 상세 -->
-        {% block list_block %}
-        {% endblock %}
+        <div id="hospital-block">
+            {% block list_block %}
+            {% endblock %}
+        </div>
     </div>
     <!-- 지도 -->
     <div class="map_wrap col-md-9" style="display: flex">
@@ -37,10 +39,14 @@
             </li>
         </ul>
     </div>
-
-    <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c943b1898ad9e05ed319cf1cb6bfe096&libraries=services"></script>
-    <script type="text/javascript" src="{% static 'hospital/js/hospital_scripts.js' %}"></script>
+</div>
+<div class="offcanvas offcanvas-start detail-canvas z-0" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+     id="offcanvasScrolling">
 </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c943b1898ad9e05ed319cf1cb6bfe096&libraries=services"></script>
+<script type="text/javascript" src="{% static 'hospital/js/map_scripts.js' %}"></script>
+<script type="text/javascript" src="{% static 'hospital/js/hospital_scripts.js' %}"></script>
 </html>
