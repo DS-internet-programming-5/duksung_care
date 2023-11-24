@@ -49,5 +49,5 @@ class Review(models.Model):
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL) # 리뷰 작성자
     created_at = models.DateTimeField(auto_now_add=True) # 작성일
     updated_at = models.DateTimeField(auto_now=True) # 수정일
-    likes = models.ManyToManyField(User, related_name='like_reviews') # 리뷰 좋아요
+    likes = models.ManyToManyField(User, related_name='like_reviews', null=True) # 리뷰 좋아요
     hospital_rating = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)]) # 별점(0~5)
