@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+
+<title>Signup</title>
+
+<!-- leftside -->
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div id="image">
+          <img src="{% static 'accounts/images/image_1.svg' %}" alt="Image" class="img-fluid">
+        </div></div>
+
+<!-- rightside -->
+        
+<!-- header -->
+<div class="col-md-6">
+        <div id="header">
+          Signup
+      </div>
+
+      <!-- wrapper -->
+      <div id="wrapper">
+
+          <!-- content-->
+          <div id="content">
+
+              <form action="{% url 'signup' %}" method="POST">
+                {% csrf_token %}
+    
+    <!-- Email -->
+    <div>
+      <h3 class="join_title">
+          <label for="email">이메일</label>
+      </h3>
+      <span class="box int_email">
+          <input type="text" name="email" class="int" maxlength="20">
+          <span class="step_url">@duksung.ac.kr</span>
+      </span>
+  </div>
+    
+     <!-- PW -->
+     <div>
+      <h3 class="join_title"><label for="pswd">비밀번호</label></h3>
+      <span class="box int_pass">
+          <input type="text" name="password" class="int" maxlength="20">
+      </span>
+  </div>
+    
+  
+    
+  <!-- NICKNAME -->
+    <div>
+      <h3 class="join_title"><label for="nickname">닉네임</label></h3>
+      <span class="box int_nickname">
+        <input type="text" name="nickname" class="int" maxlength="20">
+    </span>
+    </div>
+    
+    <!-- GROUP: Personal Information -->
+<div class="personal-info-group">
+  <h3 class="join_title"><label for="personal-info">개인정보</label></h3>
+  
+  <!-- USERNAME -->
+  <div>
+      <span class="box int_username">
+        <label for="username" class="label-text">이름</label>
+          <input type="text" name="username" class="int">
+      </span>
+  </div>
+
+  <!-- BIRTH -->
+  <div>
+      <span class="box int_bd">
+        <label for="username" class="label-text">생년월일</label>
+          <input type="text" name="date_of_birth" class="int" placeholder="YYYY-MM-DD">
+      </span>
+  </div>
+</div>
+    
+   <!-- PHONE -->
+   <div>
+    <h3 class="join_title"><label for="phoneNo">휴대전화</label></h3>
+    <span class="box int_phone">
+        <input type="tel" name="phone" class="int" maxlength="16" placeholder="전화번호 입력">
+    </span>
+</div>
+    
+     <!-- JOIN BTN-->
+     <div class="btn_area">
+      <button type="submit" id="btnJoin">
+          <span>가입하기</span>
+      </button>
+  </div>
+
+    </form>
+    </div>
+    </div>
+  </div>
+    
+    {% endblock %}
