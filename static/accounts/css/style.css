@@ -169,6 +169,10 @@ input {
    border-top: none;
 }
 
+.profile {
+    display: flex;
+    justify-content: center;
+}
 
 
 

@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from accounts.models import User
 from django.contrib import auth
 
-
 def SignupPage(request):
     form_class=SignupPage
     if request.method == 'POST':
@@ -12,7 +11,8 @@ def SignupPage(request):
             nickname=request.POST.get('nickname'),
             username=request.POST.get('username'),
             date_of_birth=request.POST.get('date_of_birth'),
-            phone=request.POST.get('phone')
+            phone=request.POST.get('phone'),
+            profileImg=request.FILES.get('profileImg'),
         )
         auth.login(request, user)
         return redirect('/')
@@ -31,4 +31,3 @@ def LoginPage(request):
             return render(request, 'login.html', {'error': '이메일 또는 비밀번호가 틀렸습니다.'})
     else:
         return render(request, 'login.html')
-

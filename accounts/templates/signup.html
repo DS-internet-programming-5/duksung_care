@@ -5,6 +5,39 @@
 
 <title>Signup</title>
 
+<style>
+
+#content {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  width: 460px;
+}
+
+   .image-container {
+        text-align: center;
+    }
+
+    #preview {
+        height: 150px;
+        width:150px;
+    }
+</style>
+
+<script>
+    function previewImage(input) {
+        var preview = document.getElementById('preview');
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+
 <!-- leftside -->
   <div class="content">
     <div class="container">
@@ -28,8 +61,27 @@
           <!-- content-->
           <div id="content">
 
-              <form action="{% url 'signup' %}" method="POST">
+              <form action="{% url 'signup' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
+
+      <!-- PROFILE PICTURE -->
+<div>
+    <div class="image-container">
+        {% if user.profile.profileImg %}
+            <img id="preview" src="{{ user.profile.profileImg.url }}">
+        {% else %}
+            <img id="preview" src="{% static 'accounts/images/dukse.jpg' %}" alt="{{ user.username }}" class="avatar">
+        {% endif %}
+    </div>
+
+    <div class="profile">
+    <label for="profileImg" style="text-align: center; font-size: 12px; cursor: pointer; display: inline-block; padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px;">
+    프로필 사진 선택하기
+    <input type="file" id="profileImg" name="profileImg" accept="image/*" onchange="previewImage(this)" style="display: none;">
+</label>
+
+</div>
+</div>
     
     <!-- Email -->
     <div>
