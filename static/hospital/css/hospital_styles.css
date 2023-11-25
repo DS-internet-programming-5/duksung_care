@@ -5,44 +5,54 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .body {
-    font-family: 'NEXON Lv2 Gothic', sans-serif;
+    font-family: 'NanumSquareRound', sans-serif;
 }
 
 .navbar {
-    font-family: 'NEXON Lv2 Gothic', sans-serif;
+    font-family: 'NanumSquareRound', sans-serif;
     font-size: 20px;
 }
 
 .div-detail {
-    font-family: 'NEXON Lv2 Gothic', sans-serif;
+    font-family: 'NanumSquareRound', sans-serif;
 }
+
 .navbar-brand {
     font-size: 24px;
 }
 
-#navbarNavDropdown{
+#navbarNavDropdown {
     justify-content: space-between;
 }
 
-.nav-item{
+.nav-item {
     margin: 0 20px;
 }
 
 .detail-canvas {
-    margin-left: 350px;
-    margin-top: 63px;
+    margin-left: 380px;
+    margin-top: 62px;
     z-index: 0;
 }
 
 #hospital_list {
-    font-family: 'NEXON Lv2 Gothic', sans-serif;
+    font-family: 'NanumSquareRound', sans-serif;
     position: absolute;
-    top: 0;
+    top: 60px;
     left: 0;
-    height: 100%;
-    padding-top: 60px;
+    height: calc(100% - 60px);
+    /*padding-top: 60px;*/
     z-index: 2; /* hospital_list를 오프캔버스 위에 표시 */
+    border-right: 1px solid lightgray;
+
 }
 
 #reviewTab button {
@@ -64,8 +74,8 @@
 .map_wrap {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: 20%;
+    width: 80%;
     height: 100%;
     z-index: -1;
 }

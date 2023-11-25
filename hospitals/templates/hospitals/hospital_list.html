@@ -1,14 +1,84 @@
 {% extends 'hospitals/map_base.html' %}
 {% block list_block %}
-    <div class="list-group pl-2 pr-2 z-2">
-        {% for h in hospital_list %}
-            <a class="list-group-item list-group-item-action hospital-detail-link z-2" data-bs-toggle="offcanvas" href="#offcanvasScrolling" aria-controls="offcanvasScrolling" data-hospital-pk="{{ h.pk }}">
-                <div class="container z-2">
-                    <strong class="row">{{ h.place_name }}</strong>
-                    <span class="row mb-0" style="font-size: 14px;">{{ h.address_name }}</span>
+    <style>
+        .list-group::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .list-group::-webkit-scrollbar-button {
+            display: none;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: lightgrey; /* 스크롤바 막대 색상 */
+        {#border: 2px solid lightgrey; /* 스크롤바 막대 테두리 설정  */#} border-radius: 12px 12px 12px 12px;
+        }
+
+        /* Custom pagination colors */
+        .page-item.active .page-link {
+            background-color: #FFF0CE; /* 활성 페이지의 배경색 */
+            border-color: var(--bs-border-color); /* 활성 페이지의 배경색 */
+            color: black;
+        }
+
+        .page-link {
+            color: black; /* 페이지 링크의 색상 */
+        }
+
+        /* 페이지네이션 hover 시 text color 변경 방지 */
+        .page-item:not(.active) .page-link:hover {
+            color: black !important;
+        }
+    </style>
+
+    <div class="list-group pl-2 z-2 overflow-y-auto" style="height: 95%; padding-right: 10px">
+        {% for h in page_obj %}
+            <a class="list-group-item list-group-item-action hospital-detail-link z-2 pt-3 pb-3"
+               data-bs-toggle="offcanvas" href="#offcanvasScrolling" aria-controls="offcanvasScrolling"
+               data-hospital-pk="{{ h.pk }}">
+                <div class="container-fluid p-0">
+                    <strong class="fs-5">{{ h.place_name }}</strong>
+                    <span class="mb-1" style="font-size: 14px; color: gray; margin-left: 5px">| {{ h.category_name }}</span>
+                    <p class="mb-0 mt-2" style="font-size: 14px;">
+{#                        <i class="fa-solid fa-location-dot w-auto align-self-center" style="padding-right: 5px"></i>#}
+                        {{ h.address_name }}
+                    </p>
+                    <p style="font-size: 14px; margin-bottom: 0">
+{#                        <i class="fa-regular fa-clock w-auto align-self-center" style="padding-right: 5px"></i>#}
+                        영업시간 : {{ h.opening_time }} ~ {{ h.closing_time }}</p>
                 </div>
             </a>
         {% endfor %}
     </div>
+
+    <!-- pagination -->
+    {% if page_obj.has_other_pages %}
+    <nav class="pt-3 d-flex justify-content-center" aria-label="Page navigation example" style="padding-right: 20px">
+        <ul class="pagination pagination-sm">
+            <li class="page-item">
+                {% if page_obj.has_previous %}
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true"> < </span>
+                </a>
+                {% endif %}
+            </li>
+            {% for page in custom_range %}
+                {% if page == page_obj.number %}
+                    <li class="page-item active"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+            <li class="page-item">
+                {% if page_obj.has_next %}
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true"> > </span>
+                </a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
+
 {% endblock %}
 
