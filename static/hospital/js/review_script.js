@@ -168,6 +168,12 @@ function updateReviewCard(reviewId, updatedContent, updatedRating, updatedDate) 
     ratingStars.append(`<div class="rating" data-rate="${updatedRating}">
                                 ${getStars(updatedRating)}
                             </div>`);
+
+    // 수정 버튼의 review-content와 hospital-rating 값 업데이트
+    const updateLink = reviewCard.find(`.update-link[data-review-id="${reviewId}"]`);
+    console.log(updateLink);
+    updateLink.data('review-content', updatedContent);
+    updateLink.data('hospital-rating', updatedRating);
 }
 
 function getStars(rating) {
