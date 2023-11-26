@@ -53,7 +53,7 @@
             <div class="review-list-box mt-3">
                 <!-- 기존 리뷰 목록을 표시할 곳 -->
                 {% for r in review_list %}
-                    <div class="card review-card mt-3 p-3" data-review-id="r.pk">
+                    <div class="card review-card-{{ r.pk }} mt-3 p-3" data-review-id="r.pk">
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
                                 <div class="review-profile-box d-flex justify-content-center align-content-center"
@@ -67,12 +67,17 @@
                                     {% endif %}
                                 </div>
                                 <span style="margin-left: 10px">{{ r.author.nickname }}</span>
-                                <span style="margin-left: 10px; color: gray"> | {{ r.created_at | date:'Y.m.d.' }}</span>
+                                {% if r.updated_at %}
+                                    <span class="time" style="margin-left: 10px; color: gray"> | {{ r.updated_at | date:'Y.m.d.' }}</span>
+                                {% else %}
+                                    <span class="time" style="margin-left: 10px; color: gray"> | {{ r.created_at | date:'Y.m.d.' }}</span>
+                                {% endif %}
                             </div>
                             <!-- 수정, 삭제 버튼 -->
                             <div>
-                                <a>수정</a>
-                                <a>삭제</a>
+                                <a class="update-link" data-bs-toggle="modal" href="#updateModal" data-review-id="{{ r.pk }}"
+                                data-review-content="{{ r.content }}" data-hospital-rating="{{ r.hospital_rating }}">수정</a>
+                                <a class="delete-link" data-bs-toggle="modal" href="#deleteModal" data-review-id="{{ r.pk }}">삭제</a>
                             </div>
                         </div>
                         <div class="review mt-2">
@@ -83,7 +88,7 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                             </div>
-                            <p class="mt-2 mb-0">{{ r.content }}</p>
+                            <p class="r-content mt-2 mb-0">{{ r.content }}</p>
                         </div>
                     </div>
                 {% endfor %}

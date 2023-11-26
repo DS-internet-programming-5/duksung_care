@@ -12,6 +12,20 @@
     font-style: normal;
 }
 
+.modal{
+    font-family: 'NanumSquareRound', sans-serif;
+}
+
+.update-link, .delete-link {
+    color: gray;
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.update-link:hover, .delete-link:hover {
+    color: black; /* 호버 시 색상 변경 */
+    text-decoration: underline; /* 호버 시 밑줄 추가 */
+}
+
 .body {
     font-family: 'NanumSquareRound', sans-serif;
 }

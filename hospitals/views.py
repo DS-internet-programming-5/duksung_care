@@ -5,7 +5,9 @@ from .models import Hospital, Review
 from .forms import ReviewForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
-
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from django.views import View
 
 class HospitalList(ListView):
     model = Hospital
@@ -68,7 +70,6 @@ def get_hospital_list(request):
 
 
 def new_review(request, pk):
-    review = Review.objects.filter(pk=pk)
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         filled_form = ReviewForm(request.POST)
         if filled_form.is_valid():
@@ -80,6 +81,7 @@ def new_review(request, pk):
 
             # 새로 추가된 리뷰의 내용을 가져와서 JSON 응답
             new_review = {
+                'review_pk': finished_form.pk,
                 'content': finished_form.content,
                 'hospital_rating': finished_form.hospital_rating,
                 'nickname': finished_form.author.nickname,
@@ -93,3 +95,37 @@ def new_review(request, pk):
             return JsonResponse({'error': 'Form is not valid'}, status=400)
     else:
         return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+# @method_decorator(csrf_exempt, name='dispatch')
+class UpdateReview(View):
+    def post(self, request, review_pk):  # review_pk로 변경
+        review_instance = get_object_or_404(Review, pk=review_pk)
+        filled_form = ReviewForm(request.POST, instance=review_instance)
+
+        if filled_form.is_valid():
+            updated_review = filled_form.save(commit=False)
+            updated_review.updated_at = timezone.localtime(timezone.now())
+            updated_review.save()
+
+            updated_data = {
+                'content': updated_review.content,
+                'hospital_rating': updated_review.hospital_rating,
+                'nickname': updated_review.author.nickname,
+                'profileImg': updated_review.author.profileImg.url if updated_review.author.profileImg else None,
+                'updated_at': updated_review.updated_at.strftime('%Y.%m.%d. %H:%M'),
+            }
+            return JsonResponse(updated_data)
+        else:
+            errors = filled_form.errors.as_json()
+            return JsonResponse({'error': 'Form is not valid'}, status=400)
+
+# 리뷰 삭제
+def delete_review(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+
+    if request.method == 'POST':
+        review.delete()
+        return JsonResponse({'message': 'Review deleted successfully'}, status=200)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=400)

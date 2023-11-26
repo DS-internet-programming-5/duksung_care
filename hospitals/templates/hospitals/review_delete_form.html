@@ -1,0 +1,27 @@
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h1 class="modal-title fs-5 m-auto" id="exampleModalLabel" style="padding-left: 32px">리뷰 수정</h1>
+                <button type="button" class="btn-close m-0" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="review-delete-form" method="POST" data-hospital-pk="{{ hospital.pk }}">
+                    {% csrf_token %}
+                    <div class="original-content">
+                        <p class="text-center pt-4 pb-4">리뷰를 정말 삭제하시겠습니까?</p>
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-outline-secondary" data-bs-dismiss="modal" style="width: 100px; margin-right: 5px">취소</button>
+                            <button class="btn btn-outline-danger" type="submit" style="width: 100px; margin-left: 5px">삭제</button>
+                        </div>
+                    </div>
+                    <!-- 수정 성공 문구를 감출 div -->
+                    <div class="success-message text-center" style="display: none;">
+                        <p class="pt-4 pb-4">리뷰가 삭제되었습니다.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
