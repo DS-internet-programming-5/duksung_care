@@ -43,9 +43,13 @@
 {#                        <i class="fa-solid fa-location-dot w-auto align-self-center" style="padding-right: 5px"></i>#}
                         {{ h.address_name }}
                     </p>
+                    {% if h.operation_time %}
                     <p style="font-size: 14px; margin-bottom: 0">
 {#                        <i class="fa-regular fa-clock w-auto align-self-center" style="padding-right: 5px"></i>#}
-                        영업시간 : {{ h.opening_time }} ~ {{ h.closing_time }}</p>
+                        {{ h.operation_time | truncatewords:4 }}</p>
+                    {% else %}
+                        <p style="font-size: 14px; margin-bottom: 0">-</p>
+                    {% endif %}
                 </div>
             </a>
         {% endfor %}

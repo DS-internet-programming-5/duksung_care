@@ -35,7 +35,14 @@
              aria-labelledby="detail-tab" tabindex="0">
             <p class="text-start" style="font-size: 16px;"><i
                     class="fa-solid fa-location-dot mb-2 mt-3"></i>{{ hospital.address_name }}</p>
-            <p class="text-start" style="font-size: 16px;"><i class="fa-regular fa-clock mb-2"></i>영업시간</p>
+            {% if hospital.operation_time %}
+                <div class="d-flex">
+                <i class="fa-regular fa-clock mb-2"></i>
+                <p class="text-start col" style="font-size: 16px; white-space:pre;">{{ hospital.operation_time }}</p>
+                </div>
+            {% else %}
+                <p class="text-start" style="font-size: 16px;"><i class="fa-regular fa-clock mb-2"></i>-</p>
+            {% endif %}
             <p class="text-start" style="font-size: 16px;"><i class="fa-solid fa-phone mb-2"
                                                               style="color: #000000;"></i>{{ hospital.hospital_phone }}
             </p>
