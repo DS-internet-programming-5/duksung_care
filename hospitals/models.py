@@ -30,8 +30,9 @@ class Hospital(models.Model):
     x = models.DecimalField(max_digits=50, decimal_places=45)  # x좌표, 경도
     y = models.DecimalField(max_digits=50, decimal_places=45)  # y좌표, 위도
 
-    opening_time = models.TimeField(blank=True, null=True)  # 영업 시작 시간
-    closing_time = models.TimeField(blank=True, null=True)  # 영업 종료 시간
+    # opening_time = models.TimeField(blank=True, null=True)  # 영업 시작 시간
+    # closing_time = models.TimeField(blank=True, null=True)  # 영업 종료 시간
+    operation_time = models.TextField(blank=True, null=True)  # 영업 시간 정보
     average_rating = models.DecimalField(max_digits=3, decimal_places=1, default=0.0,
                                          validators=[MinValueValidator(0), MaxValueValidator(5)])  # 평균별점(0~5)
     has_female_doctor = models.BooleanField(default=False)  # 여성 의사 여부
