@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from .models import Hospital, Review
 from .forms import ReviewForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils import timezone
 
 
 class HospitalList(ListView):
@@ -50,7 +51,7 @@ class HospitalList(ListView):
 
 def hospital_detail(request, pk):
     hospital = get_object_or_404(Hospital, pk=pk)
-    review_list = Review.objects.filter(hospital=pk)
+    review_list = Review.objects.filter(hospital=pk).order_by('-created_at')
 
     review_form = ReviewForm()
 
@@ -67,19 +68,23 @@ def get_hospital_list(request):
 
 
 def new_review(request, pk):
+    review = Review.objects.filter(pk=pk)
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         filled_form = ReviewForm(request.POST)
         if filled_form.is_valid():
             finished_form = filled_form.save(commit=False)
             finished_form.hospital = get_object_or_404(Hospital, pk=pk)
             finished_form.author = request.user
+            finished_form.created_at = timezone.localtime(timezone.now())
             finished_form.save()
 
             # 새로 추가된 리뷰의 내용을 가져와서 JSON 응답
             new_review = {
                 'content': finished_form.content,
                 'hospital_rating': finished_form.hospital_rating,
-                # 필요한 경우 추가 필드도 JSON에 포함
+                'nickname': finished_form.author.nickname,
+                'profileImg' : finished_form.author.profileImg.url if finished_form.author.profileImg else None,
+                'created_at': finished_form.created_at.strftime('%Y.%m.%d. %H:%M'),
             }
             return JsonResponse(new_review)
         else:
