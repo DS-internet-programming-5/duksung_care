@@ -109,6 +109,7 @@ class UpdateReview(View):
             updated_review.save()
 
             updated_data = {
+                'review_pk': updated_review.pk,
                 'content': updated_review.content,
                 'hospital_rating': updated_review.hospital_rating,
                 'nickname': updated_review.author.nickname,

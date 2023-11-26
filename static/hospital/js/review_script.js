@@ -71,6 +71,7 @@ $(document).ready(function () {
 
 // 리뷰 수정
 $(document).ready(function () {
+    var review_id;
     // 입력칸에 원래 리뷰 내용 초기에 불러와서 표시
     $('#updateModal').on('show.bs.modal', function (event) {
         var triggerElement = $(event.relatedTarget); // 모달을 여는 요소 (수정 링크)
@@ -80,7 +81,10 @@ $(document).ready(function () {
         // data-hospital-rating 속성 값 가져오기
         var hospitalRating = triggerElement.data('hospital-rating');
 
-        console.log('load hospitalRating: '+hospitalRating)
+        review_id = triggerElement.data('review-id');
+
+        console.log('load hospitalRating: ' + hospitalRating);
+        console.log('load review_id: ' + review_id);
 
         // textarea에 review-content 값 설정
         $('#review-update-form textarea[name="content"]').val(reviewContent);
@@ -89,15 +93,15 @@ $(document).ready(function () {
         $('#review-update-form select[name="hospital_rating"]').val(hospitalRating);
 
         // 별점 로드
-        $('.make_star_update i').css({ color: 'lightgrey' });
-        $('.make_star_update i:nth-child(-n+' + hospitalRating + ')').css({ color: '#FFC436' });
+        $('.make_star_update i').css({color: 'lightgrey'});
+        $('.make_star_update i:nth-child(-n+' + hospitalRating + ')').css({color: '#FFC436'});
     });
-
     $('#review-update-form').submit(function (e) {
         e.preventDefault();
 
-        var review_id = $('.update-link').data('review-id');
         var formData = $(this).serialize();
+
+        console.log('update: ' + review_id);
 
         var url = `/hospital/update_review/${review_id}/`;
 
@@ -152,12 +156,14 @@ $(document).ready(function () {
             modalBody.find('.success-message').hide();
         });
     });
+
 });
 
 // 리뷰 카드 업데이트 함수
 function updateReviewCard(reviewId, updatedContent, updatedRating, updatedDate) {
     const reviewCard = $(`.review-card-${reviewId}`);
     console.log(reviewCard);
+    console.log(reviewId);
 
     // 리뷰 내용 업데이트
     reviewCard.find('.r-content').text(updatedContent);
@@ -286,7 +292,7 @@ function deleteReviewCard(reviewId) {
     console.log(reviewCard);
 
     // 리뷰 카드를 서서히 사라지도록 애니메이션 효과 적용
-    reviewCard.fadeOut('slow', function() {
+    reviewCard.fadeOut('slow', function () {
         // 카드가 사라진 후에 카드 요소를 완전히 제거
         $(this).remove();
     });
