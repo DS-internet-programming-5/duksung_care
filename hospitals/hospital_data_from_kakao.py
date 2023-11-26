@@ -21,55 +21,63 @@ headers = {
 # API 요청을 보낼 URL
 url = 'https://dapi.kakao.com/v2/local/search/category.json'
 
-# 요청에 필요한 매개변수 설정
-params = {
-    'category_group_code': 'HP8',
-    'x': '127.01680486039935',
-    'y': '37.64998176552163',
-    'radius': '1550',
-    'page': '3'
-}
+for page in range(1, 4):
+    # 요청에 필요한 매개변수 설정
+    params = {
+        'category_group_code': 'HP8',
+        'x': '127.01680486039935',
+        'y': '37.64998176552163',
+        'radius': '1550',
+        'page': page
+    }
 
-# GET 요청 보내기
-response = requests.get(url, headers=headers, params=params)
+    # GET 요청 보내기
+    response = requests.get(url, headers=headers, params=params)
 
-# 응답 확인 및 데이터 추출
-if response.status_code == 200:
-    data = response.json().get('documents', [])
+    # 응답 확인 및 데이터 추출
+    if response.status_code == 200:
+        data = response.json().get('documents', [])
 
-    # 데이터 확인
+        # 데이터 확인
+        for hospital_data in data:
+            print(hospital_data)  # 받아온 데이터 출력 (테스트용)
+
+    else:
+        print("API 요청 실패:", response.status_code)
+
+    # 데이터베이스에 저장
     for hospital_data in data:
-        print(hospital_data)  # 받아온 데이터 출력 (테스트용)
+        # hospital_data['category_name'] 형식 : 의료,건강 > 병원 > 신경외과
+        category_name = hospital_data['category_name'].split(' ')[-1] # 제일 마지막 카테고리만 가져옴
+        # 카테고리를 가져오거나 없으면 생성
+        category, created = Category.objects.get_or_create(
+            name=category_name,
+            slug=category_name,
+        )
 
-else:
-    print("API 요청 실패:", response.status_code)
+        # 기존 병원이 있는지 확인
+        hospital = Hospital.objects.filter(hospital_id=hospital_data['id']).first()
 
-# 데이터베이스에 저장
-for hospital_data in data:
-    # hospital_data['category_name'] 형식 : 의료,건강 > 병원 > 신경외과
-    category_name = hospital_data['category_name'].split(' ')[-1] # 제일 마지막 카테고리만 가져옴
-    # 카테고리를 가져오거나 없으면 생성
-    category, created = Category.objects.get_or_create(
-        name=category_name,
-        slug=category_name,
-    )
-
-    # 응답 데이터에 해당하는 항목을 Hospital 모델 인스턴스로 변환
-    hospital = Hospital(
-        address_name=hospital_data['address_name'],
-        category_group_code=hospital_data['category_group_code'],
-        category_group_name=hospital_data['category_group_name'],
-        category_name=category,
-        distance=hospital_data['distance'],
-        id=hospital_data['id'],
-        hospital_phone=hospital_data['phone'],
-        place_name=hospital_data['place_name'],
-        place_url=hospital_data['place_url'],
-        road_address_name=hospital_data['road_address_name'],
-        x=float(hospital_data['x']),
-        y=float(hospital_data['y']),
-    )
-    hospital.save()
+        if not hospital:
+            # 응답 데이터에 해당하는 항목을 Hospital 모델 인스턴스로 변환
+            hospital = Hospital(
+                address_name=hospital_data['address_name'],
+                category_group_code=hospital_data['category_group_code'],
+                category_group_name=hospital_data['category_group_name'],
+                category_name=category,
+                distance=hospital_data['distance'],
+                hospital_id=hospital_data['id'],
+                hospital_phone=hospital_data['phone'],
+                place_name=hospital_data['place_name'],
+                place_url=hospital_data['place_url'],
+                road_address_name=hospital_data['road_address_name'],
+                x=float(hospital_data['x']),
+                y=float(hospital_data['y']),
+            )
+            hospital.save()
+        elif not hospital.category_name:
+            hospital.category_name = category
+            hospital.save()
 
 
 # '여의사진료' keyword로 검색하고 모델에 여성의사여부 저장
@@ -110,12 +118,12 @@ for hospital_data in data:
     )
 
     # 기존 병원이 있는지 확인
-    hospital = Hospital.objects.filter(id=hospital_data['id']).first()
+    hospital = Hospital.objects.filter(hospital_id=hospital_data['id']).first()
 
     # 존재하지 않는 경우 새로운 병원 생성
     if not hospital:
         hospital = Hospital(
-            id=hospital_data['id'],
+            hospital_id=hospital_data['id'],
             address_name=hospital_data['address_name'],
             category_group_code=hospital_data['category_group_code'],
             category_group_name=hospital_data['category_group_name'],
@@ -135,3 +143,26 @@ for hospital_data in data:
     elif not hospital.has_female_doctor:
         hospital.has_female_doctor = True
         hospital.save()
+
+# 영업 시간 추가
+import pandas as pd
+
+# 엑셀 파일 경로 지정
+excel_file_path = 'hospital_hours_data.xlsx'
+
+# 엑셀 파일을 데이터프레임으로 읽기
+excel_data = pd.read_excel(excel_file_path)
+
+# 데이터베이스에 데이터 추가
+for index, row in excel_data.iterrows():
+    hospital_id = row['hospital_id']  # hospital 모델의 primary key
+    operation_time = row['operation_time'] # operation_time 필드 데이터
+    if pd.isna(operation_time):
+        operation_time = None
+
+    # Hospital 모델 인스턴스 가져오기
+    hospital = Hospital.objects.get(hospital_id=hospital_id)
+
+    # operation_time 필드 업데이트
+    hospital.operation_time = operation_time
+    hospital.save()
