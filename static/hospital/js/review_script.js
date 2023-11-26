@@ -88,8 +88,9 @@ $(document).ready(function () {
         // select에 hospital-rating 값 설정
         $('#review-update-form select[name="hospital_rating"]').val(hospitalRating);
 
-        var initialRating = $('#makeStar_update').val();
-        $('.make_star_update i:nth-child(-n+' + initialRating + ')').css({ color: '#FFC436' });
+        // 별점 로드
+        $('.make_star_update i').css({ color: 'lightgrey' });
+        $('.make_star_update i:nth-child(-n+' + hospitalRating + ')').css({ color: '#FFC436' });
     });
 
     $('#review-update-form').submit(function (e) {
