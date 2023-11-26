@@ -57,7 +57,7 @@
             <div class="collapse" id="collapseExample">
                 {% include 'hospitals/review_create_form.html' %}
             </div>
-            <div class="review-list-box mt-3">
+            <div class="review-list-box mt-3 pb-3">
                 <!-- 기존 리뷰 목록을 표시할 곳 -->
                 {% for r in review_list %}
                     <div class="card review-card-{{ r.pk }} mt-3 p-3" data-review-id="r.pk">

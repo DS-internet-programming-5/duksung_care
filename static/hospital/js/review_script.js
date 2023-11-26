@@ -36,8 +36,8 @@ $(document).ready(function () {
                                 <div class="review-profile-box d-flex justify-content-center align-content-center"
                                      style="width: 40px; height: 40px; background-color: #FFF0CE; border-radius: 70%">
                                     ${data.profileImg ? `<img src="${data.profileImg}"
-                                         style="width: 100%; height: 100%; object-fit: cover">` :
-                    `<img src="${defaultProfileImg}"
+                                         style="width: 100%; height: 100%; object-fit: cover; border-radius: 70%;">` :
+                                        `<img src="${defaultProfileImg}"
                                              style="width:80%; height:80%; margin: auto; object-fit: cover">`}
                                 </div>
                                 <span style="margin-left: 10px">${data.nickname}</span>
