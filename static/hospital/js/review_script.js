@@ -54,7 +54,7 @@ $(document).ready(function () {
                             <div class="rating" data-rate="${data.hospital_rating}">
                                 ${getStars(data.hospital_rating)}
                             </div>
-                            <p class="r-content mt-2 mb-0">${data.content}</p>
+                            <p class="r-content mt-2 mb-0" style="white-space:pre;">${data.content}</p>
                         </div>
                     </div>
                 `;

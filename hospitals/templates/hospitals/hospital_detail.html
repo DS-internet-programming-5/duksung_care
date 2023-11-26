@@ -60,7 +60,7 @@
                                      style="width: 40px; height: 40px; background-color: #FFF0CE; border-radius: 70%">
                                     {% if r.author.profileImg %}
                                         <img src="{{ r.author.profileImg.url }}"
-                                             style="width: 100%; height: 100%; object-fit: cover">
+                                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 70%">
                                     {% else %}
                                         <img src="{% static 'imgs/default_profile.png' %}"
                                              style="width:80%; height:80%; margin: auto; object-fit: cover">
@@ -75,9 +75,11 @@
                             </div>
                             <!-- 수정, 삭제 버튼 -->
                             <div>
+                                {% if r.author == request.user or request.user.is_superuser%}
                                 <a class="update-link" data-bs-toggle="modal" href="#updateModal" data-review-id="{{ r.pk }}"
                                 data-review-content="{{ r.content }}" data-hospital-rating="{{ r.hospital_rating }}">수정</a>
                                 <a class="delete-link" data-bs-toggle="modal" href="#deleteModal" data-review-id="{{ r.pk }}">삭제</a>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="review mt-2">
@@ -88,7 +90,7 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                             </div>
-                            <p class="r-content mt-2 mb-0">{{ r.content }}</p>
+                            <p class="r-content mt-2 mb-0" style="white-space:pre;">{{ r.content }}</p>
                         </div>
                     </div>
                 {% endfor %}
