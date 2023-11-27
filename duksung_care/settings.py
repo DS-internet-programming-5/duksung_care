@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'accounts',
     'main',
     'health_tips',
+    'import_export',
 ]
 
 MIDDLEWARE = [
