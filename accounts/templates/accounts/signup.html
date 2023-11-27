@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "accounts/base.html" %}
 
 {% block content %}
 {% load static %}
@@ -16,11 +16,14 @@
 
    .image-container {
         text-align: center;
+        border-radius: 70%;
     }
 
     #preview {
-        height: 150px;
-        width:150px;
+        height: 145px;
+        width:145px;
+        border-radius: 70%;
+        border: 1px solid #ccc;
     }
 </style>
 
@@ -52,7 +55,7 @@
 <!-- header -->
 <div class="col-md-6">
         <div id="header">
-          Signup
+          회원가입
       </div>
 
       <!-- wrapper -->
@@ -74,13 +77,13 @@
         {% endif %}
     </div>
 
-    <div class="profile">
-    <label for="profileImg" style="text-align: center; font-size: 12px; cursor: pointer; display: inline-block; padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px;">
-    프로필 사진 선택하기
-    <input type="file" id="profileImg" name="profileImg" accept="image/*" onchange="previewImage(this)" style="display: none;">
-</label>
-
+    <div class="profile" style="text-align:center;">
+    <label for="profileImg" style="font-size: 12px; cursor: pointer; display: inline-block; padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px; margin: 10px 0 0px;">
+        프로필 사진 선택하기
+        <input type="file" id="profileImg" name="profileImg" accept="image/*" onchange="previewImage(this)" style="display: none;">
+    </label>
 </div>
+
 </div>
     
     <!-- Email -->
@@ -98,7 +101,7 @@
      <div>
       <h3 class="join_title"><label for="pswd">비밀번호</label></h3>
       <span class="box int_pass">
-          <input type="text" name="password" class="int" maxlength="20">
+          <input type="password" name="password" class="int" maxlength="20">
       </span>
   </div>
     
