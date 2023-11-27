@@ -1,0 +1,428 @@
+/* 기본 설정 */
+body {
+    width: 1440px;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  /* 헤더 */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    background-color: #f0f0f0;
+  }
+
+  #main_logo_{
+    margin-left: 92px;
+  }
+
+  .nav_bar {
+    color: #000;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+  }
+
+  nav ul li {
+    margin-right: 40px;
+
+  }
+
+  .nav_bar ul li:nth-child(5) {
+    margin-left : 680px;
+  }
+
+  nav ul a {
+    color: #000;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration-line: none;
+  }
+
+  /* 메인 컨텐츠 */
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content : center;
+    align-items: center;
+    text-align: center;
+    padding: 60px;
+  }
+
+  .title_text{
+    color: #0C356A;
+    font-family: Pretendard;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.25px;
+  }
+
+  .sub_text{
+    color: #838383;
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.25px;
+    margin : 10px 0 10px 0;
+  }
+
+  .select_wrapper{
+    height: 44px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 15px;
+    background: #F4F4F4;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.20);
+    gap: 20px;
+  }
+
+  .find_by_name{
+    display : flex;
+    width : 160px;
+    height : 34px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    background: #0174BE;
+    color: white;
+    margin-left: 20px;
+  }
+
+  .find_by_type{
+    display : flex;
+    width : 160px;
+    height : 34px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    background: #F4F4F4;
+    color: #838383 ;
+    margin-right: 20px;
+  }
+
+  .search-bar {
+    display : flex;
+    flex-direction : row;
+    justify-content: flex-start;
+    margin-top: 30px;
+
+  }
+
+  .search-bar input {
+    width: 655px;
+    height: 60px;
+    border-radius: 15px 0px 0px 15px;
+    border : none;
+    background: #F4F4F4;
+    color: #838383;
+    font-family: Pretendard;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.25px;
+  }
+
+  .search-bar button {
+    width: 75px;
+    height: 60px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 0px 15px 15px 0px;
+    background: #0174BE;
+    cursor: pointer;
+  }
+
+  .search-bar button:hover {
+    background-color: #0056b3;
+  }
+
+  .divider{
+    width : 920px;
+    height : 1px;
+    background: #838383;
+    margin-top: 130px;
+    margin-bottom : 50px;
+  }
+
+  .middle_nav_bar{
+    width: 1050px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .middle_nav_bar ul li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    font-family: Pretendard;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.25px;
+  }
+
+  .middle_nav_bar ul li:first-child{
+    color: #000;
+    font-family: Pretendard;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.25px;
+  }
+
+  .middle_nav_bar ul li:nth-child(2){
+    margin-left : 50px;
+  }
+
+  .content_wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .text_wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align : left;
+    margin-right: 70px;
+  }
+
+  .text_wrapper a{
+    color: #FF4F5A;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  .text_wrapper :first-child{
+    font-size: 40px;
+    margin-bottom: 15px;
+  }
+
+  .text_wrapper :nth-child(2){
+    font-size: 25px;
+    margin-bottom: 10px;
+  }
+
+  .text_wrapper button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 35px;
+    border-radius: 8px;
+    background-color: #FF4F5A;
+    border: none;
+    margin-top : 15px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height : 20px;
+    color: white;
+  }
+
+  .table {
+    display: flex;
+    flex-direction: column;
+    gap : 55px;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap : 26px;
+  }
+
+  .cell {
+    width: 275px;
+    height: 130px;
+    padding: 32px;
+    flex: 1;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid #EEE;
+    background: var(--White, #FFF);
+  }
+
+  .hospital_title{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--gray-900, #111827);
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 27px */
+  }
+
+  .hospital_title button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 22.703px;
+    border-radius: 15px;
+    background: #819AF6;
+    border: none;
+    color: #FFF;
+    font-family: Pretendard;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 200% */
+    letter-spacing: 0.25px;
+    margin-left : 5px;
+  }
+
+  .hospital_content{
+    margin-top : 15px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    color: var(--gray-500, #6D7280);
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 21px */
+  }
+
+  .upper_footer{
+    display: flex;
+    width: 1440px;
+    height: 235px;
+    justify-content : center;
+    align-items: center;
+    background: #FFF;
+    color: #000;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .lower_footer{
+    display: flex;
+    flex-direction: column;
+    width: 1440px;
+    height: 235px;
+    justify-content : center;
+    align-items: center;
+    background: #FFF;
+    color: #858585;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .lower_footer_divider{
+    width: 1219.002px;
+    height: 1px;
+    background: #D4D4D4;
+    margin-bottom: 50px;
+  }
+
+  .subject_wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap : 15px;
+  }
+
+  .table-container {
+    display: inline-block;
+    text-align: left;
+  }
+
+  .subject_table {
+    display: grid;
+    grid-template-columns: repeat(4, 171px);
+    grid-gap: 25px;
+  }
+
+  .subject_cell {
+    width: 171px;
+    height: 62px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background: #D9D9D9;
+    color: #000;
+    font-family: Pretendard;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 117.647% */
+    letter-spacing: 0.25px;
+  }
+
+  .subject_title_wrapper{
+    width: 760px;
+    display: flex;
+    flex-direction: row;
+    flex-direction: flex-start;
+    margin : 70px 0 35px 0;
+  }
+
+  .subject_title{
+    color: #000;
+    font-family: Pretendard;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 80% */
+    letter-spacing: 0.25px;
+  }
+
+  .subject_search{
+    margin-top : 40px;
+    width: 214px;
+    height: 46px;
+    border-radius: 15px;
+    background: #5B7FFF;
+    border: none;
+    color: #FFF;
+    font-family: Pretendard;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 117.647% */
+    letter-spacing: 0.25px;
+  }
