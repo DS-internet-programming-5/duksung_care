@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
+from django.utils.translation import gettext_lazy as _
+from duksung_care import settings
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email, username, nickname="", date_of_birth=None, phone=None, profileImg=None, password=None):
@@ -44,7 +47,7 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     phone = PhoneNumberField(null=True)
-    profileImg = models.ImageField(upload_to='user/profile/%Y/%m/%d/', blank=True, null=True)
+    profileImg = models.ImageField(upload_to='accounts/images/%Y/%m/%d/', blank=True, null=True)
 
     objects = UserManager()
 
@@ -53,3 +56,8 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+    def save(self, *args, **kwargs):
+        if not self.profileImg:
+            self.profileImg = 'accounts/images/dukse.jpg'
+        super().save(*args, **kwargs)
