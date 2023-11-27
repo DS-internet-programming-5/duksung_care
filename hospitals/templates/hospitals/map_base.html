@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>병원 지도</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}" media="screen">
+    <script src="https://kit.fontawesome.com/bdcda05bfe.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <title>Bootstrap Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="{% static 'hospital/css/hospital_styles.css' %}">
+</head>
+<body>
+<!-- NavBar -->
+{% include 'navbar.html' %}
+<div class="row">
+    <div id="hospital_list" class="col-md-3 z-3" style="background-color: white; width: 380px;">
+        <!-- 검색 -->
+        <form class="search-form d-flex mb-3 pt-3 z-2" role="search">
+            <input class="form-control me-2 z-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success z-2" type="submit" style="width: 100px">검색</button>
+        </form>
+        <!-- 병원 목록 -->
+        <div id="hospital-block" style="height: calc(100% - 100px);">
+            {% block list_block %}
+            {% endblock %}
+        </div>
+    </div>
+    <!-- 지도 -->
+    <div class="map_wrap col-md-9" style="display: flex">
+        <div id="map" style="width:100%;height:100%;overflow:hidden;"></div>
+        <ul id="category">
+            <li id="HP8" data-order="2">
+                <span class="category_bg pharmacy"></span>
+                <!--<span class="icon fas fa-hospital"></span>-->
+                병원
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- 병원 상세 정보 (offcanvas) -->
+<div class="offcanvas offcanvas-start detail-canvas z-0" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+     id="offcanvasScrolling">
+</div>
+
+<!-- 리뷰 수정 & 삭제 (modal) -->
+{% include 'hospitals/review_update_form.html' %}
+{% include 'hospitals/review_delete_form.html' %}
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c943b1898ad9e05ed319cf1cb6bfe096&libraries=services"></script>
+<script type="text/javascript" src="{% static 'hospital/js/map_scripts.js' %}"></script>
+<script type="text/javascript" src="{% static 'hospital/js/hospital_scripts.js' %}"></script>
+</html>

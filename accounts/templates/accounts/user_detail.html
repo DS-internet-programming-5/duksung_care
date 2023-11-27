@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    <title>마이 페이지</title>
+    <link rel="stylesheet" href="{% static '/bootstrap/bootstrap.min.css' %}" media="screen">
+    <script src="https://kit.fontawesome.com/726bbd6862.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'accounts/css/accounts-styles.css' %}">
+</head>
+
+<body>
+    <!-- NavBar -->
+    {% include 'navbar.html' %}
+
+    <div class="centered-content">
+        <h1>마이 페이지</h1>
+
+        <!-- 메뉴바 -->
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#basic-info" data-toggle="tab">기본정보</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#favorites" data-toggle="tab">즐겨찾기</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#reviews" data-toggle="tab">내가 쓴 후기</a>
+            </li>
+        </ul>
+        <hr>
+
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="basic-info">
+                <h3>기본정보</h3>
+                <img src={{ user.profileImg }}>
+
+                <div class="mb-3 justify-contents-center">
+                    <label for="exampleFormControlInput1" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value={{ user.email }} disabled readonly>
+
+                    <label for="exampleFormControlInput2" class="form-label">닉네임</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput2" value={{ user.nickname }} disabled readonly>
+
+                    <label for="exampleFormControlInput3" class="form-label">개인정보</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput3" value={{ user.username }} disabled readonly>
+                    <input type="date" class="form-control" id="exampleFormControlInput4" value={{ user.date_of_birth }} disabled readonly>
+
+                    <label for="exampleFormControlInput5" class="form-label">휴대폰번호</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput5" value={{ user.phone }} disabled readonly>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="favorites">
+                <h3>즐겨찾기</h3>
+                <!-- 즐겨찾기 내용 -->
+            </div>
+            <div class="tab-pane fade" id="reviews">
+                <h3>내가 쓴 후기</h3>
+                <!-- 내가 쓴 후기 내용 -->
+            </div>
+        </div>
+        <a href="/accounts/modify" class="btn btn-lg btn-outline-dark">회원정보 수정</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $(".nav-link").click(function() {
+            $(".nav-link").removeClass("active");
+            $(this).addClass("active");
+            $("h3").text($(this).text());
+        });
+    });
+    </script>
+</body>
+
+</html>
