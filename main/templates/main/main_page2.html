@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>병원 찾기</title>
+  <link rel="stylesheet" type="style.css" href="{% static 'static/main/css/style.css' %}">
+</head>
+  <body>
+    <header>
+      <img src="media/logo.png" alt="로고" id="main_logo">
+      <nav class="nav_bar">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">지도</a></li>
+          <li><a href="#">병원정보</a></li>
+          <li><a href="#">마이페이지</a></li>
+          <li><a href="#">로그아웃</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <img src="media/cross_logo.png" style="width: 47px; height: 53px;">
+      <a class="title_text">주변 병원 찾기</a>
+      <a class="sub_text">학교 주변 병원을 찾아보세요!</a>
+      <div class="select_wrapper">
+        <div class="find_by_name">이름/후기(으)로 찾기</div>
+        <div class="find_by_type">종류별로 찾기</div>
+      </div>
+
+      <div class="subject_title_wrapper">
+        <a class="subject_title">진료 과목</a>
+      </div>
+      <div class="subject_wrapper">
+        <div class="subject_table">
+            <div class="subject_cell">가정의학과 </div>
+            <div class="subject_cell">내과</div>
+            <div class="subject_cell">산부인과</div>
+            <div class="subject_cell">안과</div>
+        </div>
+        <div class="subject_table">
+            <div class="subject_cell">외과</div>
+            <div class="subject_cell">이비인후과</div>
+            <div class="subject_cell">정신건강의학과</div>
+            <div class="subject_cell">정형외과</div>
+        </div>
+        <div class="subject_table">
+            <div class="subject_cell">피부과</div>
+            <div class="subject_cell">치과</div>
+            <div class="subject_cell">소아과</div>
+            <div class="subject_cell">비뇨의학과</div>
+        </div>        <div class="subject_table">
+            <div class="subject_cell"></div>
+            <div class="subject_cell"></div>
+            <div class="subject_cell"></div>
+            <div class="subject_cell"></div>
+        </div>
+      </div>
+      <button class="subject_search">검색</button>
+
+      <div class="divider" style="margin-top: 60px;"></div>
+      <nav class="middle_nav_bar">
+        <ul>
+          <li><a style="font-size: 25px;">소식 모아보기</a></li>
+          <li><a href="#">학교 제휴 병원</a></li>
+          <li><a href="#">건강 상식</a></li>
+        </ul>
+      </nav>
+      <div class="content_wrapper">
+        <div class="text_wrapper">
+          <a>COVID-19 AWARENESS</a>
+          <a>Stay Safe. Stay Home.</a>
+          <a>Amet minim molit non desenunt ullamco est st do<br>amet sint officia eit ofcie<br>conaequnt duis enimelit molt</a>
+          <button>How to Prevent</button>
+        </div>
+        <img src="media/hero_img.png"/>
+      </div>
+
+      <nav class="middle_nav_bar" style="margin-top : 105px;">
+        <ul>
+          <li><a>학교 제휴 병원</a></li>
+        </ul>
+      </nav>
+
+      <div class="table">
+        <div class="row">
+          <div class="cell">
+            <div class="hospital_title">
+              경희 의료원
+              <button>병원 정보</button>
+            </div>
+            <div class="hospital_content">
+              -
+            </div>
+          </div>
+          <div class="cell">
+            <div class="hospital_title">
+              대림성모 병원
+              <button>병원 정보</button>
+            </div>
+            <div class="hospital_content">
+              -
+            </div>
+          </div>
+          <div class="cell">
+            <div class="hospital_title">
+              한일 병원
+              <button>병원 정보 </button>
+            </div>
+            <div class="hospital_content">
+              -
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="cell">
+            <div class="hospital_title">
+              강남서울밝은안과의원
+              <button>병원 정보</button>
+            </div>
+            <div class="hospital_content">
+              라식, 라섹, 스마일, 렌즈삽입술, 노안교정
+              70여가지 사전검사 비용 지원
+              , 제휴대학
+              특별우대가 적용
+            </div>
+          </div>
+          <div class="cell">
+            <div class="hospital_title">
+              서울베스트의료의원
+              <button>병원 정보</button>
+            </div>
+            <div class="hospital_content">
+              대학생 건강검진과
+              가다실9가 추가 접종 할인 혜택
+            </div>
+          </div>
+          <div class="cell" style="border: none;"></div>
+        </div>
+      </div>
+    </main>
+    <div class="upper_footer">
+      @ 2023 Duksung Care
+    </div>
+    <div class="lower_footer">
+      <div class="lower_footer_divider"></div>
+      <img src="media/logo.png" alt="로고" id="main_logo" style="margin-bottom: 15px;">
+      @ 2023 Duksung Care
+    </div>
+  </body>
+  </html>
