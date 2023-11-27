@@ -37,7 +37,7 @@ def SignupPage(request):
         )
         auth.login(request, user)
         return redirect('/')
-    return render(request, 'signup.html')
+    return render(request, 'accounts/signup.html')
 
 
 def LoginPage(request):
@@ -49,6 +49,6 @@ def LoginPage(request):
             auth.login(request, user)
             return redirect('/')
         else:
-            return render(request, 'login.html', {'error': '이메일 또는 비밀번호가 틀렸습니다.'})
+            return render(request, 'accounts/login.html', {'error': '이메일 또는 비밀번호가 틀렸습니다.'})
     else:
-        return render(request, 'login.html')
+        return render(request, 'accounts/login.html')

@@ -1,9 +1,13 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
   <title>병원 찾기</title>
-  <link rel="stylesheet" type="style.css" href="{% static 'static/main/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}" media="screen">
+    <script src="https://kit.fontawesome.com/bdcda05bfe.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 </head>
   <body>
     <header>
@@ -19,7 +23,7 @@
       </nav>
     </header>
 
-    <main>
+    <div>
       <img src="media/cross_logo.png" style="width: 47px; height: 53px;">
       <a class="title_text">주변 병원 찾기</a>
       <a class="sub_text">학교 주변 병원을 찾아보세요!</a>
@@ -112,7 +116,7 @@
           <div class="cell" style="border: none;"></div>
         </div>
       </div>
-    </main>
+    </div>
     <div class="upper_footer">
       @ 2023 Duksung Care
     </div>

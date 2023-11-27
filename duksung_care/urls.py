@@ -10,7 +10,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    # path('hospital/', include('hospitals.urls')),
+    path('hospital/', include('hospitals.urls')),
     path('admin/', admin.site.urls),
     path('', include('main.urls')),  # main 앱의 URL 매핑을 포함합니다.
     path('accounts/', include('accounts.urls')),
