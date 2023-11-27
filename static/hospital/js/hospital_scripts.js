@@ -1,3 +1,4 @@
+// 리뷰 목록 클릭시 새로고침 없이 오프캔버스 열리게 함
 $(document).ready(function () {
     $('.hospital-detail-link').on('click', function (e) {
         e.preventDefault();

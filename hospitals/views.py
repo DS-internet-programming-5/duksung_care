@@ -5,11 +5,9 @@ from .models import Hospital, Review
 from .forms import ReviewForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
 from django.views import View
 
-class HospitalList(ListView):
+class HospitalList(ListView): # 병원 목록
     model = Hospital
     context_object_name = 'hospital_list'
 
@@ -17,8 +15,8 @@ class HospitalList(ListView):
         context = super().get_context_data(**kwargs)
         hospitals = context['hospital_list']
 
+        # 페이지네이션
         page = self.request.GET.get('page')
-
         paginator = Paginator(hospitals, 10)
         page_obj = paginator.page(page)
 
@@ -50,25 +48,23 @@ class HospitalList(ListView):
         context['custom_range'] = custom_range
         return context
 
-
-def hospital_detail(request, pk):
+def hospital_detail(request, pk): # 병원 상세정보
     hospital = get_object_or_404(Hospital, pk=pk)
-    review_list = Review.objects.filter(hospital=pk).order_by('-created_at')
+    review_list = Review.objects.filter(hospital=pk).order_by('-created_at') # 최신리뷰순으로 정렬
 
     review_form = ReviewForm()
 
     return render(request, 'hospitals/hospital_detail.html',
                   {'hospital': hospital, 'review_list': review_list, 'review_form': review_form})
 
-
 def get_hospital_list(request):
-    # Hospital 모델에서 필요한 데이터를 쿼리하여 JSON으로 직렬화합니다.
+    # Hospital 모델에서 필요한 데이터를 쿼리하여 JSON으로 직렬화
     hospital_list = list(Hospital.objects.values('pk', 'x', 'y'))
 
     # JSON 응답 반환
     return JsonResponse(hospital_list, safe=False)
 
-
+# 리뷰 작성 (추가)
 def new_review(request, pk):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         filled_form = ReviewForm(request.POST)
@@ -97,7 +93,7 @@ def new_review(request, pk):
         return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
-# @method_decorator(csrf_exempt, name='dispatch')
+# 리뷰 수정
 class UpdateReview(View):
     def post(self, request, review_pk):  # review_pk로 변경
         review_instance = get_object_or_404(Review, pk=review_pk)

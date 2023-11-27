@@ -27,8 +27,6 @@ $(document).ready(function () {
 
                 console.log(data);
                 // 리뷰가 성공적으로 추가되면 해당 리뷰를 화면에 동적으로 추가
-                // $('.review-list').append(`<div class="review"><div class="rating" data-rate="${data.hospital_rating}">${getStars(data.hospital_rating)}</div></div>`);
-                // $('.review-list').append(`<p>${data.content}</p>`);
                 var reviewCard = `
                     <div class="card review-card-${data.review_pk} mt-3 p-3" data-review-id="${data.review_pk}">
                         <div class="d-flex align-items-center justify-content-between">
