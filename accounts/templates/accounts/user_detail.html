@@ -48,7 +48,7 @@
                     <input type="text" class="form-control" id="exampleFormControlInput3" value="{{ user.username }}" disabled readonly>
 
                     <label for="exampleFormControlInput4" class="form-label">생년월일</label>
-                    <input type="date" class="form-control" id="exampleFormControlInput4" value="{{ user.date_of_birth }}" disabled readonly>
+                    <input type="date" class="form-control" id="exampleFormControlInput4" value="{{ user.date_of_birth|date:'Y-m-d' }}" disabled readonly>
 
                     <label for="exampleFormControlInput5" class="form-label">휴대폰번호</label>
                     <input type="text" class="form-control" id="exampleFormControlInput5" value="{{ user.phone }}" disabled readonly>
