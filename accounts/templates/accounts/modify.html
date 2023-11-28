@@ -41,17 +41,26 @@
 
                     <div class="mb-3 justify-contents-center">
                         <label for="exampleFormControlInput1" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" name="email" value="{{ user.email }}" required>
+                        <input type="email" class="form-control" id="exampleFormControlInput1" name="email" value="{{ user.email }}" disabled readonly>
 
                         <label for="exampleFormControlInput2" class="form-label">닉네임</label>
                         <input type="text" class="form-control" id="exampleFormControlInput2" name="nickname" value="{{ user.nickname }}" required>
 
-                        <label for="exampleFormControlInput3" class="form-label">개인정보</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput3" name="username" value="{{ user.username }}" required>
-                        <input type="date" class="form-control" id="exampleFormControlInput4" name="date_of_birth" value="{{ user.date_of_birth }}" required>
+                        <div class="mb-3 row">
+                            <label for="exampleFormControlInput3" class="form-label">이름</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="exampleFormControlInput3" name="username" value="{{ user.username }}" disabled readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="exampleFormControlInput4" class="form-label">생년월일</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" id="exampleFormControlInput4" name="date_of_birth" value="{{ user.date_of_birth }}" required>
+                            </div>
+                        </div>
 
                         <label for="exampleFormControlInput5" class="form-label">휴대폰번호</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput5" name="phone" value="{{ user.phone }}" required>
+                        <input type="tel" class="form-control" id="exampleFormControlInput5" name="phone" value="{{ user.phone }}" required>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="favorites">
