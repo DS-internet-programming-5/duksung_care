@@ -1,5 +1,9 @@
 // 리뷰 목록 클릭시 새로고침 없이 오프캔버스 열리게 함
 $(document).ready(function () {
+    // 평균 별점 표시
+    displayRatings();
+
+    // 병원 목록 클릭시 상세보기
     $('.hospital-detail-link').on('click', function (e) {
         e.preventDefault();
 
@@ -17,8 +21,7 @@ $(document).ready(function () {
                 console.log(hospitalY, hospitalX);
 
                 // panTo 함수 호출하여 해당 위치로 지도 이동
-                panTo(hospitalY, hospitalX)
-
+                panTo(hospitalY, hospitalX);
             },
             error: function (xhr, status, error) {
                 console.error(error); // Handle errors if any
@@ -26,3 +29,28 @@ $(document).ready(function () {
         });
     });
 });
+
+// 평균 별점 표시
+function displayRatings (){
+    var ratings = $('.avg-rating .rating-avg');
+
+    ratings.each(function () {
+        var $this = $(this);
+        var targetScore = $(this).attr('data-rate');
+        var firstDigit = targetScore.split('.');
+
+        if(firstDigit.length > 1){
+            for(var i=0;i<firstDigit[0];i++){
+                $this.find('.star-avg').eq(i).css({width:'100%'})
+            }
+            $this.find('.star-avg').eq(firstDigit[0]).css({width:firstDigit[1]+'0%'})
+        }
+        else{
+            for(var i=0;i<targetScore;i++){
+                $this.find('.star-avg').eq(i).css({width:'100%'})
+            }
+        }
+
+        console.log('targetScore: ', targetScore);
+    });
+}
