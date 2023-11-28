@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
 from django.http import JsonResponse
-from .models import Hospital, Review
+from .models import Hospital, Review, Category
 from .forms import ReviewForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
@@ -14,6 +14,7 @@ class HospitalList(ListView): # 병원 목록
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         hospitals = context['hospital_list']
+        categories = Category.objects.all()  # 카테고리 데이터 가져오기
 
         # 페이지네이션
         page = self.request.GET.get('page')
@@ -46,7 +47,50 @@ class HospitalList(ListView): # 병원 목록
         context['page_obj'] = page_obj
         context['paginator'] = paginator
         context['custom_range'] = custom_range
+        context['categories'] = categories  # 카테고리 데이터 추가
         return context
+
+# 카테고리
+def category_page(request, slug):
+    if slug == 'no_category':
+        category = '미분류'
+        hospitals = Hospital.objects.filter(category_name=None)
+    else:
+        category = get_object_or_404(Category, slug=slug)
+        hospitals = Hospital.objects.filter(category_name=category)
+
+    paginator = Paginator(hospitals, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    custom_range = get_custom_range(page_obj, paginator)
+
+    return render(
+        request,
+        'hospitals/hospital_list.html',
+        {
+            'page_obj': page_obj,
+            'categories': Category.objects.all(),
+            'no_categories_hospital_count': Hospital.objects.filter(category_name=None).count(),
+            'category': category,
+            'paginator': paginator,
+            'custom_range': custom_range,
+        }
+    )
+
+def get_custom_range(page_obj, paginator):
+    num_pages = paginator.num_pages
+    current_page = page_obj.number
+
+    if num_pages <= 5:
+        return range(1, num_pages + 1)
+    else:
+        if current_page <= 3:
+            return range(1, 6)
+        elif current_page + 2 >= num_pages:
+            return range(num_pages - 4, num_pages + 1)
+        else:
+            return range(current_page - 2, current_page + 3)
 
 def hospital_detail(request, pk): # 병원 상세정보
     hospital = get_object_or_404(Hospital, pk=pk)

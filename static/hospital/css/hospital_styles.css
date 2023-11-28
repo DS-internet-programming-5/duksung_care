@@ -150,7 +150,7 @@
     margin: 0;
     padding: 0;
     font-family: 'NEXON Lv2 Gothic', dotum, 'NEXON Lv2 Gothic', sans-serif;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .map_wrap {
@@ -164,7 +164,7 @@
 
 #category {
     position: absolute;
-    top: 60px;
+    top: 65px;
     right: 10px;
     border-radius: 5px;
     border: 1px solid #909090;
@@ -175,67 +175,50 @@
 }
 
 #category li {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     float: left;
     list-style: none;
-    width: 50px;
-    border-right: 1px solid #acacac;
     padding: 6px 0;
     text-align: center;
-    cursor: pointer;
 }
 
 #category li.on {
     background: #eee;
 }
 
-#category li:hover {
-    background: #ffe6e6;
-    border-left: 1px solid #acacac;
-    margin-left: -1px;
-}
-
-#category li:last-child {
-    margin-right: 0;
-    border-right: 0;
-}
-
 #category li span {
     display: block;
-    margin: 0 auto 3px;
-    width: 27px;
-    height: 28px;
+    margin: 0 auto;
+    width: auto;
+    align-self: center;
+    white-space: nowrap;
+    font-weight: bold;
 }
 
-#category li .category_bg {
-    background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png) no-repeat;
+/* 기본적으로 수평 정렬되도록 수정 */
+#category li select {
+    vertical-align: middle;
+    margin: 0 5px;
+    white-space: nowrap;
+    padding-left: 5px;
+    padding-right: 20px; /* 오른쪽 패딩을 설정하여 화살표와 겹치지 않도록 함 */
+    -webkit-appearance: none; /* 웹킷 기반 브라우저에서 기본 화살표 숨김 */
+    -moz-appearance: none; /* Firefox 브라우저에서 기본 화살표 숨김 */
+    appearance: none; /* 기본 화살표 숨김 */
+    background-position: right 2px center;
+    background-repeat: no-repeat;
 }
 
-#category li .bank {
-    background-position: -10px 0;
+#category li .form-check {
+    display: flex;
+    align-items: center;
 }
-
-#category li .mart {
-    background-position: -10px -36px;
-}
-
-#category li .pharmacy {
-    background-position: -10px -72px;
-}
-
-#category li .oil {
-    background-position: -10px -108px;
-}
-
-#category li .cafe {
-    background-position: -10px -144px;
-}
-
-#category li .store {
-    background-position: -10px -180px;
-}
-
-#category li.on .category_bg {
-    background-position-x: -46px;
+#category li .form-check-input{
+    display: inline-block;
+    margin: 0 5px;
+    white-space: nowrap;
 }
 
 .placeinfo_wrap {

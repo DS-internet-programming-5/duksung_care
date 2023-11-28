@@ -30,11 +30,43 @@
     <!-- 지도 -->
     <div class="map_wrap col-md-9" style="display: flex">
         <div id="map" style="width:100%;height:100%;overflow:hidden;"></div>
-        <ul id="category">
-            <li id="HP8" data-order="2">
-                <span class="category_bg pharmacy"></span>
-                <!--<span class="icon fas fa-hospital"></span>-->
-                병원
+        <ul id="category" class="d-flex list-unstyled">
+            <li class="me-3 ms-3">
+                <span>진료과목:</span>
+                <select class="form-select" id="categorySelect">
+                    <option value="/hospital/?page=1" {% if not category %}selected{% endif %}>전체보기</option>
+                    {% for c in categories %}
+                    <option value="/hospital/category/{{ c }}" {% if category and c == category %}selected{% endif %}>{{ c }}</option>
+                    {% endfor %}
+                </select>
+            </li>
+            <li class="me-3">
+                <span>정렬기준:</span>
+                <select class="form-select">
+                    <option selected>정렬기준</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </li>
+            <li class="me-3">
+                <span>상세설정:</span>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+                    <label class="form-check-label" for="flexCheckDefault1">여성의사여부</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+                    <label class="form-check-label" for="flexCheckDefault2">야간진료</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
+                    <label class="form-check-label" for="flexCheckDefault3">휴일진료</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault4">
+                    <label class="form-check-label" for="flexCheckDefault4">학교제휴병원</label>
+                </div>
             </li>
         </ul>
     </div>

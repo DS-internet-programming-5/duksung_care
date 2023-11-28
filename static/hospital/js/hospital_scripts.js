@@ -54,3 +54,11 @@ function displayRatings (){
         console.log('targetScore: ', targetScore);
     });
 }
+
+// 카테고리 선택시 해당 카테고리 페이지로 이동
+document.getElementById('categorySelect').addEventListener('change', function() {
+    var selectedOption = this.value;
+    if (selectedOption) {
+        window.location.href = selectedOption;
+    }
+});
