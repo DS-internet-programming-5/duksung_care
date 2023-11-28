@@ -11,32 +11,15 @@
     font-weight: normal;
     font-style: normal;
 }
-
-.modal {
-    font-family: 'NanumSquareRound', sans-serif;
-}
-
-.update-link, .delete-link {
-    color: gray;
-    text-decoration: none; /* 밑줄 제거 */
-}
-
-.update-link:hover, .delete-link:hover {
-    color: black; /* 호버 시 색상 변경 */
-    text-decoration: underline; /* 호버 시 밑줄 추가 */
-}
-
+/* body */
 .body {
     font-family: 'NanumSquareRound', sans-serif;
 }
 
+/* navbar */
 .navbar {
     font-family: 'NanumSquareRound', sans-serif;
     font-size: 20px;
-}
-
-.div-detail {
-    font-family: 'NanumSquareRound', sans-serif;
 }
 
 .navbar-brand {
@@ -51,12 +34,9 @@
     margin: 0 20px;
 }
 
-.detail-canvas {
-    margin-left: 380px;
-    margin-top: 62px;
-    z-index: 0;
-}
-
+/* ############# */
+/* hospital_list */
+/* ############# */
 #hospital_list {
     font-family: 'NanumSquareRound', sans-serif;
     position: absolute;
@@ -68,6 +48,39 @@
     border-right: 1px solid lightgray;
 }
 
+.list-group::-webkit-scrollbar {
+    width: 10px;
+}
+
+.list-group::-webkit-scrollbar:horizontal{
+    display: none;
+}
+
+.list-group::-webkit-scrollbar-button {
+    display: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background: lightgrey; /* 스크롤바 막대 색상 */
+    border-radius: 12px 12px 12px 12px;
+}
+
+/* 페이지네이션 */
+.page-item.active .page-link {
+    background-color: #FFF0CE; /* 활성 페이지의 배경색 */
+    border-color: var(--bs-border-color); /* 활성 페이지의 배경색 */
+    color: black;
+}
+
+.page-link {
+    color: black; /* 페이지 링크의 색상 */
+}
+
+/* 페이지네이션 hover 시 text color 변경 방지 */
+.page-item:not(.active) .page-link:hover {
+    color: black !important;
+}
+
 .rating-avg i {
     color: #FFC436;
 }
@@ -77,7 +90,6 @@
 }
 
 .rating-avg .star-avg-wrap, .rating-back .star-wrap-back  {
-    width: 12px;
     display: inline-block;
     overflow: hidden;
 }
@@ -85,6 +97,19 @@
 .rating-avg .star-avg {
     width: 0%;
     overflow: hidden;
+}
+
+/* ############### */
+/* hospital_detail */
+/* ############### */
+.div-detail {
+    font-family: 'NanumSquareRound', sans-serif;
+}
+
+.detail-canvas {
+    margin-left: 380px;
+    margin-top: 62px;
+    z-index: 0;
 }
 
 #reviewTab button {
@@ -96,6 +121,31 @@
     margin: 0 15px;
 }
 
+.div-detail::-webkit-scrollbar {
+    display: none;
+}
+
+.rating i {
+    color: lightgrey;
+}
+/* 수정 & 삭제 모달 */
+.modal {
+    font-family: 'NanumSquareRound', sans-serif;
+}
+
+.update-link, .delete-link {
+    color: gray;
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.update-link:hover, .delete-link:hover {
+    color: black; /* 호버 시 색상 변경 */
+    text-decoration: underline; /* 호버 시 밑줄 추가 */
+}
+
+/* ### */
+/* map */
+/* ### */
 .map_wrap, .map_wrap * {
     margin: 0;
     padding: 0;

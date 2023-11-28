@@ -1,13 +1,6 @@
 {% load static %}
-<style>
-    .div-detail::-webkit-scrollbar {
-        display: none;
-    }
-
-    .rating i {
-        color: lightgrey;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'hospital/css/hospital_styles.css' %}">
+<script type="text/javascript" src="{% static 'hospital/js/hospital_scripts.js' %}"></script>
 
 <div class="offcanvas-header justify-content-end">
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
@@ -16,8 +9,50 @@
 
 <div class="div-detail pt-2 pl-2 pr-2 overflow-y-auto" data-latitude="{{ hospital.y }}"
      data-longitude="{{ hospital.x }}">
+    <!-- 병원 이름 -->
     <h3 class="text-center">{{ hospital.place_name }}</h3>
+    <!-- 병원 카테고리 -->
     <p class="text-center" style="font-size: 16px; color: gray">{{ hospital.category_name }}</p>
+    <!-- 평균 별점 -->
+    <div class="mt-1 mb-3" style="font-size: 20px; height: 20px">
+        <div class="avg-rating d-flex justify-content-center" style="height: 20px">
+            <div class="rating-back" style="position: absolute; white-space: nowrap; width: fit-content;">
+                <div class="star-wrap-back">
+                    <div class="star-back"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-wrap-back">
+                    <div class="star-back"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-wrap-back">
+                    <div class="star-back"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-wrap-back">
+                    <div class="star-back"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-wrap-back">
+                    <div class="star-back"><i class="fas fa-star"></i></div>
+                </div>
+            </div>
+            <div class="rating-avg" data-rate="{{ hospital.average_rating }}" style="position: absolute; white-space: nowrap;">
+                <div class="star-avg-wrap">
+                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-avg-wrap">
+                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-avg-wrap">
+                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-avg-wrap">
+                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-avg-wrap">
+                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="text-center" style="font-size: 14px; color: grey">평균 별점 {{ hospital.average_rating }}</p>
     <ul class="nav nav-tabs justify-content-center" id="reviewTab" role="tablist">
         <li class="nav-item m-0" role="presentation">
             <button class="nav-link active" id="detail-tab" data-bs-toggle="tab" data-bs-target="#detail-tab-pane"
@@ -34,8 +69,10 @@
         <!-- 상세정보 탭 -->
         <div class="tab-pane fade show active p-3 pt-3" id="detail-tab-pane" role="tabpanel"
              aria-labelledby="detail-tab" tabindex="0">
+            <!-- 병원 지번주소 -->
             <p class="text-start" style="font-size: 16px;"><i
                     class="fa-solid fa-location-dot mb-2 mt-3"></i>{{ hospital.address_name }}</p>
+            <!-- 병원 진료시간 -->
             {% if hospital.operation_time %}
                 <div class="d-flex">
                 <i class="fa-regular fa-clock mb-2"></i>
@@ -44,9 +81,11 @@
             {% else %}
                 <p class="text-start" style="font-size: 16px;"><i class="fa-regular fa-clock mb-2"></i>-</p>
             {% endif %}
+            <!-- 병원 전화번호 -->
             <p class="text-start" style="font-size: 16px;"><i class="fa-solid fa-phone mb-2"
                                                               style="color: #000000;"></i>{{ hospital.hospital_phone }}
             </p>
+            <hr>
         </div>
         <!-- 리뷰 탭 -->
         <div class="tab-pane fade pt-3" id="review-tab-pane" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
