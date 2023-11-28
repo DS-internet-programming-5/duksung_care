@@ -27,7 +27,7 @@ class HospitalAdmin(ImportExportModelAdmin):
               'hospital_id', 'hospital_phone', 'category_group_code', 'category_group_name', 'x', 'y',
               'operation_time', 'average_rating', 'has_female_doctor', 'has_evening_hours', 'has_holiday_hours',
               'is_partnership', 'bookmarks')
-    list_display = ('id', 'place_name', 'category_name', 'address_name', 'road_address_name',
+    list_display = ('id', 'place_name', 'category_name', 'distance', 'address_name', 'road_address_name',
               'hospital_phone', 'operation_time')
     resource_class = HospitalResource
 

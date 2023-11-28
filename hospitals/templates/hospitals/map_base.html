@@ -33,20 +33,20 @@
         <ul id="category" class="d-flex list-unstyled">
             <li class="me-3 ms-3">
                 <span>진료과목:</span>
-                <select class="form-select" id="categorySelect">
-                    <option value="/hospital/?page=1" {% if not category %}selected{% endif %}>전체보기</option>
+                <select class="form-select category-select" id="categorySelect">
+                    <option value="" {% if not category %}selected{% endif %}>전체보기</option>
                     {% for c in categories %}
-                    <option value="/hospital/category/{{ c }}" {% if category and c == category %}selected{% endif %}>{{ c }}</option>
+                    <option value="{{ c }}" {% if category and c == category %}selected{% endif %}>{{ c }}</option>
                     {% endfor %}
                 </select>
             </li>
             <li class="me-3">
                 <span>정렬기준:</span>
-                <select class="form-select">
+                <select class="form-select order-select">
                     <option selected>정렬기준</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option value="distance">거리가까운순</option>
+                    <option value="rating">별점높은순</option>
+                    <option value="review">리뷰많은순</option>
                 </select>
             </li>
             <li class="me-3">

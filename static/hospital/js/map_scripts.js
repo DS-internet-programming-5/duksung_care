@@ -31,7 +31,6 @@ function setCenter(y, x) {
 fetch('/hospital/get_hospital_list') // 서버에서 hospital_list를 반환하는 엔드포인트
     .then(response => response.json())
     .then(data => {
-            var order = document.getElementById('HP8').getAttribute('data-order');
             for (let i = 0; i < data.length; i++) {
                 const hospital = data[i];
                 const markerPosition = new kakao.maps.LatLng(hospital.y, hospital.x);
@@ -75,7 +74,6 @@ fetch('/hospital/get_hospital_list') // 서버에서 hospital_list를 반환하�
                                 var myOffcanvas = new bootstrap.Offcanvas(offcanvasElement);
                                 myOffcanvas.show();
                             }
-                            console.log(data);
                         },
                         error: function (xhr, status, error) {
                             console.error(error); // 에러 처리

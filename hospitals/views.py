@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
 from django.http import JsonResponse
@@ -50,6 +52,18 @@ class HospitalList(ListView): # 병원 목록
         context['categories'] = categories  # 카테고리 데이터 추가
         return context
 
+    def get_queryset(self):
+        order_condition = self.request.GET.get('order', None)
+        hospitals = super().get_queryset()
+
+        if order_condition == 'distance':  # 거리 가까운 순
+            hospitals = hospitals.order_by('distance')
+        elif order_condition == 'rating':  # 별점 많은 순
+            hospitals = hospitals.order_by('-average_rating')
+        elif order_condition == 'review':  # 리뷰 많은 순
+            hospitals = hospitals.annotate(review_count=Count('review')).order_by('-review_count')
+        return hospitals
+
 # 카테고리
 def category_page(request, slug):
     if slug == 'no_category':
@@ -58,6 +72,15 @@ def category_page(request, slug):
     else:
         category = get_object_or_404(Category, slug=slug)
         hospitals = Hospital.objects.filter(category_name=category)
+
+    # 정렬
+    order_condition = request.GET.get('order', None)
+    if order_condition == 'distance':  # 거리 가까운 순
+        hospitals = hospitals.order_by('distance')
+    elif order_condition == 'rating':  # 별점 많은 순
+        hospitals = hospitals.order_by('-average_rating')
+    elif order_condition == 'review':  # 리뷰 많은 순
+        hospitals = hospitals.annotate(review_count=Count('review')).order_by('-review_count')
 
     paginator = Paginator(hospitals, 10)
     page_number = request.GET.get('page')
@@ -77,6 +100,7 @@ def category_page(request, slug):
             'custom_range': custom_range,
         }
     )
+
 
 def get_custom_range(page_obj, paginator):
     num_pages = paginator.num_pages
@@ -109,26 +133,32 @@ def get_hospital_list(request):
     return JsonResponse(hospital_list, safe=False)
 
 # 리뷰 작성 (추가)
+@login_required
 def new_review(request, pk):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         filled_form = ReviewForm(request.POST)
         if filled_form.is_valid():
-            finished_form = filled_form.save(commit=False)
-            finished_form.hospital = get_object_or_404(Hospital, pk=pk)
-            finished_form.author = request.user
-            finished_form.created_at = timezone.localtime(timezone.now())
-            finished_form.save()
+            # 로그인된 사용자인지 확인
+            if request.user.is_authenticated:
+                finished_form = filled_form.save(commit=False)
+                finished_form.hospital = get_object_or_404(Hospital, pk=pk)
+                finished_form.author = request.user  # 인증된 사용자로 리뷰 작성자 설정
+                finished_form.created_at = timezone.localtime(timezone.now())
+                finished_form.save()
 
-            # 새로 추가된 리뷰의 내용을 가져와서 JSON 응답
-            new_review = {
-                'review_pk': finished_form.pk,
-                'content': finished_form.content,
-                'hospital_rating': finished_form.hospital_rating,
-                'nickname': finished_form.author.nickname,
-                'profileImg' : finished_form.author.profileImg.url if finished_form.author.profileImg else None,
-                'created_at': finished_form.created_at.strftime('%Y.%m.%d. %H:%M'),
-            }
-            return JsonResponse(new_review)
+                # 새로 추가된 리뷰의 내용을 가져와서 JSON 응답
+                new_review = {
+                    'review_pk': finished_form.pk,
+                    'content': finished_form.content,
+                    'hospital_rating': finished_form.hospital_rating,
+                    'nickname': finished_form.author.nickname,
+                    'profileImg' : finished_form.author.profileImg.url if finished_form.author.profileImg else None,
+                    'created_at': finished_form.created_at.strftime('%Y.%m.%d. %H:%M'),
+                }
+                return JsonResponse(new_review)
+            else:
+                # 사용자가 인증되지 않은 경우 에러 메시지를 JSON으로 반환
+                return JsonResponse({'error': 'User is not authenticated'}, status=403)
         else:
             # 폼이 유효하지 않은 경우 에러 메시지를 JSON으로 반환
             errors = filled_form.errors.as_json()
@@ -162,6 +192,7 @@ class UpdateReview(View):
             return JsonResponse({'error': 'Form is not valid'}, status=400)
 
 # 리뷰 삭제
+@login_required
 def delete_review(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
 

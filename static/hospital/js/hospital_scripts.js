@@ -22,6 +22,7 @@ $(document).ready(function () {
 
                 // panTo 함수 호출하여 해당 위치로 지도 이동
                 panTo(hospitalY, hospitalX);
+                displayRatings();
             },
             error: function (xhr, status, error) {
                 console.error(error); // Handle errors if any
@@ -50,15 +51,46 @@ function displayRatings (){
                 $this.find('.star-avg').eq(i).css({width:'100%'})
             }
         }
-
-        console.log('targetScore: ', targetScore);
     });
 }
 
-// 카테고리 선택시 해당 카테고리 페이지로 이동
-document.getElementById('categorySelect').addEventListener('change', function() {
-    var selectedOption = this.value;
-    if (selectedOption) {
-        window.location.href = selectedOption;
-    }
+// 카테고리 선택 또는 정렬 기준 변경 시 병원 목록 페이지로 이동
+document.querySelectorAll('.form-select').forEach(select => {
+    select.addEventListener('change', function() {
+        var categoryOption = document.getElementById('categorySelect').value;
+        var orderOption = document.querySelectorAll('.form-select')[1].value;
+
+        var baseUrl = '/hospital/';
+
+        if (categoryOption !== '') {
+            baseUrl += 'category/' + categoryOption + '/';
+        }
+
+        baseUrl+= '?page=1';
+
+        if (orderOption !== '정렬기준') {
+            var delimiter = (baseUrl.includes('?')) ? '&' : '?';
+            baseUrl += delimiter + 'order=' + orderOption;
+        }
+
+        window.location.href = baseUrl;
+    });
 });
+
+// 현재 URL에서 order 매개변수 가져오기
+const urlParams = new URLSearchParams(window.location.search);
+const orderParam = urlParams.get('order');
+
+// 정렬 기준 select 엘리먼트 가져오기
+const orderSelect = document.querySelector('.order-select');
+
+// order 매개변수 값에 따라 정렬 기준을 설정
+if (orderParam) {
+    const options = orderSelect.options;
+    for (const option of options) {
+        if (option.value === orderParam) {
+            option.setAttribute('selected', 'selected');
+            break;
+        }
+    }
+}
