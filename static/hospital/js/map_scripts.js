@@ -34,11 +34,10 @@ fetch('/hospital/get_hospital_list') // 서버에서 hospital_list를 반환하�
             var order = document.getElementById('HP8').getAttribute('data-order');
             for (let i = 0; i < data.length; i++) {
                 const hospital = data[i];
-                console.log(hospital.pk)
                 const markerPosition = new kakao.maps.LatLng(hospital.y, hospital.x);
 
-                // const imageSrc = 'https://cdn4.iconfinder.com/data/icons/essentials-72/24/025_-_Location-1024.png'; // 마커 이미지 url
-                const imageSrc = 'https://cdn.iconfinder.com/stored_data/1388462/128/png?token=1700871706-RMv8idjAKgte%2FejVd11%2BPvwjMh0kUK2A%2FE0w3rss2WQ%3D'; // 마커 이미지 url
+                const imageSrc = 'https://cdn4.iconfinder.com/data/icons/essentials-72/24/025_-_Location-512.png'; // 마커 이미지 url
+                // const imageSrc = 'https://cdn.iconfinder.com/stored_data/1388462/128/png?token=1700871706-RMv8idjAKgte%2FejVd11%2BPvwjMh0kUK2A%2FE0w3rss2WQ%3D'; // 마커 이미지 url
                 const imageSize = new kakao.maps.Size(30, 30);  // 마커 이미지의 크기
                 const imgOptions = {
                     // spriteSize: new kakao.maps.Size(72, 208), // 스프라이트 이미지의 크기
