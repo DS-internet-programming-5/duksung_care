@@ -51,57 +51,58 @@
 
     <!-- 메뉴바 -->
     <div class="d-flex justify-content-sm-center align-items-center custom-container">
-        <a href="{% url 'main_page1' %}" role="button" class="btn btn-primary btn-lg px-4 gap-3 custom-button" aria-pressed="true">이름/후기(으)로
+        <a href="{% url 'main_page1' %}" role="button" class="btn btn-primary btn-lg px-4 gap-3 custom-button"
+           aria-pressed="true">이름/후기(으)로
             찾기</a>
         <a href="{% url 'main_page2' %}" role="button" class="btn btn-secondary btn-lg px-4 custom-outline-button"
            aria-pressed="true">종류별로 찾기</a>
     </div>
 
     <div class="subject">
-    <div class="subject_title_wrapper">
-        <h3 class="subject_title">진료 과목</h3>
-    </div>
-    <div class="checkbox-group">
-        <input type="checkbox" class="btn-check" id="option1" autocomplete="off">
-        <label class="btn btn-primary" for="option1">가정의학과</label>
-        <input type="checkbox" class="btn-check" id="option2" autocomplete="off">
-        <label class="btn btn-primary" for="option2">내과</label>
-        <input type="checkbox" class="btn-check" id="option3" autocomplete="off">
-        <label class="btn btn-primary" for="option3">산부인과</label>
-        <input type="checkbox" class="btn-check" id="option4" autocomplete="off">
-        <label class="btn btn-primary" for="option4">안과</label>
-    </div>
-    <div class="checkbox-group">
-        <input type="checkbox" class="btn-check" id="option5" autocomplete="off">
-        <label class="btn btn-primary" for="option5">외과</label>
-        <input type="checkbox" class="btn-check" id="option6" autocomplete="off">
-        <label class="btn btn-primary" for="option6">이비인후과</label>
-        <input type="checkbox" class="btn-check" id="option7" autocomplete="off">
-        <label class="btn btn-primary" for="option7">정신건강의학과</label>
-        <input type="checkbox" class="btn-check" id="option8" autocomplete="off">
-        <label class="btn btn-primary" for="option8">정형외과</label>
-    </div>
-    <div class="checkbox-group">
-        <input type="checkbox" class="btn-check" id="option9" autocomplete="off">
-        <label class="btn btn-primary" for="option9">피부과</label>
-        <input type="checkbox" class="btn-check" id="option10" autocomplete="off">
-        <label class="btn btn-primary" for="option10">치과</label>
-        <input type="checkbox" class="btn-check" id="option11" autocomplete="off">
-        <label class="btn btn-primary" for="option11">소아과</label>
-        <input type="checkbox" class="btn-check" id="option12" autocomplete="off">
-        <label class="btn btn-primary" for="option12">비뇨의학과</label>
-    </div>
-
-    <div class="subject_search">
-        <button class="subject_searchbtn" onclick="location.href='#'">검색</button>
-    </div>
+        <div class="subject_title_wrapper">
+            <h3 class="subject_title">진료 과목</h3>
         </div>
-<hr>
+        <div class="checkbox-group">
+            <input type="checkbox" class="btn-check" id="option1" autocomplete="off">
+            <label class="btn btn-primary" for="option1">가정의학과</label>
+            <input type="checkbox" class="btn-check" id="option2" autocomplete="off">
+            <label class="btn btn-primary" for="option2">내과</label>
+            <input type="checkbox" class="btn-check" id="option3" autocomplete="off">
+            <label class="btn btn-primary" for="option3">산부인과</label>
+            <input type="checkbox" class="btn-check" id="option4" autocomplete="off">
+            <label class="btn btn-primary" for="option4">안과</label>
+        </div>
+        <div class="checkbox-group">
+            <input type="checkbox" class="btn-check" id="option5" autocomplete="off">
+            <label class="btn btn-primary" for="option5">외과</label>
+            <input type="checkbox" class="btn-check" id="option6" autocomplete="off">
+            <label class="btn btn-primary" for="option6">이비인후과</label>
+            <input type="checkbox" class="btn-check" id="option7" autocomplete="off">
+            <label class="btn btn-primary" for="option7">정신건강의학과</label>
+            <input type="checkbox" class="btn-check" id="option8" autocomplete="off">
+            <label class="btn btn-primary" for="option8">정형외과</label>
+        </div>
+        <div class="checkbox-group">
+            <input type="checkbox" class="btn-check" id="option9" autocomplete="off">
+            <label class="btn btn-primary" for="option9">피부과</label>
+            <input type="checkbox" class="btn-check" id="option10" autocomplete="off">
+            <label class="btn btn-primary" for="option10">치과</label>
+            <input type="checkbox" class="btn-check" id="option11" autocomplete="off">
+            <label class="btn btn-primary" for="option11">소아과</label>
+            <input type="checkbox" class="btn-check" id="option12" autocomplete="off">
+            <label class="btn btn-primary" for="option12">비뇨의학과</label>
+        </div>
+
+        <div class="subject_search">
+            <button class="subject_searchbtn" onclick="location.href='#'">검색</button>
+        </div>
+    </div>
+    <hr>
 
     <div class="news">
         <!-- 메뉴바2 -->
         <div class="nav-container">
-            <ul id="scrollspy" class="nav" style="text-align: left;">
+            <ul class="nav" style="text-align: left;">
                 <h2>소식 모아보기</h2>
                 <li class="nav-item">
                     <a class="nav-link" href="#hospital" data-toggle="tab">학교 제휴 병원</a>
@@ -113,32 +114,24 @@
         </div>
 
         <!-- banner-->
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                        aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
-            </div>
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="#" class="d-block w-100" alt="...">
+                    <img src="https://picsum.photos/450/130" class="d-block w-100" alt="random_image">
                 </div>
                 <div class="carousel-item">
-                    <img src="#" class="d-block w-100" alt="...">
+                    <img src="https://picsum.photos/450/130" class="d-block w-100" alt="random_image">
                 </div>
                 <div class="carousel-item">
-                    <img src="#" class="d-block w-100" alt="...">
+                    <img src="https://picsum.photos/450/130" class="d-block w-100" alt="random_image">
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
                     data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
                     data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
@@ -146,61 +139,64 @@
         </div>
 
 
-    <!--제휴병원-->
-<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
-    <div class="container">
-        <div class="row">
+        <!--제휴병원-->
+        <div class="hospital-container">
             <h4 id="hospital">학교 제휴 병원</h4>
-            <div class="col-sm-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">경희의료원 </h5>
-                        <p class="card-text">-</p>
-                        <a href="#" class="btn btn-primary">병원 정보</a>
+            <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example"
+                 tabindex="0">
+                <div class="card-container">
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">경희의료원 </h5>
+                                    <p class="card-text">-</p>
+                                    <a href="#" class="btn btn-primary-hospital">병원 정보</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">대림성모병원</h5>
+                                    <p class="card-text">-</p>
+                                    <a href="#" class="btn btn-primary-hospital">병원 정보</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">한일병원</h5>
+                                    <p class="card-text">-</p>
+                                    <a href="#" class="btn btn-primary-hospital">병원 정보</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">강남서울밝은안과의원</h5>
+                                    <p class="card-text">-</p>
+                                    <a href="#" class="btn btn-primary-hospital">병원 정보</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">서울베스트의료의원</h5>
+                                    <p class="card-text">-</p>
+                                    <a href="#" class="btn btn-primary-hospital">병원 정보</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">대림성모병원</h5>
-                        <p class="card-text">-</p>
-                        <a href="#" class="btn btn-primary">병원 정보</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">한일병원</h5>
-                        <p class="card-text">-</p>
-                        <a href="#" class="btn btn-primary">병원 정보</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">강남서울밝은안과의원</h5>
-                        <p class="card-text">-</p>
-                        <a href="#" class="btn btn-primary">병원 정보</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">서울베스트의료의원</h5>
-                        <p class="card-text">-</p>
-                        <a href="#" class="btn btn-primary">병원 정보</a>
-                    </div>
-                </div>
-            </div>
-        </div>
         </div>
     </div>
-        </div>
-
+</div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
