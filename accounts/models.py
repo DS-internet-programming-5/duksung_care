@@ -46,9 +46,8 @@ class User(AbstractUser):
     date_of_birth = models.DateField(null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    phone = PhoneNumberField(null=True)
+    phone = models.CharField(max_length=13, null=True)
     profileImg = models.ImageField(upload_to='accounts/images/%Y/%m/%d/', blank=True, null=True)
-
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
