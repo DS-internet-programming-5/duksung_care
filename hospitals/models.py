@@ -24,7 +24,7 @@ class Hospital(models.Model):
     address_name = models.CharField(max_length=200)  # 지번 주소
     road_address_name = models.CharField(max_length=200)  # 도로명 주소
     hospital_id = models.CharField(max_length=50)  # 카카오맵에서의 id
-    hospital_phone = models.CharField(max_length=20)  # 전화번호
+    hospital_phone = models.CharField(max_length=20, null=True)  # 전화번호
     category_group_code = models.CharField(max_length=50)  # HP8 : 병원
     category_group_name = models.CharField(max_length=50)  # 카테고리 이름 (병원, 약국, 음식점 등)
     x = models.DecimalField(max_digits=50, decimal_places=45)  # x좌표, 경도
