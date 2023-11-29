@@ -39,7 +39,21 @@
                     <h3>회원정보 수정</h3>
                     <img src={{ user.profileImg }}>
 
-                    <div class="mb-3 justify-contents-center">
+                    <div class="mb-3 justify-content-center">
+                        <div class="profile-image-wrapper">
+                            <img src={{ user.profileImg }} id="profileImg" class="rounded-circle">
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="col-auto">
+                                <input type="file" id="profileImageInput" name="profile_image" accept="image/*" onchange="loadImage(event)" style="display: none;">
+                                <label for="profileImageInput" class="btn btn-sm btn-outline-dark">사진 선택</label>
+                            </div>
+                            <div class="col-auto">
+                                <input type="hidden" id="defaultProfileImage" name="default_profile_image">
+                                <button type="button" class="btn btn-sm btn-outline-dark" onclick="setDefaultImage()">기본 이미지로 변경</button>
+                            </div>
+                        </div>
                         <label for="exampleFormControlInput1" class="form-label">Email</label>
                         <input type="email" class="form-control" id="exampleFormControlInput1" name="email" value="{{ user.email }}" disabled readonly>
 
@@ -79,13 +93,23 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    $(document).ready(function() {
-        $(".nav-link").click(function() {
-            $(".nav-link").removeClass("active");
-            $(this).addClass("active");
-            $("h3").text($(this).text());
+        $(document).ready(function() {
+            $(".nav-link").click(function() {
+                $(".nav-link").removeClass("active");
+                $(this).addClass("active");
+                $("h3").text($(this).text());
+            });
         });
-    });
+
+        function loadImage(event) {
+            document.getElementById('profileImg').src = URL.createObjectURL(event.target.files[0]);
+            document.getElementById('defaultProfileImage').value = "";
+        }
+
+        function setDefaultImage() {
+            document.getElementById('profileImg').src = "{% static '/imgs/default_profile.png' %}";
+            document.getElementById('defaultProfileImage').value = "{% static 'imgs/default_profile.png' %}";
+        }
     </script>
 </body>
 

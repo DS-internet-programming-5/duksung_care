@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.hashers import check_password
+from django.core.exceptions import ValidationError
 
 User=get_user_model()
 
@@ -10,7 +11,15 @@ class SignupForm(UserCreationForm):
     class Meta(UserCreationForm):
         model=User
         fields=('email','nickname','date_of_birth','phone','username','profileImg')
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and not email.endswith('@duksung.ac.kr'):
+            email += '@duksung.ac.kr'
 
+        if email and User.objects.filter(email=email).exists():
+            raise ValidationError('이미 등록된 이메일 주소입니다.')
+
+        return email
 
 class LoginForm(forms.Form):
     email = forms.CharField(
