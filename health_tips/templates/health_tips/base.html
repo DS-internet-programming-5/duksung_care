@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+    <title>건강상식</title>
+
+    <!-- 부트스트랩 CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}" media="screen">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/726bbd6862.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- NavBar -->
+    {% include 'health_tips/navbar.html' %}
+
+    <!-- Modal -->
+    {% include 'health_tips/modal.html' %}
+
+    <div class="container my-3">
+        <div class="row">
+            <div class="col-12" id="main-area">
+
+                {% block main_area %}
+
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if post_list.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ post_list.previous_page_number }}">Previous</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">Previous</span>
+                </li>
+            {% endif %}
+
+            {% for num in post_list.paginator.page_range %}
+                {% if post_list.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if post_list.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ post_list.next_page_number }}">Next</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link">Next</span>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- 부트스트랩 JavaScript 및 의존성 -->
+   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

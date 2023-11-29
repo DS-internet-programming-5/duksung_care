@@ -1,0 +1,71 @@
+{% extends 'health_tips/base.html' %}
+
+{% block main_area %}
+    {% if user.is_authenticated %}
+        <a class="btn btn-info btn-sm fload-end href="health_tips/create_post/" role="button"><i class="fa-solid"></i>NEW POST</a>
+    {% endif %}
+
+
+  <h1 class="text-center mb-4">건강 상식
+    {% if category %} <span class="badge bg-secondary">{{ category }}</span> {% endif %}
+    {% if tag %} <span class="bg-info text-dark"><i class="fa fa-tags"></i>{{ tag }} ({{ tag.post_set.count }})</span> {% endif %}
+  </h1>
+
+  <style>
+    .card-body {
+      min-height: 170px;  /* 최소 높이를 조절할 값 설정 */
+    }
+  </style>
+
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+        <!-- 상단 큰 포스트 -->
+        <div class="col-md-8 mb-4">
+            <div class="card mb-4">
+                <!-- 상단 큰 포스트 내용 -->
+                <div class="card-body">
+                    <h2 class="card-title"> {{ post_list.0.post_title }}</h2>
+                    <p class="card-text">{{ post_list.0.post_content | truncatewords:20 }}</p>
+                    <a href="{{ post_list.0.get_absolute_url }}" class="btn btn-primary float-end">Read More &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 2x2 형식의 작은 포스트 -->
+    <div class="row justify-content-center">
+        {% for p in post_list|slice:"1:" %}
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <img class="card-img-top" src="{% if p.head_image %}{{ p.head_image.url }}{% else %}https://picsum.photos/seed/{{ p.id }}/800/200{% endif %}" alt="Card image cap">
+                    <div class="card-body">
+                        <h2 class="card-title"> {{ p.post_title }}</h2>
+                        <p class="card-text">{{ p.post_content | truncatewords:20 }}</p>
+                        <a href="{{ p.get_absolute_url }}" class="btn btn-primary float-end">Read More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- health_tips/post_list.html -->
+</div>
+<!-- 페이징 추가 -->
+<div class="pagination">
+    <span class="step-links">
+        {% if post_list.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ post_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ post_list.number }} of {{ post_list.paginator.num_pages }}.
+        </span>
+
+        {% if post_list.has_next %}
+            <a href="?page={{ post_list.next_page_number }}">next</a>
+            <a href="?page={{ post_list.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
