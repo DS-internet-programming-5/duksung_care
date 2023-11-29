@@ -1,3 +1,6 @@
+{% load static %}
+<script src="https://kit.fontawesome.com/bdcda05bfe.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{% static 'common_style.css' %}">
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 999">
     <div class="container-fluid mx-md-4">
         <a class="navbar-brand" href="/main_page1"><strong>Duksung Care</strong>
@@ -23,7 +26,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/health/">건강뉴스</a>
+                    <a class="nav-link" href="/health_tips/post/">건강뉴스</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/accounts/{{ request.user.pk }}">마이페이지</a>
@@ -38,7 +41,7 @@
                             {% csrf_token %}
                         </form>
                     {% else %}
-                        <a class="nav-link" href="{% url 'login' %}" data-toggle="modal" data-target="#loginModal">로그인</a>
+                        <a class="nav-link" href="{% url 'login' %}">로그인</a>
                     {% endif %}
                 </li>
             </ul>
