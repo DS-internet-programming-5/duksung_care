@@ -27,7 +27,12 @@ h1 {
 h2{
     font-size: 25px;
     font-weight: 550;
+    padding:0 40px 0;
+}
 
+h4{
+    text-align:left;
+    padding:30px 40px 30px;
 }
 
 h5 {
@@ -40,7 +45,7 @@ h5 {
 .centered-content {
     display: flex;
     flex-direction: column;
-    padding-top:60px;
+    padding-top:70px;
     align-items: center;
     width: 90%;
     font-family: "Pretendard-Regular", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
@@ -52,16 +57,29 @@ hr {
     width: 90%;
 }
 
-.nav-box {
-    text-align: center;
+.news{
+    padding:30px 0 30px;
 }
 
-.news{
-    padding:30px;
+.flex-container{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+}
+
+.row>* {
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+.hospital-container{
+    padding:50px 0 20px;
+}
+
+.card{
+    border-radius: 6px;
+    border: 1px solid #EEE;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
 }
 
 .card-body{
@@ -91,7 +109,7 @@ hr {
 form {
   width: 70%;
   height: 50px;
-  margin: 30px 0 100px;
+  margin: 30px 0 90px;
   text-align: center;
 }
 
@@ -138,9 +156,6 @@ input[type="search"] {
   display: block;
   margin: auto;
   background: url(images/search-solid.png) 4% no-repeat;
-  background-size: 20px;
-  padding-left: 50px;
-  outline: none;
   background: #F4F4F4;
 }
 
@@ -167,11 +182,11 @@ input[type="search"] {
     background: #0174BE;
     border: none;
     color: #FFF;
-    font-size: 17px;
-    font-weight: 500;
+    font-size: 15px;
     width: 214px;
     height: 35px;
     flex-shrink: 0;
+    padding-bottom:5px 0 30px;
 }
 
 .nav-link{
@@ -180,12 +195,24 @@ input[type="search"] {
     font-family: Pretendard;
 }
 
+.nav-container{
+    padding:0 0 30px;
+}
+
 .btn btn-primary{
     width: 171px;
     height: 62px;
     flex-shrink: 0;
     border-radius: 20px;
-     background: #D9D9D9;
+}
+
+.btn-primary-hospital{
+    border-radius: 15px;
+    width: 168px;
+    height: 34px;
+    background: #0174BE;
+    color:#FFF;
+    padding-top:4px;
 }
 
 .btn-primary {
