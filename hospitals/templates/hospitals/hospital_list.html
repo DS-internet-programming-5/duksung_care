@@ -1,0 +1,96 @@
+{% extends 'hospitals/map_base.html' %}
+{% block list_block %}
+    <div class="list-group pl-2 z-2 overflow-y-auto" style="height: 95%; padding-right: 10px">
+        {% for h in page_obj %}
+            <a class="list-group-item list-group-item-action hospital-detail-link z-2 pt-3 pb-3"
+               data-bs-toggle="offcanvas" href="#offcanvasScrolling" aria-controls="offcanvasScrolling"
+               data-hospital-pk="{{ h.pk }}">
+                <div class="container-fluid p-0">
+                    <strong class="fs-5">{{ h.place_name }}</strong>
+                    <span class="mb-1"
+                          style="font-size: 14px; color: gray; margin-left: 5px">| {{ h.category_name }}</span>
+                    <!-- 평균 별점 -->
+                    <div class="mt-1 mb-1" style="font-size: 12px">
+                        <div class="avg-rating">
+                            <div class="rating-back" style="position: absolute; white-space: nowrap; width: 100%;">
+                                <div class="star-wrap-back">
+                                    <div class="star-back"><i class="fas fa-star"></i></div>
+                                </div>
+                                <div class="star-wrap-back">
+                                    <div class="star-back"><i class="fas fa-star"></i></div>
+                                </div>
+                                <div class="star-wrap-back">
+                                    <div class="star-back"><i class="fas fa-star"></i></div>
+                                </div>
+                                <div class="star-wrap-back">
+                                    <div class="star-back"><i class="fas fa-star"></i></div>
+                                </div>
+                                <div class="star-wrap-back">
+                                    <div class="star-back"><i class="fas fa-star"></i></div>
+                                </div>
+                            </div>
+                            <div class="rating-avg" data-rate="{{ h.average_rating }}" style="position: absolute; white-space: nowrap;">
+                                <div class="star-avg-wrap">
+                                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                                </div>
+                                <div class="star-avg-wrap">
+                                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                                </div>
+                                <div class="star-avg-wrap">
+                                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                                </div>
+                                <div class="star-avg-wrap">
+                                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                                </div>
+                                <div class="star-avg-wrap">
+                                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="mb-0" style="color: gray; margin-left: 90px; position: relative">{{ h.average_rating }}</span>
+                    </div>
+                    {{ h.address_name }}
+                    </p>
+                    {% if h.operation_time %}
+                        <p style="font-size: 14px; margin-bottom: 0">
+                            {{ h.operation_time | truncatewords:4 }}</p>
+                    {% else %}
+                        <p style="font-size: 14px; margin-bottom: 0">-</p>
+                    {% endif %}
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    <!-- pagination -->
+    {% if page_obj.has_other_pages %}
+        <nav class="pt-3 d-flex justify-content-center" aria-label="Page navigation example"
+             style="padding-right: 20px">
+            <ul class="pagination pagination-sm mb-0">
+                <li class="page-item">
+                    {% if page_obj.has_previous %}
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true"> < </span>
+                        </a>
+                    {% endif %}
+                </li>
+                {% for page in custom_range %}
+                    {% if page == page_obj.number %}
+                        <li class="page-item active"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item">
+                    {% if page_obj.has_next %}
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true"> > </span>
+                        </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+
+{% endblock %}
+

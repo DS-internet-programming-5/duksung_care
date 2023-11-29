@@ -1,0 +1,230 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.body {
+    font-family: 'Pretendard-Regular';
+    font-size: 16px;
+}
+
+.navbar {
+    font-family: 'Pretendard-Regular';
+    font-size: 16px;
+}
+
+.navbar-brand {
+    font-size: 24px;
+}
+
+#navbarNavDropdown{
+    justify-content: space-between;
+}
+
+.nav-item{
+    margin: 0 20px;
+}
+
+h1 {
+    color: #0C356A;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.25px;
+}
+
+h2{
+    font-size: 25px;
+    font-weight: 550;
+
+}
+
+h5 {
+    font-weight: 400;
+    font-size:17px;
+    color: #838383;
+    padding-bottom:10px;
+}
+
+.centered-content {
+    display: flex;
+    flex-direction: column;
+    padding-top:60px;
+    align-items: center;
+    width: 90%;
+    font-family: "Pretendard-Regular", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    text-align: center;
+    margin: auto;
+}
+
+hr {
+    width: 90%;
+}
+
+.nav-box {
+    text-align: center;
+}
+
+.news{
+    padding:30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.card-body{
+    padding:0px;
+    font-family: Pretendard;
+}
+
+.custom-container {
+  width: 350px;
+  height: 44px;
+  padding: 10px 14px 10px 14px;
+  box-sizing: border-box;
+  background: #F4F4F4;
+  position: relative;
+  border-radius: 15px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.20);
+}
+
+.btn-group-lg>.btn, .btn-lg {
+    font-size: 13px;
+    border-radius: 15px;
+    width: 168px;
+    height: 34px;
+    padding-bottom:15px
+}
+
+form {
+  width: 70%;
+  height: 50px;
+  margin: 30px 0 100px;
+  text-align: center;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-direction: row;
+}
+
+.checkbox-group label {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    width: 171px;
+    height: 61px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    justify-content: center;
+}
+
+.checkbox-group input[type="checkbox"]:checked + label {
+    background-color: #5B7FFF;
+    border:none;
+    color: #fff;
+    font-size: 15px;
+}
+
+.checkbox-group input[type="checkbox"]:not(:checked) + label {
+    background-color: #D9D9D9;
+    border:none;
+    color: #000;
+    font-size: 15px;
+}
+
+.checkbox-group input:hover {
+    background-color: #6c757d;
+}
+
+input[type="search"] {
+  height: 40px;
+  width: 70%;
+  border: 1px solid #e0e0e0;
+  padding: 30px;
+  border-radius: 15px;
+  display: block;
+  margin: auto;
+  background: url(images/search-solid.png) 4% no-repeat;
+  background-size: 20px;
+  padding-left: 50px;
+  outline: none;
+  background: #F4F4F4;
+}
+
+.subject{
+    padding-top:40px;
+}
+
+.subject_title{
+    font-size: 25px;
+    font-family: Pretendard;
+    font-weight: 500;
+}
+
+.subject_title_wrapper{
+    padding-bottom:10px;
+}
+
+.subject_search{
+    padding:20px;
+}
+
+.subject_searchbtn{
+    border-radius: 15px;
+    background: #0174BE;
+    border: none;
+    color: #FFF;
+    font-size: 17px;
+    font-weight: 500;
+    width: 214px;
+    height: 35px;
+    flex-shrink: 0;
+}
+
+.nav-link{
+    font-size: 15px;
+    color: #000;
+    font-family: Pretendard;
+}
+
+.btn btn-primary{
+    width: 171px;
+    height: 62px;
+    flex-shrink: 0;
+    border-radius: 20px;
+     background: #D9D9D9;
+}
+
+.btn-primary {
+    color:#fff;
+    background-color:#0174BE;
+    border-color:#0174BE;
+}
+
+.btn-secondary {
+    color:#838383;
+    background-color:#F4F4F4;
+    border-color:#F4F4F4;
+}
+
+.btn-primary:hover {
+    background-color: #0069ab;
+    color: white;
+    border-color: #0174BE;
+}
+
+.btn-secondary:hover {
+    background-color:#dddddd;
+    color:#838383;
+    border-color:#dddddd;
+}
+
+
+
+
+
+

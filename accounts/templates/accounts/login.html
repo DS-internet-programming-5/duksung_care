@@ -1,0 +1,107 @@
+{% extends "accounts/base.html" %}
+
+{% block content %}
+  {% load static %}
+
+<title>Login</title>
+
+<style>
+#header {
+  padding-top: 120px;
+}
+
+.messages {
+    display: flex;
+    justify-content: center;
+    color: #FF0000;
+}
+
+.alert.error{
+    margin: -10px 0 -35px;
+}
+</style>
+
+<!-- leftside -->
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <div id="image">
+        <img src="{% static 'accounts/images/image_1.svg' %}" alt="Image" class="img-fluid">
+      </div>
+    </div>
+        
+<!-- rightside -->
+
+<!-- header -->
+<div class="col-md-6">
+  <div id="header">로그인</div>
+
+<!-- wrapper -->
+<div id="wrapper">
+
+    <!-- content-->
+    <div id="content">
+
+    <form action="{% url 'login' %}" method="POST" novalidate>
+    {% csrf_token %}
+                
+    <!-- Email -->
+    <div>
+      <h3 class="join_title">
+          <label for="email">이메일</label>
+      </h3>
+      <span class="box int_email">
+          <input type="text" name="email" class="int" value="{{ form.email.value|default_if_none:'' }}">
+          <span class="step_url">@duksung.ac.kr</span>
+      </span>
+  </div>
+
+     <!-- PW -->
+     <div>
+      <h3 class="join_title"><label for="pswd">비밀번호</label></h3>
+      <span class="box int_pass">
+          <input type="password" name="password" class="int"  value="{{ form.password.value|default_if_none:'' }}">
+      </span>
+  </div>
+
+    <!-- FORGOTPASS-->
+    <div class="forgot-pass">
+      <a href="#" class="forgot-pass-link">아이디 찾기</a>
+      <span>|</span>
+      <a href="#" class="forgot-pass-link">비밀번호 찾기</a>
+    </div>
+
+
+        {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+     <!-- JOIN BTN-->
+     <div class="btn_area" style="">
+      <button type="submit" id="btnJoin">
+          <span>로그인</span>
+      </button>
+     </div>
+
+   <!-- SIGNUP-->
+   <div class="mt-3 text-center">
+      <span class="signup-text">계정이 아직 없으신가요? <a href="{% url 'signup' %}" class="signup">회원가입</a></span>
+   </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+

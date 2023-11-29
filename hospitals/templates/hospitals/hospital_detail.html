@@ -1,0 +1,173 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'hospital/css/hospital_styles.css' %}">
+<script type="text/javascript" src="{% static 'hospital/js/hospital_scripts.js' %}"></script>
+
+<div class="offcanvas-header justify-content-end">
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+            id="offcanvasCloseBtn"></button>
+</div>
+
+<div class="div-detail pt-2 pl-2 pr-2 overflow-y-auto" data-latitude="{{ hospital.y }}"
+     data-longitude="{{ hospital.x }}">
+    <!-- 병원 이름 -->
+    <h3 class="text-center">{{ hospital.place_name }}</h3>
+    <!-- 병원 카테고리 -->
+    <p class="text-center" style="font-size: 16px; color: gray">{{ hospital.category_name }}</p>
+    <!-- 평균 별점 -->
+    <div class="mt-1 mb-3" style="font-size: 20px; height: 20px">
+        <div class="avg-rating d-flex justify-content-center position-relative" style="height: 20px">
+            <div class="rating-back" style="position: absolute; white-space: nowrap; width: fit-content;">
+                <div class="star-wrap-back">
+                    <div class="star-back"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-wrap-back">
+                    <div class="star-back"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-wrap-back">
+                    <div class="star-back"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-wrap-back">
+                    <div class="star-back"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-wrap-back">
+                    <div class="star-back"><i class="fas fa-star"></i></div>
+                </div>
+            </div>
+            <div class="rating-avg" data-rate="{{ hospital.average_rating }}" style="position: absolute; white-space: nowrap;">
+                <div class="star-avg-wrap">
+                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-avg-wrap">
+                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-avg-wrap">
+                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-avg-wrap">
+                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                </div>
+                <div class="star-avg-wrap">
+                    <div class="star-avg"><i class="fas fa-star"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="text-center" style="font-size: 14px; color: grey">평균 별점 {{ hospital.average_rating }}</p>
+    <ul class="nav nav-tabs justify-content-center" id="reviewTab" role="tablist">
+        <li class="nav-item m-0" role="presentation">
+            <button class="nav-link active" id="detail-tab" data-bs-toggle="tab" data-bs-target="#detail-tab-pane"
+                    type="button" role="tab" aria-controls="detail-tab-pane" aria-selected="true">정보
+            </button>
+        </li>
+        <li class="nav-item m-0" role="presentation">
+            <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review-tab-pane"
+                    type="button" role="tab" aria-controls="review-tab-pane" aria-selected="false">리뷰
+            </button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent" style="padding: 0 20px">
+        <!-- 상세정보 탭 -->
+        <div class="tab-pane fade show active p-3 pt-3" id="detail-tab-pane" role="tabpanel"
+             aria-labelledby="detail-tab" tabindex="0">
+            <!-- 병원 지번주소 -->
+            <p class="text-start" style="font-size: 16px;"><i
+                    class="fa-solid fa-location-dot mb-2 mt-3"></i>{{ hospital.address_name }}</p>
+            <!-- 병원 진료시간 -->
+            {% if hospital.operation_time %}
+                <div class="d-flex">
+                <i class="fa-regular fa-clock mb-2"></i>
+                <p class="text-start col" style="font-size: 16px; white-space:pre;">{{ hospital.operation_time }}</p>
+                </div>
+            {% else %}
+                <p class="text-start" style="font-size: 16px;"><i class="fa-regular fa-clock mb-2"></i>-</p>
+            {% endif %}
+            <!-- 병원 전화번호 -->
+            <p class="text-start" style="font-size: 16px;"><i class="fa-solid fa-phone mb-2"
+                                                              style="color: #000000;"></i>{{ hospital.hospital_phone }}
+            </p>
+            <hr>
+        </div>
+        <!-- 리뷰 탭 -->
+        <div class="tab-pane fade pt-3" id="review-tab-pane" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
+            <div class="d-flex justify-content-center">
+                <a class="link-secondary" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                   aria-expanded="false" aria-controls="collapseExample">
+                    리뷰작성하기 <i class="fa-solid fa-caret-down"></i>
+                </a>
+            </div>
+            <div class="collapse" id="collapseExample">
+                {% if request.user.is_authenticated %}
+                    {% include 'hospitals/review_create_form.html' %}
+                {% else %}
+                    <!-- 로그인하지 않은 사용자에게 보여줄 내용 -->
+                    <div class="d-flex justify-content-center row">
+                        <p class="text-center mt-2 fw-bold">리뷰를 작성하려면 로그인이 필요합니다.</p>
+                        <a class="btn btn-outline-primary m-auto w-25" href="/accounts/login/">로그인</a>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="review-list-box mt-3 pb-3">
+                <!-- 기존 리뷰 목록을 표시할 곳 -->
+                {% for r in review_list %}
+                    <div class="card review-card-{{ r.pk }} mt-3 p-3" data-review-id="r.pk">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <div class="review-profile-box d-flex justify-content-center align-content-center"
+                                     style="width: 40px; height: 40px; background-color: #FFF0CE; border-radius: 70%">
+                                    {% if r.author.profileImg %}
+                                        <img src="{{ r.author.profileImg.url }}"
+                                             style="width: 100%; height: 100%; object-fit: cover; border-radius: 70%">
+                                    {% else %}
+                                        <img src="{% static 'imgs/default_profile.png' %}"
+                                             style="width:80%; height:80%; margin: auto; object-fit: cover">
+                                    {% endif %}
+                                </div>
+                                <span style="margin-left: 10px">{{ r.author.nickname }}</span>
+                                {% if r.updated_at %}
+                                    <span class="time" style="margin-left: 10px; color: gray"> | {{ r.updated_at | date:'Y.m.d.' }}</span>
+                                {% else %}
+                                    <span class="time" style="margin-left: 10px; color: gray"> | {{ r.created_at | date:'Y.m.d.' }}</span>
+                                {% endif %}
+                            </div>
+                            <!-- 수정, 삭제 버튼 -->
+                            <div>
+                                {% if r.author == request.user or request.user.is_superuser%}
+                                <a class="update-link" data-bs-toggle="modal" href="#updateModal" data-review-id="{{ r.pk }}"
+                                data-review-content="{{ r.content }}" data-hospital-rating="{{ r.hospital_rating }}">수정</a>
+                                <a class="delete-link" data-bs-toggle="modal" href="#deleteModal" data-review-id="{{ r.pk }}">삭제</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="review mt-2"> <!-- 리뷰 별점 -->
+                            <div class="rating" data-rate="{{ r.hospital_rating }}">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <!-- 리뷰 내용 -->
+                            <p class="r-content mt-2 mb-0" style="white-space:pre;">{{ r.content }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'hospital/js/review_script.js' %}"></script>
+<script>
+    // 상세정보가 열리면서 해당 병원 위치로 지도 중심좌표 이동
+    document.addEventListener("DOMContentLoaded", function () {
+        const element = document.querySelector('.div-detail');
+        const latitude = element.getAttribute('data-latitude');
+        const longitude = element.getAttribute('data-longitude');
+
+        panTo(latitude, longitude);
+
+        // Bootstrap 탭 활성화
+        var tab = new bootstrap.Tab(document.getElementById('myTab'));
+        tab.show();
+    });
+</script>

@@ -1,0 +1,9 @@
+django-import-export
+Pillow
+beautifulsoup4
+requests
+selenium
+pandas
+
+django-phonenumber-field[phonenumbers]
+django-phonenumber-field[phonenumberslite]
