@@ -33,6 +33,12 @@ def modify(request):
     else:
         return render(request, 'accounts/modify.html')
 
+@login_required
+def user_delete(request):
+    user = get_object_or_404(User, pk=request.user.pk)
+    user.delete()
+    messages.success(request, '회원 탈퇴가 완료되었습니다.')
+    return redirect('/main_page1/')
 
 def SignupPage(request):
     if request.method == 'POST':
