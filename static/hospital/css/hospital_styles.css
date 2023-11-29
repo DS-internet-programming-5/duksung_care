@@ -156,8 +156,8 @@
 .map_wrap {
     position: absolute;
     top: 0;
-    left: 20%;
-    width: 80%;
+    left: 380px;
+    width: calc(100% - 380px);
     height: 100%;
     z-index: -1;
 }
@@ -167,7 +167,7 @@
     top: 65px;
     right: 10px;
     border-radius: 5px;
-    border: 1px solid #909090;
+    border: 1px solid lightgray;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
     background: #fff;
     overflow: hidden;
