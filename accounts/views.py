@@ -18,9 +18,14 @@ def user_detail(request, pk):
 def modify(request):
     if request.method == 'POST':
         user = get_object_or_404(User, pk=request.user.pk)
-        user.email = request.POST.get('email')
+        default_profile_image = request.POST.get('default_profile_image')
+        if default_profile_image == 'default':
+            if user.profileImg:
+                user.profileImg.delete()  # 이 부분 추가
+            user.profileImg = None
+        else:
+            user.profileImg = request.FILES.get('profile_image', user.profileImg)
         user.nickname = request.POST.get('nickname')
-        user.username = request.POST.get('username')
         user.date_of_birth = request.POST.get('date_of_birth')
         user.phone = request.POST.get('phone')
         user.save()
