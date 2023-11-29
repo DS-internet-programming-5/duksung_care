@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>{{post.title}}</title>
+</head>
+<body>
+<nav>
+    <a href="/health_tips/"></a>
+</nav>
+
+
+{% for p in posts %}
+    <hr/>
+    <h2>{{ p.title }}</h2>
+    <h4>{{ p.create_at }}</h4>
+    <p>{{ p.content }}</p>
+{% endfor %}
+</body>
+
+</html>
