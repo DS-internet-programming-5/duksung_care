@@ -15,7 +15,7 @@
     <p class="text-center" style="font-size: 16px; color: gray">{{ hospital.category_name }}</p>
     <!-- 평균 별점 -->
     <div class="mt-1 mb-3" style="font-size: 20px; height: 20px">
-        <div class="avg-rating d-flex justify-content-center" style="height: 20px">
+        <div class="avg-rating d-flex justify-content-center position-relative" style="height: 20px">
             <div class="rating-back" style="position: absolute; white-space: nowrap; width: fit-content;">
                 <div class="star-wrap-back">
                     <div class="star-back"><i class="fas fa-star"></i></div>
@@ -96,7 +96,15 @@
                 </a>
             </div>
             <div class="collapse" id="collapseExample">
-                {% include 'hospitals/review_create_form.html' %}
+                {% if request.user.is_authenticated %}
+                    {% include 'hospitals/review_create_form.html' %}
+                {% else %}
+                    <!-- 로그인하지 않은 사용자에게 보여줄 내용 -->
+                    <div class="d-flex justify-content-center row">
+                        <p class="text-center mt-2 fw-bold">리뷰를 작성하려면 로그인이 필요합니다.</p>
+                        <a class="btn btn-outline-primary m-auto w-25" href="/accounts/login/">로그인</a>
+                    </div>
+                {% endif %}
             </div>
             <div class="review-list-box mt-3 pb-3">
                 <!-- 기존 리뷰 목록을 표시할 곳 -->
