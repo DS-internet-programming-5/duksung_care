@@ -9,4 +9,5 @@ urlpatterns=[
     path('new_review/<int:pk>/', views.new_review, name='new_review'),
     path('update_review/<int:review_pk>/', views.UpdateReview.as_view(), name='update_review'),
     path('delete_review/<int:review_pk>/', views.delete_review, name='delete_review'),
+    path('like_review/<int:review_pk>/', views.likes_review, name='likes_review'),
 ]

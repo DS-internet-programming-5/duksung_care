@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
+from django.views.decorators.http import require_POST
 from django.views.generic import ListView
 from django.http import JsonResponse
 from .models import Hospital, Review, Category
@@ -231,3 +232,24 @@ def delete_review(request, review_pk):
         return JsonResponse({'message': 'Review deleted successfully'}, status=200)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+# 리뷰 좋아요
+def likes_review(request, review_pk):
+    if request.method == 'POST' and request.user.is_authenticated:
+        review = get_object_or_404(Review, pk=review_pk)
+        user = request.user
+
+        if user in review.likes.all():
+            review.likes.remove(user)
+            liked = False
+        else:
+            review.likes.add(user)
+            liked = True
+
+        # 좋아요를 추가 또는 제거할 때마다 해당 리뷰의 좋아요 수를 업데이트
+        review.num_likes = review.likes.count()
+        review.save()
+
+        return JsonResponse({'liked': liked, 'likes': review.num_likes})
+
+    return JsonResponse({}, status=400)

@@ -145,24 +145,24 @@ for hospital_data in data:
         hospital.save()
 
 # 영업 시간 추가
-import pandas as pd
-
-# 엑셀 파일 경로 지정
-excel_file_path = 'hospital_hours_data.xlsx'
-
-# 엑셀 파일을 데이터프레임으로 읽기
-excel_data = pd.read_excel(excel_file_path)
-
-# 데이터베이스에 데이터 추가
-for index, row in excel_data.iterrows():
-    hospital_id = row['hospital_id']  # hospital 모델의 primary key
-    operation_time = row['operation_time'] # operation_time 필드 데이터
-    if pd.isna(operation_time):
-        operation_time = None
-
-    # Hospital 모델 인스턴스 가져오기
-    hospital = Hospital.objects.get(hospital_id=hospital_id)
-
-    # operation_time 필드 업데이트
-    hospital.operation_time = operation_time
-    hospital.save()
+# import pandas as pd
+#
+# # 엑셀 파일 경로 지정
+# excel_file_path = 'hospital_hours_data.xlsx'
+#
+# # 엑셀 파일을 데이터프레임으로 읽기
+# excel_data = pd.read_excel(excel_file_path)
+#
+# # 데이터베이스에 데이터 추가
+# for index, row in excel_data.iterrows():
+#     hospital_id = row['hospital_id']  # hospital 모델의 primary key
+#     operation_time = row['operation_time'] # operation_time 필드 데이터
+#     if pd.isna(operation_time):
+#         operation_time = None
+#
+#     # Hospital 모델 인스턴스 가져오기
+#     hospital = Hospital.objects.get(hospital_id=hospital_id)
+#
+#     # operation_time 필드 업데이트
+#     hospital.operation_time = operation_time
+#     hospital.save()
