@@ -55,8 +55,54 @@ function displayRatings (){
 }
 
 // 카테고리 선택 또는 정렬 기준 변경 시 병원 목록 페이지로 이동
+function redirectToHospitalList() {
+    var categoryOption = document.getElementById('categorySelect').value;
+    var orderOption = document.querySelectorAll('.form-select')[1].value;
+
+    var baseUrl = '/hospital/';
+    var queryParams = [];
+
+    if (categoryOption !== '') {
+        baseUrl += 'category/' + categoryOption + '/';
+    }
+
+    queryParams.push('page=1');
+
+    if (orderOption !== '정렬기준') {
+        queryParams.push('order=' + orderOption);
+    }
+
+    var filterOptions = [];
+    document.querySelectorAll('.form-check-input').forEach(checkbox => {
+        if (checkbox.checked) {
+            filterOptions.push(checkbox.id);
+        }
+    });
+
+    if (filterOptions.length > 0) {
+        queryParams.push('filter=' + filterOptions.join(','));
+    }
+
+    if (queryParams.length > 0) {
+        baseUrl += '?' + queryParams.join('&');
+    }
+
+    window.location.href = baseUrl;
+}
+
+// 카테고리 선택 또는 정렬 기준 변경 이벤트
 document.querySelectorAll('.form-select').forEach(select => {
-    select.addEventListener('change', function() {
+    select.addEventListener('change', redirectToHospitalList);
+});
+
+// 상세 설정 체크박스 변경 이벤트
+document.querySelectorAll('.form-check-input').forEach(input => {
+    input.addEventListener('change', redirectToHospitalList);
+});
+
+// 상세 설정 체크박스 변경 시 URL 재구성 및 페이지 이동
+document.querySelectorAll('.form-check-input').forEach(input => {
+    input.addEventListener('change', function() {
         var categoryOption = document.getElementById('categorySelect').value;
         var orderOption = document.querySelectorAll('.form-select')[1].value;
 
@@ -66,11 +112,17 @@ document.querySelectorAll('.form-select').forEach(select => {
             baseUrl += 'category/' + categoryOption + '/';
         }
 
-        baseUrl+= '?page=1';
+        baseUrl += '?page=1';
 
-        if (orderOption !== '정렬기준') {
-            var delimiter = (baseUrl.includes('?')) ? '&' : '?';
-            baseUrl += delimiter + 'order=' + orderOption;
+        var filterOptions = [];
+        document.querySelectorAll('.form-check-input').forEach(checkbox => {
+            if (checkbox.checked) {
+                filterOptions.push(checkbox.id);
+            }
+        });
+
+        if (filterOptions.length > 0) {
+            baseUrl += '&filter=' + filterOptions.join(',');
         }
 
         window.location.href = baseUrl;
@@ -80,9 +132,11 @@ document.querySelectorAll('.form-select').forEach(select => {
 // 현재 URL에서 order 매개변수 가져오기
 const urlParams = new URLSearchParams(window.location.search);
 const orderParam = urlParams.get('order');
+const filterParam = urlParams.get('filter');
 
 // 정렬 기준 select 엘리먼트 가져오기
 const orderSelect = document.querySelector('.order-select');
+const filterCheckboxes = document.querySelectorAll('.form-check-input');
 
 // order 매개변수 값에 따라 정렬 기준을 설정
 if (orderParam) {
@@ -93,4 +147,16 @@ if (orderParam) {
             break;
         }
     }
+}
+
+// filter 매개변수 값에 따라 체크박스 상태 설정
+if (filterParam) {
+    console.log(filterParam);
+    const filters = filterParam.split(',');
+    filterCheckboxes.forEach(checkbox => {
+        if (filters.includes(checkbox.id)) {
+            checkbox.checked = true;
+            checkbox.value = true;
+        }
+    });
 }

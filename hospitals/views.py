@@ -54,14 +54,30 @@ class HospitalList(ListView): # 병원 목록
 
     def get_queryset(self):
         order_condition = self.request.GET.get('order', None)
+        filter_condition = self.request.GET.get('filter', None)
         hospitals = super().get_queryset()
 
+        # 상세설정
+        if filter_condition:
+            filters = filter_condition.split(',')
+            for condition in filters:
+                if condition == 'has_female_doctor':
+                    hospitals = hospitals.filter(has_female_doctor=True)
+                elif condition == 'has_evening_hours':
+                    hospitals = hospitals.filter(has_evening_hours=True)
+                elif condition == 'has_holiday_hours':
+                    hospitals = hospitals.filter(has_holiday_hours=True)
+                elif condition == 'is_partnership':
+                    hospitals = hospitals.filter(is_partnership=True)
+
+        # 정렬
         if order_condition == 'distance':  # 거리 가까운 순
             hospitals = hospitals.order_by('distance')
         elif order_condition == 'rating':  # 별점 많은 순
             hospitals = hospitals.order_by('-average_rating')
         elif order_condition == 'review':  # 리뷰 많은 순
             hospitals = hospitals.annotate(review_count=Count('review')).order_by('-review_count')
+
         return hospitals
 
 # 카테고리
@@ -72,6 +88,20 @@ def category_page(request, slug):
     else:
         category = get_object_or_404(Category, slug=slug)
         hospitals = Hospital.objects.filter(category_name=category)
+
+    # 상세설정
+    filter_condition = request.GET.get('filter', None)
+    if filter_condition:
+        filters = filter_condition.split(',')
+        for condition in filters:
+            if condition == 'has_female_doctor':
+                hospitals = hospitals.filter(has_female_doctor=True)
+            elif condition == 'has_evening_hours':
+                hospitals = hospitals.filter(has_evening_hours=True)
+            elif condition == 'has_holiday_hours':
+                hospitals = hospitals.filter(has_holiday_hours=True)
+            elif condition == 'is_partnership':
+                hospitals = hospitals.filter(is_partnership=True)
 
     # 정렬
     order_condition = request.GET.get('order', None)
