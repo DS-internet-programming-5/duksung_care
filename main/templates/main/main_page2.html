@@ -1,151 +1,207 @@
 <!DOCTYPE html>
-<html lang="ko">
+{% load static %}
+
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>병원 찾기</title>
-  <link rel="stylesheet" type="style.css" href="{% static 'static/main/css/style.css' %}">
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <script src="https://kit.fontawesome.com/726bbd6862.js" crossorigin="anonymous"></script>
 </head>
-  <body>
-    <header>
-      <img src="media/logo.png" alt="로고" id="main_logo">
-      <nav class="nav_bar">
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">지도</a></li>
-          <li><a href="#">병원정보</a></li>
-          <li><a href="#">마이페이지</a></li>
-          <li><a href="#">로그아웃</a></li>
-        </ul>
-      </nav>
-    </header>
 
-    <main>
-      <img src="media/cross_logo.png" style="width: 47px; height: 53px;">
-      <a class="title_text">주변 병원 찾기</a>
-      <a class="sub_text">학교 주변 병원을 찾아보세요!</a>
-      <div class="select_wrapper">
-        <div class="find_by_name">이름/후기(으)로 찾기</div>
-        <div class="find_by_type">종류별로 찾기</div>
-      </div>
+<style>
+    .btn-secondary{
+        color:#fff;
+        background-color:#0174BE;
+        border-color:#0174BE;
+    }
 
-      <div class="subject_title_wrapper">
-        <a class="subject_title">진료 과목</a>
-      </div>
-      <div class="subject_wrapper">
-        <div class="subject_table">
-            <div class="subject_cell">가정의학과 </div>
-            <div class="subject_cell">내과</div>
-            <div class="subject_cell">산부인과</div>
-            <div class="subject_cell">안과</div>
-        </div>
-        <div class="subject_table">
-            <div class="subject_cell">외과</div>
-            <div class="subject_cell">이비인후과</div>
-            <div class="subject_cell">정신건강의학과</div>
-            <div class="subject_cell">정형외과</div>
-        </div>
-        <div class="subject_table">
-            <div class="subject_cell">피부과</div>
-            <div class="subject_cell">치과</div>
-            <div class="subject_cell">소아과</div>
-            <div class="subject_cell">비뇨의학과</div>
-        </div>        <div class="subject_table">
-            <div class="subject_cell"></div>
-            <div class="subject_cell"></div>
-            <div class="subject_cell"></div>
-            <div class="subject_cell"></div>
-        </div>
-      </div>
-      <button class="subject_search">검색</button>
+     .btn-primary{
+        color:#838383;
+        background-color:#F4F4F4;
+        border-color:#F4F4F4;
+    }
 
-      <div class="divider" style="margin-top: 60px;"></div>
-      <nav class="middle_nav_bar">
-        <ul>
-          <li><a style="font-size: 25px;">소식 모아보기</a></li>
-          <li><a href="#">학교 제휴 병원</a></li>
-          <li><a href="#">건강 상식</a></li>
-        </ul>
-      </nav>
-      <div class="content_wrapper">
-        <div class="text_wrapper">
-          <a>COVID-19 AWARENESS</a>
-          <a>Stay Safe. Stay Home.</a>
-          <a>Amet minim molit non desenunt ullamco est st do<br>amet sint officia eit ofcie<br>conaequnt duis enimelit molt</a>
-          <button>How to Prevent</button>
-        </div>
-        <img src="media/hero_img.png"/>
-      </div>
 
-      <nav class="middle_nav_bar" style="margin-top : 105px;">
-        <ul>
-          <li><a>학교 제휴 병원</a></li>
-        </ul>
-      </nav>
+.btn-secondary:hover {
+    background-color: #0069ab;
+    color: white;
+    border-color: #0174BE;
+}
 
-      <div class="table">
-        <div class="row">
-          <div class="cell">
-            <div class="hospital_title">
-              경희 의료원
-              <button>병원 정보</button>
-            </div>
-            <div class="hospital_content">
-              -
-            </div>
-          </div>
-          <div class="cell">
-            <div class="hospital_title">
-              대림성모 병원
-              <button>병원 정보</button>
-            </div>
-            <div class="hospital_content">
-              -
-            </div>
-          </div>
-          <div class="cell">
-            <div class="hospital_title">
-              한일 병원
-              <button>병원 정보 </button>
-            </div>
-            <div class="hospital_content">
-              -
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="cell">
-            <div class="hospital_title">
-              강남서울밝은안과의원
-              <button>병원 정보</button>
-            </div>
-            <div class="hospital_content">
-              라식, 라섹, 스마일, 렌즈삽입술, 노안교정
-              70여가지 사전검사 비용 지원
-              , 제휴대학
-              특별우대가 적용
-            </div>
-          </div>
-          <div class="cell">
-            <div class="hospital_title">
-              서울베스트의료의원
-              <button>병원 정보</button>
-            </div>
-            <div class="hospital_content">
-              대학생 건강검진과
-              가다실9가 추가 접종 할인 혜택
-            </div>
-          </div>
-          <div class="cell" style="border: none;"></div>
-        </div>
-      </div>
-    </main>
-    <div class="upper_footer">
-      @ 2023 Duksung Care
+.btn-primary:hover {
+    background-color:#dddddd;
+    color:#838383;
+    border-color:#dddddd;
+}
+
+</style>
+
+<body>
+<!-- NavBar -->
+{% include 'navbar.html' %}
+
+<div class="centered-content">
+    <img src="{% static 'imgs\hospital.png' %}" alt="Your Alt Text">
+    <h1>주변 병원 찾기</h1>
+    <h5>학교 주변 병원을 찾아보세요!</h5>
+
+    <!-- 메뉴바 -->
+    <div class="d-flex justify-content-sm-center align-items-center custom-container">
+        <a href="{% url 'main_page1' %}" role="button" class="btn btn-primary btn-lg px-4 gap-3 custom-button" aria-pressed="true">이름/후기(으)로
+            찾기</a>
+        <a href="{% url 'main_page2' %}" role="button" class="btn btn-secondary btn-lg px-4 custom-outline-button"
+           aria-pressed="true">종류별로 찾기</a>
     </div>
-    <div class="lower_footer">
-      <div class="lower_footer_divider"></div>
-      <img src="media/logo.png" alt="로고" id="main_logo" style="margin-bottom: 15px;">
-      @ 2023 Duksung Care
+
+    <div class="subject">
+    <div class="subject_title_wrapper">
+        <h3 class="subject_title">진료 과목</h3>
     </div>
-  </body>
-  </html>
+    <div class="checkbox-group">
+        <input type="checkbox" class="btn-check" id="option1" autocomplete="off">
+        <label class="btn btn-primary" for="option1">가정의학과</label>
+        <input type="checkbox" class="btn-check" id="option2" autocomplete="off">
+        <label class="btn btn-primary" for="option2">내과</label>
+        <input type="checkbox" class="btn-check" id="option3" autocomplete="off">
+        <label class="btn btn-primary" for="option3">산부인과</label>
+        <input type="checkbox" class="btn-check" id="option4" autocomplete="off">
+        <label class="btn btn-primary" for="option4">안과</label>
+    </div>
+    <div class="checkbox-group">
+        <input type="checkbox" class="btn-check" id="option5" autocomplete="off">
+        <label class="btn btn-primary" for="option5">외과</label>
+        <input type="checkbox" class="btn-check" id="option6" autocomplete="off">
+        <label class="btn btn-primary" for="option6">이비인후과</label>
+        <input type="checkbox" class="btn-check" id="option7" autocomplete="off">
+        <label class="btn btn-primary" for="option7">정신건강의학과</label>
+        <input type="checkbox" class="btn-check" id="option8" autocomplete="off">
+        <label class="btn btn-primary" for="option8">정형외과</label>
+    </div>
+    <div class="checkbox-group">
+        <input type="checkbox" class="btn-check" id="option9" autocomplete="off">
+        <label class="btn btn-primary" for="option9">피부과</label>
+        <input type="checkbox" class="btn-check" id="option10" autocomplete="off">
+        <label class="btn btn-primary" for="option10">치과</label>
+        <input type="checkbox" class="btn-check" id="option11" autocomplete="off">
+        <label class="btn btn-primary" for="option11">소아과</label>
+        <input type="checkbox" class="btn-check" id="option12" autocomplete="off">
+        <label class="btn btn-primary" for="option12">비뇨의학과</label>
+    </div>
+
+    <div class="subject_search">
+        <button class="subject_searchbtn" onclick="location.href='#'">검색</button>
+    </div>
+        </div>
+<hr>
+
+    <div class="news">
+        <!-- 메뉴바2 -->
+        <div class="nav-container">
+            <ul id="scrollspy" class="nav" style="text-align: left;">
+                <h2>소식 모아보기</h2>
+                <li class="nav-item">
+                    <a class="nav-link" href="#hospital" data-toggle="tab">학교 제휴 병원</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#health_tips" data-toggle="tab">건강 상식</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- banner-->
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="#" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="#" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="#" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+
+    <!--제휴병원-->
+<div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+    <div class="container">
+        <div class="row">
+            <h4 id="hospital">학교 제휴 병원</h4>
+            <div class="col-sm-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">경희의료원 </h5>
+                        <p class="card-text">-</p>
+                        <a href="#" class="btn btn-primary">병원 정보</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">대림성모병원</h5>
+                        <p class="card-text">-</p>
+                        <a href="#" class="btn btn-primary">병원 정보</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">한일병원</h5>
+                        <p class="card-text">-</p>
+                        <a href="#" class="btn btn-primary">병원 정보</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">강남서울밝은안과의원</h5>
+                        <p class="card-text">-</p>
+                        <a href="#" class="btn btn-primary">병원 정보</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">서울베스트의료의원</h5>
+                        <p class="card-text">-</p>
+                        <a href="#" class="btn btn-primary">병원 정보</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+        </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

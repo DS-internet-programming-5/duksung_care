@@ -9,6 +9,16 @@
 #header {
   padding-top: 120px;
 }
+
+.messages {
+    display: flex;
+    justify-content: center;
+    color: #FF0000;
+}
+
+.alert.error{
+    margin: -10px 0 -35px;
+}
 </style>
 
 <!-- leftside -->
@@ -25,7 +35,7 @@
 
 <!-- header -->
 <div class="col-md-6">
-  <div id="header">Login</div>
+  <div id="header">로그인</div>
 
 <!-- wrapper -->
 <div id="wrapper">
@@ -33,7 +43,7 @@
     <!-- content-->
     <div id="content">
 
-    <form action="{% url 'login' %}" method="POST">
+    <form action="{% url 'login' %}" method="POST" novalidate>
     {% csrf_token %}
                 
     <!-- Email -->
@@ -42,7 +52,7 @@
           <label for="email">이메일</label>
       </h3>
       <span class="box int_email">
-          <input type="text" name="email" class="int">
+          <input type="text" name="email" class="int" value="{{ form.email.value|default_if_none:'' }}">
           <span class="step_url">@duksung.ac.kr</span>
       </span>
   </div>
@@ -51,7 +61,7 @@
      <div>
       <h3 class="join_title"><label for="pswd">비밀번호</label></h3>
       <span class="box int_pass">
-          <input type="text" name="password" class="int">
+          <input type="password" name="password" class="int"  value="{{ form.password.value|default_if_none:'' }}">
       </span>
   </div>
 
@@ -62,8 +72,19 @@
       <a href="#" class="forgot-pass-link">비밀번호 찾기</a>
     </div>
 
+
+        {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
      <!-- JOIN BTN-->
-     <div class="btn_area">
+     <div class="btn_area" style="">
       <button type="submit" id="btnJoin">
           <span>로그인</span>
       </button>

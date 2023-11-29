@@ -35,21 +35,23 @@
         <div class="tab-content">
             <div class="tab-pane fade show active" id="basic-info">
                 <h3>기본정보</h3>
-                <img src={{ user.profileImg }}>
+                <img src="{{ user.profileImg }}">
 
                 <div class="mb-3 justify-contents-center">
                     <label for="exampleFormControlInput1" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" value={{ user.email }} disabled readonly>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" value="{{ user.email }}" disabled readonly>
 
                     <label for="exampleFormControlInput2" class="form-label">닉네임</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput2" value={{ user.nickname }} disabled readonly>
+                    <input type="text" class="form-control" id="exampleFormControlInput2" value="{{ user.nickname }}" disabled readonly>
 
-                    <label for="exampleFormControlInput3" class="form-label">개인정보</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput3" value={{ user.username }} disabled readonly>
-                    <input type="date" class="form-control" id="exampleFormControlInput4" value={{ user.date_of_birth }} disabled readonly>
+                    <label for="exampleFormControlInput3" class="form-label">이름</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput3" value="{{ user.username }}" disabled readonly>
+
+                    <label for="exampleFormControlInput4" class="form-label">생년월일</label>
+                    <input type="date" class="form-control" id="exampleFormControlInput4" value="{{ user.date_of_birth|date:'Y-m-d' }}" disabled readonly>
 
                     <label for="exampleFormControlInput5" class="form-label">휴대폰번호</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput5" value={{ user.phone }} disabled readonly>
+                    <input type="text" class="form-control" id="exampleFormControlInput5" value="{{ user.phone }}" disabled readonly>
                 </div>
             </div>
             <div class="tab-pane fade" id="favorites">

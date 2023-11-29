@@ -1,129 +1,146 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="ko">
+
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>병원 찾기</title>
-  <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}" media="screen">
-    <script src="https://kit.fontawesome.com/bdcda05bfe.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <script src="https://kit.fontawesome.com/726bbd6862.js" crossorigin="anonymous"></script>
 </head>
-  <body>
-    <header>
-      <img src="media/logo.png" alt="로고" id="main_logo">
-      <nav class="nav_bar">
-        <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">지도</a></li>
-          <li><a href="#">병원정보</a></li>
-          <li><a href="#">마이페이지</a></li>
-          <li><a href="#">로그아웃</a></li>
-        </ul>
-      </nav>
-    </header>
 
-    <div>
-      <img src="media/cross_logo.png" style="width: 47px; height: 53px;">
-      <a class="title_text">주변 병원 찾기</a>
-      <a class="sub_text">학교 주변 병원을 찾아보세요!</a>
-      <div class="select_wrapper">
-        <div class="find_by_name">이름/후기(으)로 찾기</div>
-        <div class="find_by_type">종류별로 찾기</div>
-      </div>
+<body>
+<!-- NavBar -->
+{% include 'navbar.html' %}
 
-      <div class="search-bar">
-        <input type="text" placeholder="병원명/후기 검색">
-        <button type="submit"><img src="media/search_logo.svg"/></button>
-      </div>
-      <div class="divider"></div>
-      <nav class="middle_nav_bar">
-        <ul>
-          <li><a style="font-size: 25px;">소식 모아보기</a></li>
-          <li><a href="#">학교 제휴 병원</a></li>
-          <li><a href="#">건강 상식</a></li>
-        </ul>
-      </nav>
-      <div class="content_wrapper">
-        <div class="text_wrapper">
-          <a>COVID-19 AWARENESS</a>
-          <a>Stay Safe. Stay Home.</a>
-          <a>Amet minim molit non desenunt ullamco est st do<br>amet sint officia eit ofcie<br>conaequnt duis enimelit molt</a>
-          <button>How to Prevent</button>
+    <div class="centered-content">
+        <img src="{% static 'imgs\hospital.png' %}" alt="Your Alt Text">
+        <h1>주변 병원 찾기</h1>
+        <h5>학교 주변 병원을 찾아보세요!</h5>
+
+        <!-- 메뉴바 -->
+        <div class="d-flex justify-content-sm-center align-items-center custom-container">
+            <a href="{% url 'main_page1' %}" role="button" class="btn btn-primary btn-lg px-4 gap-3 custom-button" aria-pressed="true">이름/후기(으)로 찾기</a>
+            <a href="{% url 'main_page2' %}" role="button" class="btn btn-secondary btn-lg px-4 custom-outline-button" aria-pressed="true">종류별로 찾기</a>
         </div>
-        <img src="media/hero_img.png"/>
-      </div>
 
-      <nav class="middle_nav_bar" style="margin-top : 105px;">
-        <ul>
-          <li><a>학교 제휴 병원</a></li>
+        <!-- search -->
+        <form>
+            <input type="search" name="sh">
+        </form>
+        <hr>
+
+
+
+<div class="news">
+    <!-- 메뉴바2 -->
+    <div class="nav-container">
+        <ul id="scrollspy" class="nav" style="text-align: left;">
+            <h2>소식 모아보기</h2>
+            <li class="nav-item">
+                <a class="nav-link" href="#hospital" data-toggle="tab">학교 제휴 병원</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#health_tips" data-toggle="tab">건강 상식</a>
+            </li>
         </ul>
-      </nav>
+    </div>
 
-      <div class="table">
-        <div class="row">
-          <div class="cell">
-            <div class="hospital_title">
-              경희 의료원
-              <button>병원 정보</button>
-            </div>
-            <div class="hospital_content">
-              -
-            </div>
-          </div>
-          <div class="cell">
-            <div class="hospital_title">
-              대림성모 병원
-              <button>병원 정보</button>
-            </div>
-            <div class="hospital_content">
-              -
-            </div>
-          </div>
-          <div class="cell">
-            <div class="hospital_title">
-              한일 병원
-              <button>병원 정보 </button>
-            </div>
-            <div class="hospital_content">
-              -
-            </div>
-          </div>
+    <!-- banner-->
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
         </div>
-        <div class="row">
-          <div class="cell">
-            <div class="hospital_title">
-              강남서울밝은안과의원
-              <button>병원 정보</button>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="#" class="d-block w-100" alt="...">
             </div>
-            <div class="hospital_content">
-              라식, 라섹, 스마일, 렌즈삽입술, 노안교정
-              70여가지 사전검사 비용 지원
-              , 제휴대학
-              특별우대가 적용
+            <div class="carousel-item">
+                <img src="#" class="d-block w-100" alt="...">
             </div>
-          </div>
-          <div class="cell">
-            <div class="hospital_title">
-              서울베스트의료의원
-              <button>병원 정보</button>
+            <div class="carousel-item">
+                <img src="#" class="d-block w-100" alt="...">
             </div>
-            <div class="hospital_content">
-              대학생 건강검진과
-              가다실9가 추가 접종 할인 혜택
-            </div>
-          </div>
-          <div class="cell" style="border: none;"></div>
         </div>
-      </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-    <div class="upper_footer">
-      @ 2023 Duksung Care
+
+
+    <!--제휴병원-->
+    <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example"
+         tabindex="0">
+        <div class="container">
+            <div class="row">
+                <h4 id="hospital">학교 제휴 병원</h4>
+                <div class="col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">경희의료원 </h5>
+                            <p class="card-text">-</p>
+                            <a href="#" class="btn btn-primary">병원 정보</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">대림성모병원</h5>
+                            <p class="card-text">-</p>
+                            <a href="#" class="btn btn-primary">병원 정보</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">한일병원</h5>
+                            <p class="card-text">-</p>
+                            <a href="#" class="btn btn-primary">병원 정보</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">강남서울밝은안과의원</h5>
+                            <p class="card-text">-</p>
+                            <a href="#" class="btn btn-primary">병원 정보</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">서울베스트의료의원</h5>
+                            <p class="card-text">-</p>
+                            <a href="#" class="btn btn-primary">병원 정보</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="lower_footer">
-      <div class="lower_footer_divider"></div>
-      <img src="media/logo.png" alt="로고" id="main_logo" style="margin-bottom: 15px;">
-      @ 2023 Duksung Care
-    </div>
-  </body>
-  </html>
+        </div>
+        </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
