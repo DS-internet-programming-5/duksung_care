@@ -51,13 +51,8 @@ class User(AbstractUser):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         return self.email
-
-    def save(self, *args, **kwargs):
-        if not self.profileImg:
-            self.profileImg = 'accounts/images/dukse.jpg'
-        super().save(*args, **kwargs)

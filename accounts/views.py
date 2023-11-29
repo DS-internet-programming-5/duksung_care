@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from accounts.models import User
 from .forms import SignupForm, LoginForm
 from django.contrib.auth import authenticate, login
+from django.contrib import auth
 from django.views.generic import FormView
 
 
@@ -41,7 +42,7 @@ def SignupPage(request):
             profileImg=request.FILES.get('profileImg'),
         )
         login(request, user)
-        return redirect('/')
+        return redirect('/main_page1')
     return render(request, 'accounts/signup.html')
 
 
@@ -49,7 +50,7 @@ def SignupPage(request):
 class LoginPage(FormView):
     template_name = 'accounts/login.html'
     form_class = LoginForm
-    success_url = '/'
+    success_url = '/main_page1'
 
     def form_valid(self, form):
         email = form.cleaned_data.get("email")
@@ -65,3 +66,9 @@ class LoginPage(FormView):
     def form_invalid(self, form):
         messages.error(self.request, '이메일 또는 비밀번호가 일치하지 않습니다.')
         return super().form_invalid(form)
+
+def logout(request):
+    if request.method == 'POST':
+        auth.logout(request)
+        return redirect('/main_page1')
+    return render(request, 'accounts/login.html')
