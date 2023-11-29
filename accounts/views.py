@@ -41,7 +41,7 @@ def SignupPage(request):
             profileImg=request.FILES.get('profileImg'),
         )
         login(request, user)
-        return redirect('/')
+        return redirect('/main_page1')
     return render(request, 'accounts/signup.html')
 
 
@@ -49,7 +49,7 @@ def SignupPage(request):
 class LoginPage(FormView):
     template_name = 'accounts/login.html'
     form_class = LoginForm
-    success_url = '/'
+    success_url = '/main_page1'
 
     def form_valid(self, form):
         email = form.cleaned_data.get("email")
