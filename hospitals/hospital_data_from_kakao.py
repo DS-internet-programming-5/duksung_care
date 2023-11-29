@@ -65,7 +65,7 @@ for page in range(1, 4):
                 category_group_code=hospital_data['category_group_code'],
                 category_group_name=hospital_data['category_group_name'],
                 category_name=category,
-                distance=hospital_data['distance'],
+                distance=int(hospital_data['distance']),
                 hospital_id=hospital_data['id'],
                 hospital_phone=hospital_data['phone'],
                 place_name=hospital_data['place_name'],

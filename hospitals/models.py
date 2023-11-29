@@ -18,7 +18,7 @@ class Category(models.Model):
 class Hospital(models.Model):
     # 카카오맵 REST API response
     place_name = models.CharField(max_length=200)  # 장소이름
-    distance = models.CharField(max_length=50, blank=True, null=True)  # 중심좌표와의 거리
+    distance = models.IntegerField(blank=True, null=True)  # 중심좌표와의 거리
     place_url = models.URLField(max_length=200)  # 상세 정보 링크 (카카오맵)
     category_name = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
     address_name = models.CharField(max_length=200)  # 지번 주소

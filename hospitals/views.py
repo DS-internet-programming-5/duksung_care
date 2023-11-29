@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
 from django.http import JsonResponse
-from .models import Hospital, Review
+from .models import Hospital, Review, Category
 from .forms import ReviewForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
@@ -14,6 +16,7 @@ class HospitalList(ListView): # 병원 목록
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         hospitals = context['hospital_list']
+        categories = Category.objects.all()  # 카테고리 데이터 가져오기
 
         # 페이지네이션
         page = self.request.GET.get('page')
@@ -46,7 +49,102 @@ class HospitalList(ListView): # 병원 목록
         context['page_obj'] = page_obj
         context['paginator'] = paginator
         context['custom_range'] = custom_range
+        context['categories'] = categories  # 카테고리 데이터 추가
         return context
+
+    def get_queryset(self):
+        order_condition = self.request.GET.get('order', None)
+        filter_condition = self.request.GET.get('filter', None)
+        hospitals = super().get_queryset()
+
+        # 상세설정
+        if filter_condition:
+            filters = filter_condition.split(',')
+            for condition in filters:
+                if condition == 'has_female_doctor':
+                    hospitals = hospitals.filter(has_female_doctor=True)
+                elif condition == 'has_evening_hours':
+                    hospitals = hospitals.filter(has_evening_hours=True)
+                elif condition == 'has_holiday_hours':
+                    hospitals = hospitals.filter(has_holiday_hours=True)
+                elif condition == 'is_partnership':
+                    hospitals = hospitals.filter(is_partnership=True)
+
+        # 정렬
+        if order_condition == 'distance':  # 거리 가까운 순
+            hospitals = hospitals.order_by('distance')
+        elif order_condition == 'rating':  # 별점 많은 순
+            hospitals = hospitals.order_by('-average_rating')
+        elif order_condition == 'review':  # 리뷰 많은 순
+            hospitals = hospitals.annotate(review_count=Count('review')).order_by('-review_count')
+
+        return hospitals
+
+# 카테고리
+def category_page(request, slug):
+    if slug == 'no_category':
+        category = '미분류'
+        hospitals = Hospital.objects.filter(category_name=None)
+    else:
+        category = get_object_or_404(Category, slug=slug)
+        hospitals = Hospital.objects.filter(category_name=category)
+
+    # 상세설정
+    filter_condition = request.GET.get('filter', None)
+    if filter_condition:
+        filters = filter_condition.split(',')
+        for condition in filters:
+            if condition == 'has_female_doctor':
+                hospitals = hospitals.filter(has_female_doctor=True)
+            elif condition == 'has_evening_hours':
+                hospitals = hospitals.filter(has_evening_hours=True)
+            elif condition == 'has_holiday_hours':
+                hospitals = hospitals.filter(has_holiday_hours=True)
+            elif condition == 'is_partnership':
+                hospitals = hospitals.filter(is_partnership=True)
+
+    # 정렬
+    order_condition = request.GET.get('order', None)
+    if order_condition == 'distance':  # 거리 가까운 순
+        hospitals = hospitals.order_by('distance')
+    elif order_condition == 'rating':  # 별점 많은 순
+        hospitals = hospitals.order_by('-average_rating')
+    elif order_condition == 'review':  # 리뷰 많은 순
+        hospitals = hospitals.annotate(review_count=Count('review')).order_by('-review_count')
+
+    paginator = Paginator(hospitals, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    custom_range = get_custom_range(page_obj, paginator)
+
+    return render(
+        request,
+        'hospitals/hospital_list.html',
+        {
+            'page_obj': page_obj,
+            'categories': Category.objects.all(),
+            'no_categories_hospital_count': Hospital.objects.filter(category_name=None).count(),
+            'category': category,
+            'paginator': paginator,
+            'custom_range': custom_range,
+        }
+    )
+
+
+def get_custom_range(page_obj, paginator):
+    num_pages = paginator.num_pages
+    current_page = page_obj.number
+
+    if num_pages <= 5:
+        return range(1, num_pages + 1)
+    else:
+        if current_page <= 3:
+            return range(1, 6)
+        elif current_page + 2 >= num_pages:
+            return range(num_pages - 4, num_pages + 1)
+        else:
+            return range(current_page - 2, current_page + 3)
 
 def hospital_detail(request, pk): # 병원 상세정보
     hospital = get_object_or_404(Hospital, pk=pk)
@@ -65,26 +163,32 @@ def get_hospital_list(request):
     return JsonResponse(hospital_list, safe=False)
 
 # 리뷰 작성 (추가)
+@login_required
 def new_review(request, pk):
     if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
         filled_form = ReviewForm(request.POST)
         if filled_form.is_valid():
-            finished_form = filled_form.save(commit=False)
-            finished_form.hospital = get_object_or_404(Hospital, pk=pk)
-            finished_form.author = request.user
-            finished_form.created_at = timezone.localtime(timezone.now())
-            finished_form.save()
+            # 로그인된 사용자인지 확인
+            if request.user.is_authenticated:
+                finished_form = filled_form.save(commit=False)
+                finished_form.hospital = get_object_or_404(Hospital, pk=pk)
+                finished_form.author = request.user  # 인증된 사용자로 리뷰 작성자 설정
+                finished_form.created_at = timezone.localtime(timezone.now())
+                finished_form.save()
 
-            # 새로 추가된 리뷰의 내용을 가져와서 JSON 응답
-            new_review = {
-                'review_pk': finished_form.pk,
-                'content': finished_form.content,
-                'hospital_rating': finished_form.hospital_rating,
-                'nickname': finished_form.author.nickname,
-                'profileImg' : finished_form.author.profileImg.url if finished_form.author.profileImg else None,
-                'created_at': finished_form.created_at.strftime('%Y.%m.%d. %H:%M'),
-            }
-            return JsonResponse(new_review)
+                # 새로 추가된 리뷰의 내용을 가져와서 JSON 응답
+                new_review = {
+                    'review_pk': finished_form.pk,
+                    'content': finished_form.content,
+                    'hospital_rating': finished_form.hospital_rating,
+                    'nickname': finished_form.author.nickname,
+                    'profileImg' : finished_form.author.profileImg.url if finished_form.author.profileImg else None,
+                    'created_at': finished_form.created_at.strftime('%Y.%m.%d. %H:%M'),
+                }
+                return JsonResponse(new_review)
+            else:
+                # 사용자가 인증되지 않은 경우 에러 메시지를 JSON으로 반환
+                return JsonResponse({'error': 'User is not authenticated'}, status=403)
         else:
             # 폼이 유효하지 않은 경우 에러 메시지를 JSON으로 반환
             errors = filled_form.errors.as_json()
@@ -118,6 +222,7 @@ class UpdateReview(View):
             return JsonResponse({'error': 'Form is not valid'}, status=400)
 
 # 리뷰 삭제
+@login_required
 def delete_review(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
 
