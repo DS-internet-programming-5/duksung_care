@@ -9,6 +9,7 @@ from .forms import ReviewForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
 from django.views import View
+from django.db.models import Q
 
 
 class HospitalList(ListView):  # 병원 목록
@@ -88,6 +89,14 @@ class HospitalList(ListView):  # 병원 목록
             hospitals = hospitals.order_by('-average_rating')
         elif order_condition == 'review':  # 리뷰 많은 순
             hospitals = hospitals.annotate(review_count=Count('review')).order_by('-review_count')
+
+        # 검색어
+        search_query = self.request.GET.get('search_query', None)
+        if search_query:
+            # 병원 이름 또는 후기 내용에서 검색
+            hospitals = hospitals.filter(
+                Q(place_name__icontains=search_query) | Q(review__content__icontains=search_query)
+            ).distinct()
 
         return hospitals
 

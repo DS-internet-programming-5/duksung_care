@@ -184,11 +184,13 @@ const urlParams = new URLSearchParams(window.location.search);
 const orderParam = urlParams.get('order');
 const filterParam = urlParams.get('filter');
 const bookmarkParam = urlParams.get('bookmark');
+const searchParam = urlParams.get('search_query');
 
 // 정렬 기준 select 엘리먼트 가져오기
 const orderSelect = document.querySelector('.order-select');
 const filterCheckboxes = document.querySelectorAll('.form-check-input');
 const bookmarkButton = document.getElementById('bookmarkButton');
+const searchInput = document.getElementById('searchQuery');
 
 // order 매개변수 값에 따라 정렬 기준을 설정
 if (orderParam) {
@@ -213,12 +215,47 @@ if (filterParam) {
     });
 }
 
+// 북마크 매개변수 값에 따라 북마크 버튼 상태 설정
 if (bookmarkParam && bookmarkParam === 'true') {
     bookmarkButton.classList.add('active');
 }
 
+// searchParam 값이 존재하는 경우, 검색 입력 창에 해당 값 설정
+if (searchParam !== null) {
+    searchInput.value = decodeURIComponent(searchParam);
+}
+
+// 페이지 변경
 function changePage(page) {
-        const urlParams = new URLSearchParams(window.location.search);
-        urlParams.set('page', page);
-        window.location.href = '?' + urlParams.toString();
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('page', page);
+    window.location.href = '?' + urlParams.toString();
+}
+
+
+// Enter 키 입력을 감지하는 함수
+document.getElementById("searchQuery").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // 기본 동작 방지 (폼 제출 등)
+        searchHospitals();
     }
+});
+// 병원 검색
+function searchHospitals() {
+    const searchQuery = document.getElementById('searchQuery').value.trim();
+    const baseUrl = '/hospital/';
+
+    let queryString = '';
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageParam = urlParams.get('page');
+
+    if (searchQuery !== '') {
+        queryString += `?search_query=${encodeURIComponent(searchQuery)}`;
+    }
+
+    if (pageParam) {
+        queryString += `${queryString ? '&' : '?'}page=${pageParam}`;
+    }
+
+    window.location.href = baseUrl + queryString;
+}
