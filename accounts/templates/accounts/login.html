@@ -9,15 +9,12 @@
       padding-top: 120px;
     }
 
-    .messages {
-        display: flex;
-        justify-content: center;
-        color: #FF0000;
+    .form-errors {
+        color: red;
+        text-align:center;
     }
 
-    .alert.error{
-        margin: -10px 0 -35px;
-    }
+
 </style>
 
 <!-- leftside -->
@@ -45,6 +42,12 @@
                         <form action="{% url 'login' %}" method="POST" novalidate>
                             {% csrf_token %}
 
+                            {% if form.errors %}
+                            <div class="form-errors">
+                                <p>이메일이 존재하지 않거나 비밀번호가 틀렸습니다.</p>
+                            </div>
+                            {% endif %}
+
                             <!-- Email -->
                             <div>
                                 <h3 class="join_title">
@@ -71,13 +74,6 @@
                                 <a href="#" class="forgot-pass-link">비밀번호 찾기</a>
                             </div>
 
-                            {% if messages %}
-                            <div class="alert alert-danger">
-                                {% for message in messages %}
-                                {{ message }}
-                                {% endfor %}
-                            </div>
-                            {% endif %}
 
                             <!-- JOIN BTN-->
                             <div class="btn_area" style="">
