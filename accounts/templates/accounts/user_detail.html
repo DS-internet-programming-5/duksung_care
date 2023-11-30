@@ -6,126 +6,158 @@
     <title>마이 페이지</title>
     <link rel="stylesheet" href="{% static '/bootstrap/bootstrap.min.css' %}" media="screen">
     <script src="https://kit.fontawesome.com/726bbd6862.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'accounts/css/accounts-styles.css' %}">
 </head>
 
 <body>
-    <!-- NavBar -->
-    {% include 'navbar.html' %}
+<!-- NavBar -->
+{% include 'navbar.html' %}
 
-    <div class="centered-content my-5">
-        <h1 class="mb-3">마이 페이지</h1>
+<div class="centered-content my-5">
+    <h1 class="mb-3">마이 페이지</h1>
 
-        <!-- 메뉴바 -->
-        <ul class="nav justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#basic-info" data-toggle="tab">기본정보</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#favorites" data-toggle="tab">즐겨찾기</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#reviews" data-toggle="tab">내가 쓴 후기</a>
-            </li>
-        </ul>
-        <hr>
+    <!-- 메뉴바 -->
+    <ul class="nav justify-content-center" id="myTabs">
+        <li class="nav-item">
+            <a class="nav-link" id="basic-info-tab" aria-current="page" href="#basic-info">기본정보</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="favorites-tab" href="#favorites">즐겨찾기</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="reviews-tab" href="#reviews">내가 쓴 후기</a>
+        </li>
+    </ul>
+    <hr>
 
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="basic-info">
-                <h3 class="mt-3">기본정보</h3>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="basic-info">
+            <div class="profile-image-wrapper">
+                {% if user.profileImg %}
+                <img src="{{ user.profileImg.url }}" id="profileImg" class="rounded-circle">
+                {% else %}
+                <img src="{% static 'imgs/default_profile.png' %}" id="profileImg" class="rounded-circle">
+                {% endif %}
+            </div>
 
-                <div class="profile-image-wrapper">
-                    {% if user.profileImg %}
-                        <img src="{{ user.profileImg.url }}" id="profileImg" class="rounded-circle">
-                    {% else %}
-                        <img src="{% static 'imgs/default_profile.png' %}" id="profileImg" class="rounded-circle">
-                    {% endif %}
-                </div>
+            <div class="text-start justify-contents-center">
+                <label for="exampleFormControlInput1" class="form-label">Email</label>
+                <input type="email" class="form-control mb-3" id="exampleFormControlInput1" value="{{ user.email }}"
+                       disabled readonly>
 
-                <div class="text-start justify-contents-center">
-                    <label for="exampleFormControlInput1" class="form-label">Email</label>
-                    <input type="email" class="form-control mb-3" id="exampleFormControlInput1" value="{{ user.email }}" disabled readonly>
+                <label for="exampleFormControlInput2" class="form-label">닉네임</label>
+                <input type="text" class="form-control mb-3" id="exampleFormControlInput2" value="{{ user.nickname }}"
+                       disabled readonly>
 
-                    <label for="exampleFormControlInput2" class="form-label">닉네임</label>
-                    <input type="text" class="form-control mb-3" id="exampleFormControlInput2" value="{{ user.nickname }}" disabled readonly>
-
-                    <label class="form-label">개인정보</label>
-                        <div class="personal-group mb-3" style="background-color:#e9ecef">
-                            <div class="nameInput px-2.5 py-1">
-                                <div class="row align-items-center">
-                                    <div class="col-auto inputLabel">
-                                        <label for="exampleFormControlInput3" class="form-label">이름</label>
-                                    </div>
-                                    <div class="col-auto">
-                                        <input type="text" class="form-control" id="exampleFormControlInput3" name="username" value="{{ user.username }}" style="border:none" disabled readonly>
-                                    </div>
-                                </div>
+                <label class="form-label">개인정보</label>
+                <div class="personal-group mb-3" style="background-color:#e9ecef">
+                    <div class="nameInput">
+                        <div class="row align-items-center">
+                            <div class="col-auto inputLabel">
+                                <label for="exampleFormControlInput3" class="form-label">이름</label>
                             </div>
-                            <div class="birthInput px-2.5 py-1">
-                                <div class="row align-items-center">
-                                    <div class="col-auto inputLabel">
-                                        <label for="exampleFormControlInput4" class="form-label">생년월일</label>
-                                    </div>
-                                    <div class="col-auto">
-                                        <input type="date" class="form-control" id="exampleFormControlInput4" name="date_of_birth" value="{{ user.date_of_birth|date:'Y-m-d' }}" style="border:none" disabled readonly>
-                                    </div>
-                                </div>
+                            <div class="col-auto">
+                                <input type="text" class="form-control" id="exampleFormControlInput3" name="username"
+                                       value="{{ user.username }}" style="border:none" disabled readonly>
                             </div>
                         </div>
-                    <label for="exampleFormControlInput5" class="form-label">휴대폰번호</label>
-                    <input type="text" class="form-control mb-3" id="exampleFormControlInput5" value="{{ user.phone }}" disabled readonly>
+                    </div>
+                    <div class="birthInput">
+                        <div class="row align-items-center">
+                            <div class="col-auto inputLabel">
+                                <label for="exampleFormControlInput4" class="form-label">생년월일</label>
+                            </div>
+                            <div class="col-auto">
+                                <input type="date" class="form-control" id="exampleFormControlInput4"
+                                       name="date_of_birth" value="{{ user.date_of_birth|date:'Y-m-d' }}"
+                                       style="border:none" disabled readonly>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="tab-pane fade" id="favorites">
-                <h3>즐겨찾기</h3>
-                <!-- 즐겨찾기 내용 -->
-            </div>
-            <div class="tab-pane fade" id="reviews">
-                <h3>내가 쓴 후기</h3>
-                <!-- 내가 쓴 후기 내용 -->
+                <label for="exampleFormControlInput5" class="form-label">휴대폰번호</label>
+                <input type="text" class="form-control mb-3" id="exampleFormControlInput5" value="{{ user.phone }}"
+                       disabled readonly>
             </div>
             <div class="mt-5">
                 <a href="/accounts/modify" class="btn btn-lg btn-outline-dark">회원정보 수정</a>
             </div>
             <div class="mb-5">
-                <a class="text-muted" style="cursor:pointer; text-decoration:underline;" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">회원 탈퇴</a>
+                <a class="text-muted" style="cursor:pointer; text-decoration:underline;" data-bs-toggle="modal"
+                   data-bs-target="#deleteAccountModal">회원 탈퇴</a>
                 <!-- Modal -->
-                <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="deleteAccountModalLabel">회원 탈퇴</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        정말로 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.
-                      </div>
-                      <div class="modal-footer m-auto">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">취소</button>
-                        <a href="/accounts/delete_account" class="btn btn-outline-danger">탈퇴하기</a>
-                      </div>
+                <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteAccountModalLabel">회원 탈퇴</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                정말로 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.
+                            </div>
+                            <div class="modal-footer m-auto">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">취소
+                                </button>
+                                <a href="/accounts/delete_account" class="btn btn-outline-danger">탈퇴하기</a>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
             </div>
         </div>
+        <div class="tab-pane fade" id="favorites">
+            <!-- 즐겨찾기 내용 추가해야 함 -->
+        </div>
+        <div class="tab-pane fade" id="reviews">
+            <table class="table mt-4">
+                <thead>
+                <tr>
+                    <th scope="col">순번</th>
+                    <th scope="col">병원</th>
+                    <th scope="col">작성내용</th>
+                    <th scope="col">작성일자</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for review in reviews %}
+                <tr>
+                    <td scope="row">{{ forloop.counter }}</td>
+                    <td>{{ review.hospital.place_name }}</td>
+                    <td>{{ review.content }}</td>
+                    <td>{{ review.created_at|date:'Y-m-d' }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">아직 작성한 후기가 없습니다.</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </ul>
+        </div>
     </div>
+</div>
 
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#myTabs .nav-link").on('click', function() {
+            $("#myTabs .nav-link").removeClass("active");
+            $(this).addClass("active");
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $(".nav-link").click(function() {
-                $(".nav-link").removeClass("active");
-                $(this).addClass("active");
-                $("h3").text($(this).text());
-            });
+            $(".tab-pane").removeClass("show active");
+            $($(this).attr("href")).addClass("show active");
         });
-    </script>
+
+        $("#myTabs .nav-link").first().click();
+    });
+</script>
+<script src="{% static '/bootstrap/bootstrap.bundle.min.js' %}"></script>
 </body>
 
 </html>

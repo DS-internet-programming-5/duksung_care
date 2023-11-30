@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 
 from accounts.models import User
+from hospitals.models import Review
 from .forms import SignupForm, LoginForm
 from django.contrib.auth import authenticate, login
 from django.contrib import auth
@@ -12,7 +13,8 @@ from django.contrib import auth
 @login_required
 def user_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
-    return render(request, 'accounts/user_detail.html', {'user': user})
+    reviews = Review.objects.filter(author=request.user).order_by('-created_at')
+    return render(request, 'accounts/user_detail.html', {'user': user, 'reviews': reviews})
 
 
 @login_required
@@ -41,11 +43,19 @@ def user_delete(request):
     messages.success(request, '회원 탈퇴가 완료되었습니다.')
     return redirect('/main_page1/')
 
+@login_required
+def my_reviews(request):
+    reviews = Review.objects.filter(user=request.user)  # 현재 로그인한 사용자가 작성한 후기 가져오기
+    return render(request, 'accounts/user_reviews.html', {'reviews': reviews})
+
+
 def SignupPage(request):
     if request.method == 'POST':
         form_class = SignupForm(request.POST)
+        email=request.POST.get('email') + '@duksung.ac.kr'
+
         user = User.objects.create_user(
-            email=request.POST.get('email'),
+            email=email,
             password=request.POST.get('password'),
             nickname=request.POST.get('nickname'),
             username=request.POST.get('username'),
@@ -54,7 +64,8 @@ def SignupPage(request):
             profileImg=request.FILES.get('profileImg'),
         )
         login(request, user)
-        return redirect('/main_page1')
+
+        return redirect('/main_page1/')
     return render(request, 'accounts/signup.html')
 
 def LoginPage(request):
