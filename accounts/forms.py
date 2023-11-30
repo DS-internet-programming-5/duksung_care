@@ -36,7 +36,7 @@ class LoginForm(forms.Form):
     def clean(self):
         user = self.authenticate_via_email()
         if not user:
-            raise forms.ValidationError("Sorry, that login was invalid. Please try again.")
+            raise forms.ValidationError("이메일이 존재하지 않거나 비밀번호가 틀렸습니다.")
         else:
             self.user = user
         return self.cleaned_data

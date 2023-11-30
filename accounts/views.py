@@ -79,7 +79,7 @@ def LoginPage(request):
             login(request, user)
             return HttpResponseRedirect('/main_page1')
         else:
-            messages.error(request, '이메일이 존재하지 않거나 비밀번호가 틀렸습니다.')
+            return HttpResponseRedirect('/accounts/login')
 
     return render(request, 'accounts/login.html',{'form': form})
 
