@@ -55,3 +55,11 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+    def save(self, *args, **kwargs):
+        if not str(self.email).endswith('@duksung.ac.kr'):
+            self.email += '@duksung.ac.kr'
+        super().save(*args, **kwargs)
+
+
+

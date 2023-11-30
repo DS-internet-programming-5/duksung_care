@@ -1,11 +1,12 @@
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
+
 from accounts.models import User
 from .forms import SignupForm, LoginForm
 from django.contrib.auth import authenticate, login
 from django.contrib import auth
-from django.views.generic import FormView
 
 
 @login_required
@@ -56,27 +57,20 @@ def SignupPage(request):
         return redirect('/main_page1')
     return render(request, 'accounts/signup.html')
 
-
-# @method_decorator(logout_message_required, name='dispatch')
-class LoginPage(FormView):
-    template_name = 'accounts/login.html'
-    form_class = LoginForm
-    success_url = '/main_page1'
-
-    def form_valid(self, form):
+def LoginPage(request):
+    form = LoginForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
-        user = authenticate(self.request, email=email, password=password)
+        user = authenticate(request, username=email, password=password)
 
         if user is not None:
-            self.request.session['email'] = email
-            login(self.request, user)
+            login(request, user)
+            return HttpResponseRedirect('/main_page1')
+        else:
+            messages.error(request, '이메일이 존재하지 않거나 비밀번호가 틀렸습니다.')
 
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, '이메일 또는 비밀번호가 일치하지 않습니다.')
-        return super().form_invalid(form)
+    return render(request, 'accounts/login.html',{'form': form})
 
 def logout(request):
     if request.method == 'POST':
