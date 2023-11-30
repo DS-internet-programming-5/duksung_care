@@ -48,6 +48,11 @@
     border-right: 1px solid lightgray;
 }
 
+.bookmark-btn {
+    --bs-btn-active-bg: #FFF0CE;
+    --bs-btn-hover-bg: #FFF0CE;
+}
+
 .list-group::-webkit-scrollbar {
     width: 10px;
 }

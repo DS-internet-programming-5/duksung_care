@@ -24,7 +24,7 @@ class Hospital(models.Model):
     address_name = models.CharField(max_length=200)  # 지번 주소
     road_address_name = models.CharField(max_length=200)  # 도로명 주소
     hospital_id = models.CharField(max_length=50)  # 카카오맵에서의 id
-    hospital_phone = models.CharField(max_length=20)  # 전화번호
+    hospital_phone = models.CharField(max_length=20, null=True)  # 전화번호
     category_group_code = models.CharField(max_length=50)  # HP8 : 병원
     category_group_name = models.CharField(max_length=50)  # 카테고리 이름 (병원, 약국, 음식점 등)
     x = models.DecimalField(max_digits=50, decimal_places=45)  # x좌표, 경도
@@ -35,6 +35,8 @@ class Hospital(models.Model):
     operation_time = models.TextField(blank=True, null=True)  # 영업 시간 정보
     average_rating = models.DecimalField(max_digits=3, decimal_places=1, default=0.0,
                                          validators=[MinValueValidator(0), MaxValueValidator(5)])  # 평균별점(0~5)
+    num_reviews = models.IntegerField(default=0)  # 리뷰 개수
+
     has_female_doctor = models.BooleanField(default=False)  # 여성 의사 여부
     has_evening_hours = models.BooleanField(default=False)  # 야간 진료 여부
     has_holiday_hours = models.BooleanField(default=False)  # 휴일 진료 여부
@@ -55,4 +57,5 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)  # 작성일
     updated_at = models.DateTimeField(auto_now=True)  # 수정일
     likes = models.ManyToManyField(User, related_name='like_reviews', null=True)  # 리뷰 좋아요
+    num_likes = models.IntegerField(default=0)  # 리뷰 좋아요 개수
     hospital_rating = models.IntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(5)])  # 별점(0~5)
