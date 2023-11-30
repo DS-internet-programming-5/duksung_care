@@ -148,7 +148,9 @@ input {
 
 .int_username input, .int_bd input{
   align-items: right;
-  width: 350px; 
+  color: #707070;
+  width: 350px;
+  font-size:13.5px;
 }
 
 .int_username {
