@@ -16,9 +16,9 @@
                             style="border: none; background-color: transparent;">
                         <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
                         {% if request.user in h.bookmarks.all %}
-                            <i class="fa-solid fa-bookmark" style="color: green;"></i>
+                            <i class="fa-solid fa-bookmark" style="color: #0174BE; font-size: 18px"></i>
                         {% else %}
-                            <i class="fa-solid fa-bookmark" style="color: gray;"></i>
+                            <i class="fa-solid fa-bookmark" style="color: darkgray; font-size: 18px"></i>
                         {% endif %}
                     </button>
                     </div>

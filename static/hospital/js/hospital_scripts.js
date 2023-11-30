@@ -44,9 +44,9 @@ $(document).ready(function () {
             },
             success: function(response) {
                 if (response.bookmarked) {
-                    $(`.bookmark-btn[data-hospital-pk="${hospitalId}"] i`).css('color', 'green');
+                    $(`.bookmark-btn[data-hospital-pk="${hospitalId}"] i`).css('color', '#0174BE');
                 } else {
-                    $(`.bookmark-btn[data-hospital-pk="${hospitalId}"] i`).css('color', 'gray');
+                    $(`.bookmark-btn[data-hospital-pk="${hospitalId}"] i`).css('color', 'darkgray');
                 }
             },
             error: function(error) {
