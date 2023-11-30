@@ -122,7 +122,13 @@ function redirectToHospitalList() {
         baseUrl += 'category/' + categoryOption + '/';
     }
 
-    queryParams.push('page=1');
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageParam = urlParams.get('page');
+    if (pageParam) {
+        queryParams.push('page=' + pageParam);
+    } else {
+        queryParams.push('page=1');
+    }
 
     if (orderOption !== '정렬기준') {
         queryParams.push('order=' + orderOption);
@@ -137,6 +143,18 @@ function redirectToHospitalList() {
 
     if (filterOptions.length > 0) {
         queryParams.push('filter=' + filterOptions.join(','));
+    }
+
+    var bookmarkButton = document.getElementById('bookmarkButton');
+    if (bookmarkButton.classList.contains('active')) {
+        queryParams.push('bookmark=true');
+    }
+    else {
+        // 북마크 버튼이 비활성화되었을 때 해당 필터를 제거
+        var index = queryParams.indexOf('bookmark=true');
+        if (index > -1) {
+            queryParams.splice(index, 1);
+        }
     }
 
     if (queryParams.length > 0) {
@@ -156,43 +174,21 @@ document.querySelectorAll('.form-check-input').forEach(input => {
     input.addEventListener('change', redirectToHospitalList);
 });
 
-// 상세 설정 체크박스 변경 시 URL 재구성 및 페이지 이동
-document.querySelectorAll('.form-check-input').forEach(input => {
-    input.addEventListener('change', function() {
-        var categoryOption = document.getElementById('categorySelect').value;
-        var orderOption = document.querySelectorAll('.form-select')[1].value;
-
-        var baseUrl = '/hospital/';
-
-        if (categoryOption !== '') {
-            baseUrl += 'category/' + categoryOption + '/';
-        }
-
-        baseUrl += '?page=1';
-
-        var filterOptions = [];
-        document.querySelectorAll('.form-check-input').forEach(checkbox => {
-            if (checkbox.checked) {
-                filterOptions.push(checkbox.id);
-            }
-        });
-
-        if (filterOptions.length > 0) {
-            baseUrl += '&filter=' + filterOptions.join(',');
-        }
-
-        window.location.href = baseUrl;
-    });
+// 북마크 버튼 클릭 시 이벤트
+document.getElementById('bookmarkButton').addEventListener('click', function() {
+    redirectToHospitalList();
 });
 
 // 현재 URL에서 order 매개변수 가져오기
 const urlParams = new URLSearchParams(window.location.search);
 const orderParam = urlParams.get('order');
 const filterParam = urlParams.get('filter');
+const bookmarkParam = urlParams.get('bookmark');
 
 // 정렬 기준 select 엘리먼트 가져오기
 const orderSelect = document.querySelector('.order-select');
 const filterCheckboxes = document.querySelectorAll('.form-check-input');
+const bookmarkButton = document.getElementById('bookmarkButton');
 
 // order 매개변수 값에 따라 정렬 기준을 설정
 if (orderParam) {
@@ -217,3 +213,12 @@ if (filterParam) {
     });
 }
 
+if (bookmarkParam && bookmarkParam === 'true') {
+    bookmarkButton.classList.add('active');
+}
+
+function changePage(page) {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('page', page);
+        window.location.href = '?' + urlParams.toString();
+    }

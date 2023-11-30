@@ -57,7 +57,13 @@ class HospitalList(ListView):  # 병원 목록
     def get_queryset(self):
         order_condition = self.request.GET.get('order', None)
         filter_condition = self.request.GET.get('filter', None)
+        bookmark_condition = self.request.GET.get('bookmark', None)
         hospitals = super().get_queryset()
+
+        # 북마크
+        if bookmark_condition == 'true':  # 북마크 필터링 추가
+            user = self.request.user
+            hospitals = hospitals.filter(bookmarks=user)
 
         # 상세설정
         if filter_condition:
@@ -71,6 +77,9 @@ class HospitalList(ListView):  # 병원 목록
                     hospitals = hospitals.filter(has_holiday_hours=True)
                 elif condition == 'is_partnership':
                     hospitals = hospitals.filter(is_partnership=True)
+                elif condition == 'bookmark':  # 북마크 필터링 추가
+                    user = self.request.user
+                    hospitals = hospitals.filter(bookmarks=user)
 
         # 정렬
         if order_condition == 'distance':  # 거리 가까운 순
@@ -91,6 +100,12 @@ def category_page(request, slug):
     else:
         category = get_object_or_404(Category, slug=slug)
         hospitals = Hospital.objects.filter(category_name=category)
+
+    # 북마크
+    bookmark_condition = request.GET.get('bookmark', None)
+    if bookmark_condition == 'true':  # 북마크 필터링 추가
+        user = request.user
+        hospitals = hospitals.filter(bookmarks=user)
 
     # 상세설정
     filter_condition = request.GET.get('filter', None)
