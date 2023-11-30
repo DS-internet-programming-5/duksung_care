@@ -24,7 +24,7 @@
                     </div>
                     <!-- 평균 별점 -->
                     <div class="mt-1 mb-1" style="font-size: 12px">
-                        <div class="avg-rating">
+                        <div class="avg-rating" id="avg-rating-{{ h.pk }}">
                             <div class="rating-back" style="position: absolute; white-space: nowrap; width: 100%;">
                                 <div class="star-wrap-back">
                                     <div class="star-back"><i class="fas fa-star"></i></div>
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                         </div>
-                        <span class="mb-0"
+                        <span class="mb-0 rating-text-{{ h.pk }}"
                               style="color: gray; margin-left: 90px; position: relative">{{ h.average_rating }}</span>
                     </div>
                     {{ h.address_name }}

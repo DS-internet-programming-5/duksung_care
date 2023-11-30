@@ -79,6 +79,37 @@ function displayRatings (){
     });
 }
 
+// 별점 업데이트 함수
+function updateRatings(hospital_pk, targetScore, num_reviews) {
+    var ratings = $('#avg-rating-' + hospital_pk + ' .rating-avg');
+    var rating_text = $('.rating-text-' + hospital_pk);
+    var review_count = $('.num-reviews-' + hospital_pk);
+    targetScore = parseFloat(targetScore).toFixed(1);
+
+    console.log('updateRatings: ' + targetScore);
+    console.log(ratings);
+    console.log(rating_text);
+
+    ratings.each(function () {
+        var $this = $(this);
+        $this.attr('data-rate', targetScore);
+        var firstDigit = targetScore.toString().split('.');
+        console.log(firstDigit);
+
+        for(var i=0;i<5;i++){
+            $this.find('.star-avg').eq(i).css({width:'0%'})
+        }
+        for(var i=0;i<firstDigit[0];i++){
+            $this.find('.star-avg').eq(i).css({width:'100%'})
+        }
+        $this.find('.star-avg').eq(firstDigit[0]).css({width:firstDigit[1]+'0%'})
+    });
+
+    var formattedScore = parseFloat(targetScore).toFixed(1);
+    rating_text.text(formattedScore);
+    review_count.text(num_reviews);
+}
+
 // 카테고리 선택 또는 정렬 기준 변경 시 병원 목록 페이지로 이동
 function redirectToHospitalList() {
     var categoryOption = document.getElementById('categorySelect').value;

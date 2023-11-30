@@ -15,7 +15,7 @@
     <p class="text-center" style="font-size: 16px; color: gray">{{ hospital.category_name }}</p>
     <!-- 평균 별점 -->
     <div class="mt-1 mb-3" style="font-size: 20px; height: 20px">
-        <div class="avg-rating d-flex justify-content-center position-relative" style="height: 20px">
+        <div class="avg-rating d-flex justify-content-center position-relative" style="height: 20px" id="avg-rating-{{ hospital.pk }}">
             <div class="rating-back" style="position: absolute; white-space: nowrap; width: fit-content;">
                 <div class="star-wrap-back">
                     <div class="star-back"><i class="fas fa-star"></i></div>
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-    <p class="text-center" style="font-size: 14px; color: grey">평균 별점 {{ hospital.average_rating }}</p>
+    <p class="text-center" style="font-size: 14px; color: grey">평균 별점 <span class="rating-text-{{ hospital.pk }}">{{ hospital.average_rating }}</span></p>
     <ul class="nav nav-tabs justify-content-center" id="reviewTab" role="tablist">
         <li class="nav-item m-0" role="presentation">
             <button class="nav-link active" id="detail-tab" data-bs-toggle="tab" data-bs-target="#detail-tab-pane"
@@ -62,7 +62,7 @@
         <li class="nav-item m-0" role="presentation">
             <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review-tab-pane"
                     type="button" role="tab" aria-controls="review-tab-pane" aria-selected="false">
-                리뷰 {{ hospital.num_reviews }}
+                리뷰 <span class="num-reviews-{{ hospital.pk }}">{{ hospital.num_reviews }}</span>
             </button>
         </li>
     </ul>
@@ -168,6 +168,7 @@
 </div>
 
 <script type="text/javascript" src="{% static 'hospital/js/review_script.js' %}"></script>
+<script type="text/javascript" src="{% static 'hospital/js/hospital_script.js' %}"></script>
 <script>
     // 상세정보가 열리면서 해당 병원 위치로 지도 중심좌표 이동
     document.addEventListener("DOMContentLoaded", function () {
@@ -182,8 +183,8 @@
         tab.show();
     });
 </script>
-<!-- JavaScript (AJAX 요청 처리) -->
-{#<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>#}
+
+<!-- 좋아요 버튼 -->
 <script>
 $(document).ready(function() {
     $('.like-btn').click(function() {
@@ -213,5 +214,4 @@ $(document).ready(function() {
         });
     });
 });
-
 </script>

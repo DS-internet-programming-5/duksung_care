@@ -10,7 +10,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
 from django.views import View
 
-class HospitalList(ListView): # 병원 목록
+
+class HospitalList(ListView):  # 병원 목록
     model = Hospital
     context_object_name = 'hospital_list'
 
@@ -81,6 +82,7 @@ class HospitalList(ListView): # 병원 목록
 
         return hospitals
 
+
 # 카테고리
 def category_page(request, slug):
     if slug == 'no_category':
@@ -147,14 +149,16 @@ def get_custom_range(page_obj, paginator):
         else:
             return range(current_page - 2, current_page + 3)
 
-def hospital_detail(request, pk): # 병원 상세정보
+
+def hospital_detail(request, pk):  # 병원 상세정보
     hospital = get_object_or_404(Hospital, pk=pk)
-    review_list = Review.objects.filter(hospital=pk).order_by('-created_at') # 최신리뷰순으로 정렬
+    review_list = Review.objects.filter(hospital=pk).order_by('-created_at')  # 최신리뷰순으로 정렬
 
     review_form = ReviewForm()
 
     return render(request, 'hospitals/hospital_detail.html',
                   {'hospital': hospital, 'review_list': review_list, 'review_form': review_form})
+
 
 def get_hospital_list(request):
     # Hospital 모델에서 필요한 데이터를 쿼리하여 JSON으로 직렬화
@@ -162,6 +166,7 @@ def get_hospital_list(request):
 
     # JSON 응답 반환
     return JsonResponse(hospital_list, safe=False)
+
 
 # 리뷰 작성 (추가)
 @login_required
@@ -181,10 +186,18 @@ def new_review(request, pk):
                 new_review = {
                     'review_pk': finished_form.pk,
                     'content': finished_form.content,
+                    'hospital_pk': finished_form.hospital.pk,
                     'hospital_rating': finished_form.hospital_rating,
+                    'average_rating': finished_form.hospital.average_rating,
                     'nickname': finished_form.author.nickname,
-                    'profileImg' : finished_form.author.profileImg.url if finished_form.author.profileImg else None,
+                    'profileImg': finished_form.author.profileImg.url if finished_form.author.profileImg else None,
                     'created_at': finished_form.created_at.strftime('%Y.%m.%d. %H:%M'),
+                    'likes': list(finished_form.likes.values()),
+                    'num_likes': finished_form.num_likes,
+                    'num_reviews': finished_form.hospital.num_reviews,
+                    'author_pk': finished_form.author.pk,
+                    'is_superuser': request.user.is_superuser,
+                    'user_pk': request.user.pk if request.user.is_authenticated else None,
                 }
                 return JsonResponse(new_review)
             else:
@@ -212,7 +225,10 @@ class UpdateReview(View):
             updated_data = {
                 'review_pk': updated_review.pk,
                 'content': updated_review.content,
+                'hospital_pk': updated_review.hospital.pk,
                 'hospital_rating': updated_review.hospital_rating,
+                'average_rating': updated_review.hospital.average_rating,
+                'num_reviews': updated_review.hospital.num_reviews,
                 'nickname': updated_review.author.nickname,
                 'profileImg': updated_review.author.profileImg.url if updated_review.author.profileImg else None,
                 'updated_at': updated_review.updated_at.strftime('%Y.%m.%d. %H:%M'),
@@ -222,16 +238,26 @@ class UpdateReview(View):
             errors = filled_form.errors.as_json()
             return JsonResponse({'error': 'Form is not valid'}, status=400)
 
+
 # 리뷰 삭제
 @login_required
 def delete_review(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
+    hospital = review.hospital
 
     if request.method == 'POST':
         review.delete()
-        return JsonResponse({'message': 'Review deleted successfully'}, status=200)
+        # 해당 병원의 평균 별점 다시 계산
+        average_rating = hospital.average_rating
+        num_reviews = hospital.num_reviews
+        hospital_pk = hospital.pk
+
+        return JsonResponse(
+            {'message': 'Review deleted successfully', 'average_rating': average_rating, 'num_reviews': num_reviews, 'hospital_pk': hospital_pk},
+            status=200)
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=400)
+
 
 # 리뷰 좋아요
 def likes_review(request, review_pk):
@@ -253,6 +279,7 @@ def likes_review(request, review_pk):
         return JsonResponse({'liked': liked, 'likes': review.num_likes})
 
     return JsonResponse({}, status=400)
+
 
 # 북마크
 def hospital_bookmark(request, pk):
