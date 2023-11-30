@@ -18,7 +18,7 @@
 </div>
 
 <div class="div-detail pt-2 pl-2 pr-2 overflow-y-auto" data-latitude="{{ hospital.y }}"
-     data-longitude="{{ hospital.x }}">
+     data-longitude="{{ hospital.x }}" data-place-name="{{ hospital.place_name }}">
     <!-- 병원 이름 -->
     <h3 class="text-center">{{ hospital.place_name }}</h3>
     <!-- 병원 카테고리 -->
@@ -178,7 +178,6 @@
 </div>
 
 <script type="text/javascript" src="{% static 'hospital/js/review_script.js' %}"></script>
-<script type="text/javascript" src="{% static 'hospital/js/hospital_script.js' %}"></script>
 <script>
     // 상세정보가 열리면서 해당 병원 위치로 지도 중심좌표 이동
     document.addEventListener("DOMContentLoaded", function () {

@@ -18,10 +18,14 @@ $(document).ready(function () {
                 var hospitalDetail = $('<div>').html(data); // Create a temporary element to parse the HTML content
                 var hospitalY = hospitalDetail.find('.div-detail').data('latitude');
                 var hospitalX = hospitalDetail.find('.div-detail').data('longitude');
+                var place_name = hospitalDetail.find('.div-detail').data('place-name');
                 console.log(hospitalY, hospitalX);
+
+                displayPlaceInfo(place_name, hospitalY, hospitalX);
 
                 // panTo 함수 호출하여 해당 위치로 지도 이동
                 panTo(hospitalY, hospitalX);
+
                 displayRatings();
             },
             error: function (xhr, status, error) {
