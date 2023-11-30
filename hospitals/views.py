@@ -253,3 +253,20 @@ def likes_review(request, review_pk):
         return JsonResponse({'liked': liked, 'likes': review.num_likes})
 
     return JsonResponse({}, status=400)
+
+# 북마크
+def hospital_bookmark(request, pk):
+    if request.method == 'POST' and request.user.is_authenticated:
+        hospital = get_object_or_404(Hospital, pk=pk)
+        user = request.user
+
+        if user in hospital.bookmarks.all():
+            hospital.bookmarks.remove(user)
+            bookmarked = False
+        else:
+            hospital.bookmarks.add(user)
+            bookmarked = True
+
+        return JsonResponse({'bookmarked': bookmarked})
+
+    return JsonResponse({}, status=400)

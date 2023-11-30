@@ -2,13 +2,26 @@
 {% block list_block %}
     <div class="list-group pl-2 z-2 overflow-y-auto" style="height: 95%; padding-right: 10px">
         {% for h in page_obj %}
-            <a class="list-group-item list-group-item-action hospital-detail-link z-2 pt-3 pb-3"
-               data-bs-toggle="offcanvas" href="#offcanvasScrolling" aria-controls="offcanvasScrolling"
-               data-hospital-pk="{{ h.pk }}">
+            <div class="list-group-item z-2 pt-3 pb-3">
                 <div class="container-fluid p-0">
-                    <strong class="fs-5">{{ h.place_name }}</strong>
+                    <div class="d-flex justify-content-between">
+                    <div>
+                    <a class="fs-5 fw-bold hospital-detail-link text-black" data-bs-toggle="offcanvas" href="#offcanvasScrolling"
+                       aria-controls="offcanvasScrolling" data-hospital-pk="{{ h.pk }}" style="text-decoration: none">{{ h.place_name }}</a>
                     <span class="mb-1"
                           style="font-size: 14px; color: gray; margin-left: 5px">| {{ h.category_name }}</span>
+                    </div>
+                    <!-- 북마크 -->
+                    <button class="bookmark-btn" data-hospital-pk="{{ h.pk }}"
+                            style="border: none; background-color: transparent;">
+                        <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+                        {% if request.user in h.bookmarks.all %}
+                            <i class="fa-solid fa-bookmark" style="color: green;"></i>
+                        {% else %}
+                            <i class="fa-solid fa-bookmark" style="color: gray;"></i>
+                        {% endif %}
+                    </button>
+                    </div>
                     <!-- 평균 별점 -->
                     <div class="mt-1 mb-1" style="font-size: 12px">
                         <div class="avg-rating">
@@ -29,7 +42,8 @@
                                     <div class="star-back"><i class="fas fa-star"></i></div>
                                 </div>
                             </div>
-                            <div class="rating-avg" data-rate="{{ h.average_rating }}" style="position: absolute; white-space: nowrap;">
+                            <div class="rating-avg" data-rate="{{ h.average_rating }}"
+                                 style="position: absolute; white-space: nowrap;">
                                 <div class="star-avg-wrap">
                                     <div class="star-avg"><i class="fas fa-star"></i></div>
                                 </div>
@@ -47,7 +61,8 @@
                                 </div>
                             </div>
                         </div>
-                        <span class="mb-0" style="color: gray; margin-left: 90px; position: relative">{{ h.average_rating }}</span>
+                        <span class="mb-0"
+                              style="color: gray; margin-left: 90px; position: relative">{{ h.average_rating }}</span>
                     </div>
                     {{ h.address_name }}
                     </p>
@@ -58,7 +73,7 @@
                         <p style="font-size: 14px; margin-bottom: 0">-</p>
                     {% endif %}
                 </div>
-            </a>
+            </div>
         {% endfor %}
     </div>
 
@@ -91,6 +106,6 @@
             </ul>
         </nav>
     {% endif %}
-
+    <script></script>
 {% endblock %}
 

@@ -29,6 +29,31 @@ $(document).ready(function () {
             }
         });
     });
+
+    // 북마크
+    const csrfToken = document.getElementById('csrf-token').value;
+    $('.bookmark-btn').click(function() {
+        const hospitalId = $(this).data('hospital-pk');
+        console.log(hospitalId);
+
+        $.ajax({
+            type: 'POST',
+            url: `/hospital/${hospitalId}/bookmark/`,
+            data: {
+                csrfmiddlewaretoken: csrfToken,
+            },
+            success: function(response) {
+                if (response.bookmarked) {
+                    $(`.bookmark-btn[data-hospital-pk="${hospitalId}"] i`).css('color', 'green');
+                } else {
+                    $(`.bookmark-btn[data-hospital-pk="${hospitalId}"] i`).css('color', 'gray');
+                }
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        });
+    });
 });
 
 // 평균 별점 표시
@@ -160,3 +185,4 @@ if (filterParam) {
         }
     });
 }
+
