@@ -186,7 +186,7 @@ def hospital_detail(request, pk):  # 병원 상세정보
 
 def get_hospital_list(request):
     # Hospital 모델에서 필요한 데이터를 쿼리하여 JSON으로 직렬화
-    hospital_list = list(Hospital.objects.values('pk', 'x', 'y'))
+    hospital_list = list(Hospital.objects.values('pk', 'x', 'y','place_name'))
 
     # JSON 응답 반환
     return JsonResponse(hospital_list, safe=False)

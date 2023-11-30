@@ -229,8 +229,8 @@
 .placeinfo_wrap {
     position: absolute;
     bottom: 28px;
-    left: -150px;
-    width: 300px;
+    left: -100px;
+    width: 200px;
 }
 
 .placeinfo {
@@ -241,6 +241,7 @@
     border-bottom: 2px solid #ddd;
     padding-bottom: 10px;
     background: #fff;
+    padding: 5px 10px;
 }
 
 .placeinfo:nth-of-type(n) {
