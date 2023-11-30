@@ -1,43 +1,30 @@
-@font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'NanumSquareRound';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 .body {
-    font-family: 'Pretendard-Regular';
     font-size: 16px;
+    font-family: 'NanumSquareRound', sans-serif;
 }
 
 h1 {
     color: #0C356A;
-    font-size: 40px;
+    font-size: 48px;
     font-style: normal;
     font-weight: 600;
     letter-spacing: 0.25px;
 }
 
 h2{
-    font-size: 25px;
+    font-size: 30px;
     font-weight: 550;
     padding:0 40px 0;
 }
 
 h4{
     text-align:left;
-    padding:30px 40px 30px;
+    padding:50px 40px 30px;
 }
 
 h5 {
     font-weight: 400;
-    font-size:17px;
+    font-size:20px;
     color: #838383;
     padding-bottom:10px;
 }
@@ -48,9 +35,9 @@ h5 {
     padding-top:70px;
     align-items: center;
     width: 90%;
-    font-family: "Pretendard-Regular", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     text-align: center;
     margin: auto;
+    font-family: 'NanumSquareRound', sans-serif;
 }
 
 hr {
@@ -84,26 +71,27 @@ hr {
 
 .card-body{
     padding:0px;
-    font-family: Pretendard;
+    font-family: 'NanumSquareRound', sans-serif;
 }
 
 .custom-container {
-  width: 350px;
-  height: 44px;
+  width: 390px;
+  height: 49px;
   padding: 10px 14px 10px 14px;
   box-sizing: border-box;
   background: #F4F4F4;
   position: relative;
-  border-radius: 15px;
+  border-radius: 20px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.20);
 }
 
 .btn-group-lg>.btn, .btn-lg {
-    font-size: 13px;
-    border-radius: 15px;
-    width: 168px;
+    font-size: 15px;
+    border-radius: 20px;
+    width: 180px;
     height: 34px;
-    padding-bottom:15px
+    text-align: center;
+    padding-top:7px;
 }
 
 form {
@@ -190,9 +178,8 @@ input[type="search"] {
 }
 
 .nav-link{
-    font-size: 15px;
+    font-size: 20px;
     color: #000;
-    font-family: Pretendard;
 }
 
 .nav-container{
