@@ -18,6 +18,8 @@ contentNode.className = 'placeinfo_wrap';
 // 커스텀 오버레이의 컨텐츠 노드에 mousedown, touchstart 이벤트가 발생했을때
 // 지도 객체에 이벤트가 전달되지 않도록 이벤트 핸들러로 kakao.maps.event.preventMap 메소드를 등록합니다
 addEventHandle(contentNode, 'mousedown', kakao.maps.event.preventMap);
+addEventHandle(contentNode, 'mouseover', kakao.maps.event.preventMap);
+addEventHandle(contentNode, 'mouseout', kakao.maps.event.preventMap);
 addEventHandle(contentNode, 'touchstart', kakao.maps.event.preventMap);
 // 커스텀 오버레이 컨텐츠를 설정합니다
 placeOverlay.setContent(contentNode);
@@ -30,6 +32,11 @@ function addEventHandle(target, type, callback) {
         target.attachEvent('on' + type, callback);
     }
 }
+// 지도에 클릭 이벤트 추가하여 오버레이 숨기기
+kakao.maps.event.addListener(map, 'click', function() {
+    placeOverlay.setMap(null); // 오버레이 숨기기
+});
+
 function displayPlaceInfo (place_name, y, x) {
     var content = '<div class="placeinfo text-center">'+place_name+'</div>';
     content += '<div class="after"></div>';
@@ -47,16 +54,6 @@ function panTo(y, x) {
     console.log("panTo 호출")
     map.setLevel(3)
     map.panTo(moveLatLon);
-}
-
-// 지도 센터로 이동
-function setCenter(y, x) {
-    // 이동할 위도 경도 위치를 생성합니다
-    var moveLatLon = new kakao.maps.LatLng(y, x);
-
-    // 지도 중심을 이동 시킵니다
-    map.setCenter(moveLatLon);
-
 }
 
 // DB에 저장된 병원 목록으로 마커 표시
@@ -117,8 +114,14 @@ fetch('/hospital/get_hospital_list') // 서버에서 hospital_list를 반환하�
                     // 지도 중심좌표 이동
                     panTo(hospital.y, hospital.x);
 
-                    e.preventDefault(); // a 태그의 기본 동작 취소 (링크 이동 막기)
                 });
+
+                kakao.maps.event.addListener(marker, 'mouseover', function() {
+                    displayPlaceInfo(hospital.place_name, hospital.y, hospital.x);
+                });
+                // kakao.maps.event.addListener(marker, 'mouseout', function() {
+                //     placeOverlay.setMap(null); // 오버레이 숨기기
+                // });
             }
         }
         // fetch 실패
