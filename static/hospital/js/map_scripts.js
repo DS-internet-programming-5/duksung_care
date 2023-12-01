@@ -1,3 +1,9 @@
+// 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
+var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}),
+    contentNode = document.createElement('div'), // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다
+    markers = [], // 마커를 담을 배열입니다
+    currCategory = ''; // 현재 선택된 카테고리를 가지고 있을 변수입니다
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
         center: new kakao.maps.LatLng(37.64998176552163, 127.01680486039935), // 지도의 중심좌표
@@ -6,6 +12,32 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 
 // 지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer, mapOption);
+
+// 커스텀 오버레이의 컨텐츠 노드에 css class를 추가합니다
+contentNode.className = 'placeinfo_wrap';
+// 커스텀 오버레이의 컨텐츠 노드에 mousedown, touchstart 이벤트가 발생했을때
+// 지도 객체에 이벤트가 전달되지 않도록 이벤트 핸들러로 kakao.maps.event.preventMap 메소드를 등록합니다
+addEventHandle(contentNode, 'mousedown', kakao.maps.event.preventMap);
+addEventHandle(contentNode, 'touchstart', kakao.maps.event.preventMap);
+// 커스텀 오버레이 컨텐츠를 설정합니다
+placeOverlay.setContent(contentNode);
+// 클릭한 마커에 대한 장소 상세정보를 커스텀 오버레이로 표시하는 함수입니다
+// 엘리먼트에 이벤트 핸들러를 등록하는 함수입니다
+function addEventHandle(target, type, callback) {
+    if (target.addEventListener) {
+        target.addEventListener(type, callback);
+    } else {
+        target.attachEvent('on' + type, callback);
+    }
+}
+function displayPlaceInfo (place_name, y, x) {
+    var content = '<div class="placeinfo text-center">'+place_name+'</div>';
+    content += '<div class="after"></div>';
+
+    contentNode.innerHTML = content;
+    placeOverlay.setPosition(new kakao.maps.LatLng(y, x));
+    placeOverlay.setMap(map);
+}
 
 // 지도 센터로 부드럽게 이동
 function panTo(y, x) {
@@ -80,10 +112,12 @@ fetch('/hospital/get_hospital_list') // 서버에서 hospital_list를 반환하�
                         }
                     });
 
+                    displayPlaceInfo(hospital.place_name, hospital.y, hospital.x);
+
                     // 지도 중심좌표 이동
                     panTo(hospital.y, hospital.x);
-                    e.preventDefault(); // a 태그의 기본 동작 취소 (링크 이동 막기)
 
+                    e.preventDefault(); // a 태그의 기본 동작 취소 (링크 이동 막기)
                 });
             }
         }

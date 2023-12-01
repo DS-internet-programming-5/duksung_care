@@ -41,24 +41,37 @@ $(document).ready(function () {
                                 <span style="margin-left: 10px">${data.nickname}</span>
                                     <span class="time" style="margin-left: 10px; color: gray"> | ${formattedDate}</span>
                             </div>
-                            <!-- 수정, 삭제 버튼 -->
-                            <div>
-                                <a class="update-link" data-bs-toggle="modal" href="#updateModal" data-review-id="${data.review_pk}"
-                                data-review-content="${data.content}" data-hospital-rating="${data.hospital_rating}">수정</a>
-                                <a class="delete-link" data-bs-toggle="modal" href="#deleteModal" data-review-id="${data.review_pk}">삭제</a>
-                            </div>
+                            <!-- 좋아요 버튼 -->
+                            <button class="like-btn" data-review-pk="${data.review_pk}" style="border: none; background-color: transparent;">
+                                ${data.author_pk in data.likes ?
+                                    `<i class="fa-regular fa-thumbs-up fs-4" style="color: dodgerblue;"></i>` :
+                                    `<i class="fa-regular fa-thumbs-up fs-4" style="color: gray;"></i>`
+                                }
+                                <span style="color: gray">${data.num_likes}</span>
+                            </button>
                         </div>
                         <div class="review mt-2">
                             <div class="rating" data-rate="${data.hospital_rating}">
                                 ${getStars(data.hospital_rating)}
                             </div>
                             <p class="r-content mt-2 mb-0" style="white-space:pre;">${data.content}</p>
+                            <!-- 수정, 삭제 버튼 -->
+                            ${data.author_pk === data.user_pk || data.is_superuser ?
+                                `<div class="d-flex justify-content-end">
+                                    <a class="update-link  me-2" data-bs-toggle="modal" href="#updateModal" data-review-id="${data.review_pk}"
+                                    data-review-content="${data.content}" data-hospital-rating="${data.hospital_rating}">수정</a>
+                                    <a class="delete-link" data-bs-toggle="modal" href="#deleteModal" data-review-id="${data.review_pk}">삭제</a>
+                                </div>`
+                                : ``
+                            }
                         </div>
                     </div>
                 `;
                 $('.review-list-box').prepend(reviewCard);
                 $('#review-form textarea[name="content"]').val('');
                 $('.make_star i').css({color: 'lightgrey'});
+                // 리뷰 추가 후 별점 업데이트
+                updateRatings(data.hospital_pk, data.average_rating, data.num_reviews);
             },
             error: function (xhr, status, error) {
                 console.error(error);
@@ -140,6 +153,8 @@ $(document).ready(function () {
 
                 // 리뷰 카드 업데이트 함수 호출
                 updateReviewCard(review_id, updatedContent, updatedRating, formattedDate);
+                // 리뷰 수정 후 별점 업데이트
+                updateRatings(data.hospital_pk, data.average_rating, data.num_reviews);
             },
             error: function (xhr, status, error) {
                 console.error(error);
@@ -256,8 +271,8 @@ $(document).ready(function () {
             url: url,
             data: formData,
             success: function (data) {
-                console.log("update: " + data);
-                console.log("update: ", JSON.stringify(data));
+                console.log("delete: " + data);
+                console.log("delete: ", JSON.stringify(data));
 
                 // 리뷰가 성공적으로 삭제되면 해당 내용을 모달에 표시
                 const modalBody = $('#deleteModal .modal-body');
@@ -268,6 +283,8 @@ $(document).ready(function () {
 
                 // 리뷰 카드 업데이트 함수 호출
                 deleteReviewCard(review_id);
+                // 리뷰 삭제 후 별점 업데이트
+                updateRatings(data.hospital_pk, data.average_rating, data.num_reviews);
             },
             error: function (xhr, status, error) {
                 console.error(error);
@@ -294,5 +311,4 @@ function deleteReviewCard(reviewId) {
         // 카드가 사라진 후에 카드 요소를 완전히 제거
         $(this).remove();
     });
-
 }

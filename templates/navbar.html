@@ -1,6 +1,4 @@
 {% load static %}
-<script src="https://kit.fontawesome.com/bdcda05bfe.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="{% static 'common_style.css' %}">
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 999">
     <div class="container-fluid mx-md-4">
         <a class="navbar-brand" href="/main_page1"><strong>Duksung Care</strong>
@@ -14,17 +12,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/hospital/?page=1">지도</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        병원 정보
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/health_tips/post/">건강뉴스</a>
                 </li>
@@ -35,7 +22,6 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     {% if request.user.is_authenticated %}
-{#                        <a class="nav-link" methods="POST" href="/accounts/logout">로그아웃</a>#}
                         <a class="nav-link logout-link" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">로그아웃</a>
                         <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
                             {% csrf_token %}

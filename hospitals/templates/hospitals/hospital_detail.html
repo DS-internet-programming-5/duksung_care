@@ -3,19 +3,29 @@
 <script type="text/javascript" src="{% static 'hospital/js/hospital_scripts.js' %}"></script>
 
 <div class="offcanvas-header justify-content-end">
+    <!-- 북마크 -->
+    <button class="bookmark-btn me-2" data-hospital-pk="{{ hospital.pk }}"
+            style="border: none; background-color: transparent;">
+        <input type="hidden" id="csrf-token" value="{{ csrf_token }}">
+        {% if request.user in hospital.bookmarks.all %}
+            <i class="fa-solid fa-bookmark" style="color: #0174BE; font-size: 20px"></i>
+        {% else %}
+            <i class="fa-solid fa-bookmark" style="color: darkgray; font-size: 20px"></i>
+        {% endif %}
+    </button>
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
             id="offcanvasCloseBtn"></button>
 </div>
 
 <div class="div-detail pt-2 pl-2 pr-2 overflow-y-auto" data-latitude="{{ hospital.y }}"
-     data-longitude="{{ hospital.x }}">
+     data-longitude="{{ hospital.x }}" data-place-name="{{ hospital.place_name }}">
     <!-- 병원 이름 -->
     <h3 class="text-center">{{ hospital.place_name }}</h3>
     <!-- 병원 카테고리 -->
     <p class="text-center" style="font-size: 16px; color: gray">{{ hospital.category_name }}</p>
     <!-- 평균 별점 -->
     <div class="mt-1 mb-3" style="font-size: 20px; height: 20px">
-        <div class="avg-rating d-flex justify-content-center position-relative" style="height: 20px">
+        <div class="avg-rating d-flex justify-content-center position-relative" style="height: 20px" id="avg-rating-{{ hospital.pk }}">
             <div class="rating-back" style="position: absolute; white-space: nowrap; width: fit-content;">
                 <div class="star-wrap-back">
                     <div class="star-back"><i class="fas fa-star"></i></div>
@@ -52,7 +62,7 @@
             </div>
         </div>
     </div>
-    <p class="text-center" style="font-size: 14px; color: grey">평균 별점 {{ hospital.average_rating }}</p>
+    <p class="text-center" style="font-size: 14px; color: grey">평균 별점 <span class="rating-text-{{ hospital.pk }}">{{ hospital.average_rating }}</span></p>
     <ul class="nav nav-tabs justify-content-center" id="reviewTab" role="tablist">
         <li class="nav-item m-0" role="presentation">
             <button class="nav-link active" id="detail-tab" data-bs-toggle="tab" data-bs-target="#detail-tab-pane"
@@ -61,7 +71,8 @@
         </li>
         <li class="nav-item m-0" role="presentation">
             <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review-tab-pane"
-                    type="button" role="tab" aria-controls="review-tab-pane" aria-selected="false">리뷰
+                    type="button" role="tab" aria-controls="review-tab-pane" aria-selected="false">
+                리뷰 <span class="num-reviews-{{ hospital.pk }}">{{ hospital.num_reviews }}</span>
             </button>
         </li>
     </ul>
@@ -129,14 +140,16 @@
                                     <span class="time" style="margin-left: 10px; color: gray"> | {{ r.created_at | date:'Y.m.d.' }}</span>
                                 {% endif %}
                             </div>
-                            <!-- 수정, 삭제 버튼 -->
-                            <div>
-                                {% if r.author == request.user or request.user.is_superuser%}
-                                <a class="update-link" data-bs-toggle="modal" href="#updateModal" data-review-id="{{ r.pk }}"
-                                data-review-content="{{ r.content }}" data-hospital-rating="{{ r.hospital_rating }}">수정</a>
-                                <a class="delete-link" data-bs-toggle="modal" href="#deleteModal" data-review-id="{{ r.pk }}">삭제</a>
+                            <!-- 좋아요 버튼 -->
+                            <button class="like-btn" data-review-pk="{{ r.pk }}" style="border: none; background-color: transparent;">
+                                {% if request.user in r.likes.all %}
+                                    <i class="fa-regular fa-thumbs-up fs-4" style="color: orange;"></i>
+                                    <span style="color: gray">{{ r.num_likes }}</span>
+                                {% else %}
+                                    <i class="fa-regular fa-thumbs-up fs-4" style="color: gray;"></i>
+                                    <span style="color: gray">{{ r.num_likes }}</span>
                                 {% endif %}
-                            </div>
+                            </button>
                         </div>
                         <div class="review mt-2"> <!-- 리뷰 별점 -->
                             <div class="rating" data-rate="{{ r.hospital_rating }}">
@@ -148,6 +161,14 @@
                             </div>
                             <!-- 리뷰 내용 -->
                             <p class="r-content mt-2 mb-0" style="white-space:pre;">{{ r.content }}</p>
+                            <!-- 수정, 삭제 버튼 -->
+                            {% if r.author == request.user or request.user.is_superuser%}
+                            <div class="d-flex justify-content-end">
+                                <a class="update-link me-2" data-bs-toggle="modal" href="#updateModal" data-review-id="{{ r.pk }}"
+                                data-review-content="{{ r.content }}" data-hospital-rating="{{ r.hospital_rating }}">수정</a>
+                                <a class="delete-link" data-bs-toggle="modal" href="#deleteModal" data-review-id="{{ r.pk }}">삭제</a>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}
@@ -170,4 +191,36 @@
         var tab = new bootstrap.Tab(document.getElementById('myTab'));
         tab.show();
     });
+</script>
+
+<!-- 좋아요 버튼 -->
+<script>
+$(document).ready(function() {
+    $('.like-btn').click(function() {
+        const button = $(this);
+        const reviewId = button.data('review-pk');
+
+        $.ajax({
+            type: 'POST',
+            url: `/hospital/like_review/${reviewId}/`,
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(response) {
+                // 서버로부터 받은 응답으로 버튼의 텍스트와 좋아요 개수를 업데이트합니다.
+                button.find('span').text(response.likes);
+
+                // 'liked' 속성에 따라 버튼의 색상을 변경합니다.
+                if (response.liked) {
+                    button.find('i').css({ color: 'orange' });
+                } else {
+                    button.find('i').css({ color: 'gray' });
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+});
 </script>
