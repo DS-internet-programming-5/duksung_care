@@ -24,6 +24,15 @@ h3 {
     text-align: center;
 }
 
+/* 탭 메뉴 css */
+.tab-active {
+    color: #707070;
+}
+.tab-active.active, .tab-active:hover, .tab-active:focus {
+    color: #0C356A;
+    font-weight: bold;
+}
+
 hr {
     width: 80%;
 }
