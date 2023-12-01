@@ -10,12 +10,24 @@ $(document).ready(function () {
         var hospitalPk = $(this).data('hospital-pk');
         console.log(hospitalPk);
 
+        // Offcanvas 요소가 열려있는지 확인
+        var offcanvasElement = document.getElementById('offcanvasScrolling');
+
+        offcanvasElement.addEventListener('hide.bs.offcanvas', function(event) {
+          if (offcanvas._isShown && !offcanvas._isAnimating && event.target === offcanvasElement) {
+            event.preventDefault(); // 닫기 이벤트를 막음
+          }
+        });
+
         $.ajax({
             type: 'GET',
-            url: `/hospital/${hospitalPk}/`, // URL to fetch hospital detail
+            url: `/hospital/${hospitalPk}/`,
             success: function (data) {
                 $('.offcanvas').html(data);
-                var hospitalDetail = $('<div>').html(data); // Create a temporary element to parse the HTML content
+                var myOffcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                myOffcanvas.show();
+                // $('.offcanvas').html(data);
+                var hospitalDetail = $('<div>').html(data);
                 var hospitalY = hospitalDetail.find('.div-detail').data('latitude');
                 var hospitalX = hospitalDetail.find('.div-detail').data('longitude');
                 var place_name = hospitalDetail.find('.div-detail').data('place-name');
