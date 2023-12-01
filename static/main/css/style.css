@@ -6,20 +6,25 @@
 h1 {
     color: #0C356A;
     font-size: 48px;
+    font-size: 45px;
     font-style: normal;
     font-weight: 600;
     letter-spacing: 0.25px;
 }
 
 h2{
+    color: #144a91;
     font-size: 30px;
-    font-weight: 550;
-    padding:0 40px 0;
+    font-weight: 590;
+    padding-left:70px;
+    padding-right:40px;
 }
 
 h4{
+    color: #144a91;
     text-align:left;
     padding:50px 40px 30px;
+    padding:50px 60px 30px;
 }
 
 h5 {
@@ -76,13 +81,14 @@ hr {
 
 .custom-container {
   width: 390px;
-  height: 49px;
+  height: 52px;
   padding: 10px 14px 10px 14px;
   box-sizing: border-box;
   background: #F4F4F4;
   position: relative;
-  border-radius: 20px;
+  border-radius: 50px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.20);
+  box-shadow: 0px 4px 4px 0px rgba(120, 120, 120, 0.2);
 }
 
 .btn-group-lg>.btn, .btn-lg {
@@ -91,7 +97,7 @@ hr {
     width: 180px;
     height: 34px;
     text-align: center;
-    padding-top:7px;
+    padding-top:6px;
 }
 
 form {
@@ -118,21 +124,22 @@ form {
 }
 
 .checkbox-group input[type="checkbox"]:checked + label {
-    background-color: #5B7FFF;
-    border:none;
-    color: #fff;
-    font-size: 15px;
-}
-
-.checkbox-group input[type="checkbox"]:not(:checked) + label {
-    background-color: #D9D9D9;
-    border:none;
+    border: 3px solid #5B7FFF;
+    background-color: #FFF;
     color: #000;
     font-size: 15px;
 }
 
-.checkbox-group input:hover {
-    background-color: #6c757d;
+.checkbox-group input[type="checkbox"]:not(:checked) + label {
+    border: 2px solid #D9D9D9;
+    background-color: #FFF;
+    color: #000;
+    font-size: 15px;
+}
+
+.select{
+ padding-top:10px;
+    font-size:15px;
 }
 
 input[type="search"] {
@@ -148,13 +155,12 @@ input[type="search"] {
 }
 
 .subject{
-    padding-top:40px;
+    padding-top:55px;
 }
 
 .subject_title{
-    font-size: 25px;
-    font-family: Pretendard;
-    font-weight: 500;
+    font-size: 23px;
+    font-family: 'NanumSquareRound', sans-serif;
 }
 
 .subject_title_wrapper{
@@ -166,21 +172,28 @@ input[type="search"] {
 }
 
 .subject_searchbtn{
-    border-radius: 15px;
+    border-radius: 30px;
     background: #0174BE;
     border: none;
     color: #FFF;
-    font-size: 15px;
+    font-size: 16px;
     width: 214px;
-    height: 35px;
+    height: 40px;
     flex-shrink: 0;
     padding-bottom:5px 0 30px;
 }
 
-.nav-link{
-    font-size: 20px;
+.nav-link-hospital{
+    font-size:17px;
     color: #000;
+    text-decoration:none;
+    padding-top:11px;
 }
+
+.nav-link-hospital:hover {
+        color: #007bff;
+        font-size:18px;
+    }
 
 .nav-container{
     padding:0 0 30px;
@@ -202,32 +215,89 @@ input[type="search"] {
     padding-top:4px;
 }
 
-.btn-primary {
-    color:#fff;
-    background-color:#0174BE;
-    border-color:#0174BE;
+/* 검색버튼 */
+.btn-primary-search {
+    color:#ffffff;
+    background-color:#FFC436;
+    border-color:#FFC436;
 }
 
-.btn-secondary {
+.btn-secondary-search {
     color:#838383;
     background-color:#F4F4F4;
     border-color:#F4F4F4;
 }
 
-.btn-primary:hover {
-    background-color: #0069ab;
+.btn-primary-search:hover {
+    background-color: #fdb205;
     color: white;
-    border-color: #0174BE;
+    border-color: #fdb205;
 }
 
-.btn-secondary:hover {
+.btn-secondary-search:hover {
     background-color:#dddddd;
     color:#838383;
     border-color:#dddddd;
 }
 
+/* 학교제휴병원 */
+.btn-primary-card{
+    border-radius: 30px;
+    background: linear-gradient(96deg, #9cb1ff -10.84%, #476fff 196.74%);
+    box-shadow: 0px 8px 23px 0px rgba(65, 132, 247, 0.24);
+    width: 180px;
+    height: 35px;
+    font-size:14px;
+    color:#FFF;
+    padding-top:6px;
+}
 
+.btn-primary-card:hover{
+    background: linear-gradient(96deg, #7c99ff -10.84%, #1a4bff 196.74%);
+    box-shadow: 0px 8px 23px 0px rgba(44, 113, 233, 0.24);
+    color:#FFF;
+}
 
+.card-title{
+    font-size:18px;
+}
 
+.card-text{
+    font-size:15px;
+    color:#6D7280;
+}
 
+.card{
+    padding:15px;
+    box-shadow: 0px 24px 32px -3px rgba(3, 9, 50, 0.04);
+}
 
+.card-container{
+    padding:0 55px 0;
+}
+
+/* 검색 */
+.search-container {
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+    width: 550px;
+    height: 50px;
+    margin: 15px 0 40px;
+    background: #F4F4F4;
+}
+
+input[type="search"] {
+    flex: 1;
+    padding: 20px;
+    border: none;
+    background: #F4F4F4;
+    outline: none;
+}
+
+button {
+    background: #F4F4F4;
+    border: none;
+    cursor: pointer;
+    margin-right:20px;
+}
