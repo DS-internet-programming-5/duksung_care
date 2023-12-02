@@ -18,23 +18,23 @@
 </style>
 
 <!-- leftside -->
-<div class="content">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div id="image">
-                    <img src="{% static 'accounts/images/image_1.svg' %}" alt="Image" class="img-fluid">
-                </div>
-            </div>
+<div class="content" style="height: calc(100vh - 63px);">
+  <div class="container m-0 p-0 h-100">
+    <div class="row vw-100 h-100">
+      <div class="col-md-6 d-flex align-items-center justify-content-center" style="background-color: #FFF0CE">
+        <div id="image">
+          <img src="{% static 'accounts/images/image_1.svg' %}" alt="Image" class="img-fluid">
+        </div>
+      </div>
 
             <!-- rightside -->
 
             <!-- header -->
-            <div class="col-md-6">
-                <div id="header">로그인</div>
+            <div class="col-md-6 overflow-auto justify-content-center d-flex flex-column align-items-center">
+                <div id="header" class="mb-lg-5 mt-lg-5">로그인</div>
 
                 <!-- wrapper -->
-                <div id="wrapper">
+                <div id="wrapper" class="d-flex justify-content-center">
 
                     <!-- content-->
                     <div id="content">
