@@ -52,13 +52,13 @@ def my_reviews(request):
 def SignupPage(request):
     form_class = SignupForm(request.POST)
     if request.method == 'POST':
-        email=request.POST.get('email') + '@duksung.ac.kr'
+        # email=request.POST.get('email') + '@duksung.ac.kr'
         date_of_birth=request.POST.get('date_of_birth')
         if date_of_birth == '':
             date_of_birth = None
         if form_class.is_valid():
             user = User.objects.create_user(
-                email=email,
+                email=request.POST.get('email'),
                 password=request.POST.get('password'),
                 nickname=request.POST.get('nickname'),
                 username=request.POST.get('username'),
