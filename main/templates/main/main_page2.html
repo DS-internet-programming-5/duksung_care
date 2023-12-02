@@ -27,17 +27,17 @@
     }
 
 
-.btn-secondary-search:hover {
-    background-color: #0069ab;
-    color: white;
-    border-color: #0174BE;
-}
+    .btn-secondary-search:hover {
+        background-color: #0069ab;
+        color: white;
+        border-color: #0174BE;
+    }
 
-.btn-primary-search:hover {
-    background-color:#dddddd;
-    color:#838383;
-    border-color:#dddddd;
-}
+    .btn-primary-search:hover {
+        background-color:#dddddd;
+        color:#838383;
+        border-color:#dddddd;
+    }
 
     body {
         background-image: url('{% static 'imgs/duksung_symbol.png' %}');
@@ -56,7 +56,6 @@
     .nav-item-hospital {
     margin: 10px 20px 0;
     }
-}
 
 </style>
 
@@ -90,30 +89,15 @@
     </div>
 
     <div class="subject">
-        <div class="button-group">
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">종합병원</a>
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">노인,요양병원</a>
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">이비인후과</a>
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">내과</a>
-        </div>
-        <div class="button-group">
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">통증클리닉</a>
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">정형외과</a>
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">동물병원</a>
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">치과</a>
-        </div>
-        <div class="button-group">
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">정신건강의학과</a>
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">국립병원</a>
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">소아청소년과</a>
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">신경외과</a>
-        </div>
-        <div class="button-group">
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">외과</a>
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">산부인과</a>
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">피부과</a>
-            <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">영상의학과</a>
-        </div>
+    {% for category in categories.all %}
+        {% if forloop.counter0|divisibleby:4 %}
+            <div class="button-group">
+        {% endif %}
+        <a href="#" role="button" class="btn btn-primary-type" aria-pressed="true">{{ category.name }}</a>
+        {% if forloop.counter|divisibleby:4 or forloop.last %}
+            </div>
+        {% endif %}
+    {% endfor %}
     </div>
     <hr>
 
