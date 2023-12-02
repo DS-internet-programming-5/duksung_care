@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="{% static 'common_style.css' %}">
     <link rel="stylesheet"  href="{% static 'main/css/style.css' %}">
 
-
 <style>
     body {
         background-image: url('{% static 'imgs/duksung_symbol.png' %}');
@@ -55,8 +54,8 @@
     <!-- search -->
     <form class="d-flex justify-content-center" style="margin-bottom:90px;">
         <div class="search-container">
-            <input type="search" name="sh" placeholder="병원명/후기 검색">
-            <button type="submit"><i class="fas fa-search"></i></button>
+            <input type="search" placeholder="병원명/후기 검색" id="searchQuery">
+            <button type="button" onclick="searchHospitals()"><i class="fas fa-search"></i></button>
         </div>
     </form>
 
@@ -185,5 +184,6 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="{% static 'hospital/js/search_scripts.js' %}"></script>
 </body>
 </html>
