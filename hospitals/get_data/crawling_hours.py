@@ -46,9 +46,10 @@ for hospital in hospitals:
 
         operation_info = []
         for time in operation_times:
-            day = time.text.split()[0]  # 요일 정보 추출
-            operation_time = time.find_element(By.CLASS_NAME, 'time_operation').text  # 진료 시간 정보 추출
-            operation_info.append(f'{day}: {operation_time}')
+            day = time.text # 요일 정보 추출
+            # operation_time = time.find_element(By.CLASS_NAME, 'time_operation').text  # 진료 시간 정보 추출
+            # operation_info.append(f'{day}: {operation_time}')
+            operation_info.append(f'{day}')
     except Exception as e:
         # 요소를 찾을 수 없거나 다른 예외 발생 시, operation_info를 빈 리스트로 추가
         operation_info = []
