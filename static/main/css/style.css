@@ -107,34 +107,25 @@ form {
   text-align: center;
 }
 
-.checkbox-group {
+.button-group {
     display: flex;
     flex-direction: row;
 }
 
-.checkbox-group label {
+.btn-primary-type{
     display: flex;
     align-items: center;
     margin: 10px;
     width: 171px;
     height: 61px;
-    flex-shrink: 0;
     border-radius: 20px;
     justify-content: center;
-}
-
-.checkbox-group input[type="checkbox"]:checked + label {
-    border: 3px solid #5B7FFF;
-    background-color: #FFF;
-    color: #000;
-    font-size: 15px;
-}
-
-.checkbox-group input[type="checkbox"]:not(:checked) + label {
     border: 2px solid #D9D9D9;
-    background-color: #FFF;
-    color: #000;
-    font-size: 15px;
+}
+
+.btn-primary-type:hover{
+    border: 3px solid #0174BE;
+    color:#144a91;
 }
 
 .select{
@@ -150,37 +141,16 @@ input[type="search"] {
   border-radius: 15px;
   display: block;
   margin: auto;
-  background: url(images/search-solid.png) 4% no-repeat;
   background: #F4F4F4;
 }
 
 .subject{
-    padding-top:55px;
+    padding-top:28px;
 }
 
 .subject_title{
     font-size: 23px;
     font-family: 'NanumSquareRound', sans-serif;
-}
-
-.subject_title_wrapper{
-    padding-bottom:10px;
-}
-
-.subject_search{
-    padding:20px;
-}
-
-.subject_searchbtn{
-    border-radius: 30px;
-    background: #0174BE;
-    border: none;
-    color: #FFF;
-    font-size: 16px;
-    width: 214px;
-    height: 40px;
-    flex-shrink: 0;
-    padding-bottom:5px 0 30px;
 }
 
 .nav-link-hospital{
