@@ -2,7 +2,7 @@ import sys
 import os
 
 # 현재 작업 디렉토리를 추가합니다. Django 프로젝트 루트 디렉토리를 가리키도록 수정해야 합니다.
-sys.path.append('C:\duksung_care')
+sys.path.append('/')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'duksung_care.settings')
 
 import django
