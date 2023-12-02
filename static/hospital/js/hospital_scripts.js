@@ -191,9 +191,12 @@ document.querySelectorAll('.form-check-input').forEach(input => {
 });
 
 // 북마크 버튼 클릭 시 이벤트
-document.getElementById('bookmarkButton').addEventListener('click', function() {
-    redirectToHospitalList();
-});
+const bookmarkButtonElement = document.getElementById('bookmarkButton');
+if (bookmarkButtonElement) {
+    bookmarkButtonElement.addEventListener('click', function() {
+        redirectToHospitalList();
+    });
+}
 
 // 현재 URL에서 order 매개변수 가져오기
 const urlParams = new URLSearchParams(window.location.search);
