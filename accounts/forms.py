@@ -9,6 +9,7 @@ User=get_user_model()
 class SignupForm(UserCreationForm):
     email=forms.EmailField(label="이메일")
     nickname = forms.CharField(label="닉네임")
+    password = forms.CharField(label="비밀번호", widget=forms.PasswordInput)
     class Meta(UserCreationForm):
         model=User
         fields=('email','nickname','date_of_birth','phone','username','profileImg')
@@ -35,7 +36,7 @@ class SignupForm(UserCreationForm):
         return nickname
 
     def clean_password(self):
-        password = self.cleaned_data.get('password1')
+        password = self.cleaned_data.get('password')
         if not password:
             raise ValidationError('비밀번호를 입력하세요.')
         return password

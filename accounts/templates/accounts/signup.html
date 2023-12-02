@@ -117,11 +117,11 @@
                     {% endif %}
                   {% endfor %}
                 {% endif %}
-                {% if form.password1.errors %}
-                  {% for error in form.password1.errors %}
+                {% if form.password.errors %}
+                  {% for error in form.password.errors %}
                       {% if 'This field is required.' in error %}
                       <div class="form-errors">
-                        <p>비밀번호를 입력해주세요.</p>
+                        <p>{{ error }}</p>
                       </div>
                     {% endif %}
                   {% endfor %}
@@ -142,7 +142,7 @@
                   <label for="email">이메일</label>
                 </h3>
                 <span class="box int_email">
-                  <input type="text" name="email" class="int" maxlength="20" placeholder="@duksung.ac.kr">
+                  <input type="text" name="email" class="int" placeholder="@duksung.ac.kr">
 {#                  <span class="step_url">@duksung.ac.kr</span>#}
                 </span>
               </div>
