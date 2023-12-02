@@ -16,10 +16,10 @@ body {
   color:#0C356A;
 }
 
-#wrapper {
-  position: relative;
-  height: 100%;
-}
+/*#wrapper {*/
+/*  position: relative;*/
+/*  height: 100%;*/
+/*}*/
 
 #content {
   width: 460px;
