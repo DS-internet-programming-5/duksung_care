@@ -11,4 +11,5 @@ urlpatterns=[
     path('update_review/<int:review_pk>/', views.UpdateReview.as_view(), name='update_review'),
     path('delete_review/<int:review_pk>/', views.delete_review, name='delete_review'),
     path('like_review/<int:review_pk>/', views.likes_review, name='likes_review'),
+    path('partnership_detail/<int:hospital_id>/', views.partnership_detail, name='partnership_detail'),
 ]

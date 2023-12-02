@@ -43,6 +43,8 @@ class Hospital(models.Model):
     is_partnership = models.BooleanField(default=False)  # 학교 제휴 여부
     bookmarks = models.ManyToManyField(User, related_name='bookmarked_hospitals', blank=True, null=True)  # 북마크한 유저들
 
+    partnership_description = models.TextField(blank=True, null=True)  # 제휴 설명
+
     def __str__(self):
         return f'[{self.pk}] {self.place_name}'
 
