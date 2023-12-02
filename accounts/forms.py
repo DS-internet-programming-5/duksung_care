@@ -6,13 +6,14 @@ from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
 User=get_user_model()
 
-class SignupForm(UserCreationForm):
+class SignupForm(forms.Form):
     email=forms.EmailField(label="이메일")
     nickname = forms.CharField(label="닉네임")
     password = forms.CharField(label="비밀번호", widget=forms.PasswordInput)
+    username = forms.CharField(label="이름", required=True)
     class Meta(UserCreationForm):
         model=User
-        fields=('email','nickname','date_of_birth','phone','username','profileImg')
+        fields=('email','nickname','date_of_birth','phone','username','profileImg','password')
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if not email:

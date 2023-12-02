@@ -59,7 +59,7 @@ def SignupPage(request):
         if form_class.is_valid():
             user = User.objects.create_user(
                 email=email,
-                password1=request.POST.get('password'),
+                password=request.POST.get('password'),
                 nickname=request.POST.get('nickname'),
                 username=request.POST.get('username'),
                 date_of_birth=date_of_birth,

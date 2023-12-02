@@ -120,7 +120,7 @@
                   {% for error in form.password.errors %}
                       {% if 'This field is required.' in error %}
                       <div class="form-errors">
-                        <p>{{ error }}</p>
+                        <p>비밀번호를 입력해주세요.</p>
                       </div>
                     {% endif %}
                   {% endfor %}
