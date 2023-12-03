@@ -42,6 +42,10 @@ class User(AbstractUser):
         max_length=255,
         unique=True,
     )
+    username = models.CharField(
+        _('username'),
+        max_length=150,
+    )
     nickname = models.CharField(max_length=30, unique=True)
     date_of_birth = models.DateField(null=True)
     is_active = models.BooleanField(default=True)

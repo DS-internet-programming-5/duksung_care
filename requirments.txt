@@ -4,6 +4,7 @@ beautifulsoup4
 requests
 selenium
 pandas
+markdown
 
 django-phonenumber-field[phonenumbers]
 django-phonenumber-field[phonenumberslite]
