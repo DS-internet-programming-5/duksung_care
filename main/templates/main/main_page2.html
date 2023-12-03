@@ -118,14 +118,31 @@
         <!-- banner-->
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active text-center">
-                    <img src="{% static 'imgs\banner1.jpg' %}" class="d-block mx-auto" style="width: 1200px; height: 390px;">
+                <div class="carousel-item active">
+                    <a href="#">
+                        <img src="{% static 'imgs\banner1.jpg' %}" class="d-block mx-auto"
+                             style="width: 1200px; height: 390px;">
+                            <div class="carousel-caption d-none d-md-block custom-caption">
+                                <h2>현대인에게 익숙한 기분장애</h2>
+                                <p>우울증, 조울증의 증상과 치료법</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="carousel-item">
+                    <a href="#">
                     <img src="{% static 'imgs\banner2.jpg' %}" class="d-block mx-auto" style="width: 1200px; height: 390px;">
+                    <div class="carousel-caption d-none d-md-block custom-caption">
+                            <h3>세계 15~44세 여성의 암 사망률 2위 질환, 자궁경부암</h3>
+                    </div>
+                    </a>
                 </div>
                 <div class="carousel-item">
+                    <a href="#">
                    <img src="{% static 'imgs\banner3.jpg' %}" class="d-block mx-auto" style="width: 1200px; height: 390px;">
+                     <div class="carousel-caption d-none d-md-block custom-caption">
+                            <h2>추워질수록 기승을 부리는 독감, 예방법은?</h2>
+                        </div>
+                    </a>
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
