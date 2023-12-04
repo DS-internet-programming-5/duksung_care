@@ -1,4 +1,3 @@
-import bleach
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.conf import settings
@@ -14,10 +13,7 @@ class Post(models.Model):
     post_author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_post', blank=True)
     hits = models.PositiveIntegerField(default=0)
-
-    @property
-    def cleaned_content(self):
-        return bleach.clean(self.post_content, tags=[], attributes={})
+    is_banner = models.BooleanField(default=False, null=True, blank=True)
 
     def increase_hits(self):
         if not hasattr(self, '_likes_increase'):
