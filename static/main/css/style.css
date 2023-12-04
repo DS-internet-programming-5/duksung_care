@@ -273,3 +273,13 @@ button {
     cursor: pointer;
     margin-right:20px;
 }
+
+.custom-caption {
+    text-align: left;
+}
+
+.custom-caption h2 {
+    color:#fff;
+    margin-bottom: 10px;
+    padding-left:0px;
+}
