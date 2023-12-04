@@ -50,23 +50,28 @@ def my_reviews(request):
 
 
 def SignupPage(request):
+    form_class = SignupForm(request.POST)
     if request.method == 'POST':
-        form_class = SignupForm(request.POST)
-        email=request.POST.get('email') + '@duksung.ac.kr'
+        # email=request.POST.get('email') + '@duksung.ac.kr'
+        date_of_birth=request.POST.get('date_of_birth')
+        if date_of_birth == '':
+            date_of_birth = None
+        if form_class.is_valid():
+            user = User.objects.create_user(
+                email=request.POST.get('email'),
+                password=request.POST.get('password'),
+                nickname=request.POST.get('nickname'),
+                username=request.POST.get('username'),
+                date_of_birth=date_of_birth,
+                phone=request.POST.get('phone'),
+                profileImg=request.FILES.get('profileImg'),
+            )
+            login(request, user)
 
-        user = User.objects.create_user(
-            email=email,
-            password=request.POST.get('password'),
-            nickname=request.POST.get('nickname'),
-            username=request.POST.get('username'),
-            date_of_birth=request.POST.get('date_of_birth'),
-            phone=request.POST.get('phone'),
-            profileImg=request.FILES.get('profileImg'),
-        )
-        login(request, user)
-
-        return redirect('/main_page1/')
-    return render(request, 'accounts/signup.html')
+            return redirect('/main_page1/')
+    else:
+        form_class = SignupForm()
+    return render(request, 'accounts/signup.html', {'form': form_class})
 
 def LoginPage(request):
     form = LoginForm(request.POST or None)

@@ -10,12 +10,24 @@ $(document).ready(function () {
         var hospitalPk = $(this).data('hospital-pk');
         console.log(hospitalPk);
 
+        // Offcanvas 요소가 열려있는지 확인
+        var offcanvasElement = document.getElementById('offcanvasScrolling');
+
+        offcanvasElement.addEventListener('hide.bs.offcanvas', function(event) {
+          if (offcanvas._isShown && !offcanvas._isAnimating && event.target === offcanvasElement) {
+            event.preventDefault(); // 닫기 이벤트를 막음
+          }
+        });
+
         $.ajax({
             type: 'GET',
-            url: `/hospital/${hospitalPk}/`, // URL to fetch hospital detail
+            url: `/hospital/${hospitalPk}/`,
             success: function (data) {
                 $('.offcanvas').html(data);
-                var hospitalDetail = $('<div>').html(data); // Create a temporary element to parse the HTML content
+                var myOffcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                myOffcanvas.show();
+                // $('.offcanvas').html(data);
+                var hospitalDetail = $('<div>').html(data);
                 var hospitalY = hospitalDetail.find('.div-detail').data('latitude');
                 var hospitalX = hospitalDetail.find('.div-detail').data('longitude');
                 var place_name = hospitalDetail.find('.div-detail').data('place-name');
@@ -179,9 +191,12 @@ document.querySelectorAll('.form-check-input').forEach(input => {
 });
 
 // 북마크 버튼 클릭 시 이벤트
-document.getElementById('bookmarkButton').addEventListener('click', function() {
-    redirectToHospitalList();
-});
+const bookmarkButtonElement = document.getElementById('bookmarkButton');
+if (bookmarkButtonElement) {
+    bookmarkButtonElement.addEventListener('click', function() {
+        redirectToHospitalList();
+    });
+}
 
 // 현재 URL에서 order 매개변수 가져오기
 const urlParams = new URLSearchParams(window.location.search);
@@ -234,32 +249,4 @@ function changePage(page) {
     const urlParams = new URLSearchParams(window.location.search);
     urlParams.set('page', page);
     window.location.href = '?' + urlParams.toString();
-}
-
-
-// Enter 키 입력을 감지하는 함수
-document.getElementById("searchQuery").addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-        event.preventDefault(); // 기본 동작 방지 (폼 제출 등)
-        searchHospitals();
-    }
-});
-// 병원 검색
-function searchHospitals() {
-    const searchQuery = document.getElementById('searchQuery').value.trim();
-    const baseUrl = '/hospital/';
-
-    let queryString = '';
-    const urlParams = new URLSearchParams(window.location.search);
-    const pageParam = urlParams.get('page');
-
-    if (searchQuery !== '') {
-        queryString += `?search_query=${encodeURIComponent(searchQuery)}`;
-    }
-
-    if (pageParam) {
-        queryString += `${queryString ? '&' : '?'}page=${pageParam}`;
-    }
-
-    window.location.href = baseUrl + queryString;
 }

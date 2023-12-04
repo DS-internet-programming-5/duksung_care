@@ -16,7 +16,11 @@
                     <a class="nav-link" href="/health_tips/post/">건강뉴스</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/accounts/{{ request.user.pk }}">마이페이지</a>
+                    {% if request.user.is_authenticated %}
+                        <a class="nav-link" href="/accounts/{{ request.user.pk }}">마이페이지</a>
+                    {% else %}
+                        <a class="nav-link" href="/accounts/login/">마이페이지</a>
+                    {% endif %}
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">

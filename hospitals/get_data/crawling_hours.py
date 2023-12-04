@@ -2,7 +2,7 @@ import sys
 import os
 
 # 현재 작업 디렉토리를 추가
-sys.path.append('C:\duksung_care')
+sys.path.append('/')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'duksung_care.settings')
 
 import django
@@ -46,9 +46,10 @@ for hospital in hospitals:
 
         operation_info = []
         for time in operation_times:
-            day = time.text.split()[0]  # 요일 정보 추출
-            operation_time = time.find_element(By.CLASS_NAME, 'time_operation').text  # 진료 시간 정보 추출
-            operation_info.append(f'{day}: {operation_time}')
+            day = time.text # 요일 정보 추출
+            # operation_time = time.find_element(By.CLASS_NAME, 'time_operation').text  # 진료 시간 정보 추출
+            # operation_info.append(f'{day}: {operation_time}')
+            operation_info.append(f'{day}')
     except Exception as e:
         # 요소를 찾을 수 없거나 다른 예외 발생 시, operation_info를 빈 리스트로 추가
         operation_info = []
@@ -67,12 +68,12 @@ df = pd.DataFrame(data)
 print(df)
 
 # 데이터베이스 업데이트
-# for index, row in df.iterrows():
-#     hospital = Hospital.objects.get(hospital_id=row['hospital_id'])  # DataFrame에서 hospital_id 값을 이용해 Hospital 객체 가져오기
-#     hospital.operation_time = row['operation_time']  # 크롤링한 영업시간 데이터를 operation_time 필드에 업데이트
-#     hospital.save()  # 변경 사항 저장
-#
-# print("영업시간 정보를 Hospital 모델의 operation_time 필드에 업데이트했습니다.")
+for index, row in df.iterrows():
+    hospital = Hospital.objects.get(hospital_id=row['hospital_id'])  # DataFrame에서 hospital_id 값을 이용해 Hospital 객체 가져오기
+    hospital.operation_time = row['operation_time']  # 크롤링한 영업시간 데이터를 operation_time 필드에 업데이트
+    hospital.save()  # 변경 사항 저장
+
+print("영업시간 정보를 Hospital 모델의 operation_time 필드에 업데이트했습니다.")
 
 # 데이터프레임을 엑셀 파일로 저장
 excel_file_path = 'hospital_hours_data.xlsx'  # 엑셀 파일 경로 지정

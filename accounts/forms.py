@@ -6,20 +6,41 @@ from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
 User=get_user_model()
 
-class SignupForm(UserCreationForm):
+class SignupForm(forms.Form):
     email=forms.EmailField(label="이메일")
+    nickname = forms.CharField(label="닉네임")
+    password = forms.CharField(label="비밀번호", widget=forms.PasswordInput)
+    username = forms.CharField(label="이름", required=True)
     class Meta(UserCreationForm):
         model=User
-        fields=('email','nickname','date_of_birth','phone','username','profileImg')
+        fields=('email','nickname','date_of_birth','phone','username','profileImg','password')
     def clean_email(self):
         email = self.cleaned_data.get('email')
+        if not email:
+            raise ValidationError('이메일을 입력하세요.')
         if email and not email.endswith('@duksung.ac.kr'):
-            email += '@duksung.ac.kr'
+            # email += '@duksung.ac.kr'
+            raise ValidationError('학교 이메일로 가입해주세요.')
 
         if email and User.objects.filter(email=email).exists():
             raise ValidationError('이미 등록된 이메일 주소입니다.')
 
         return email
+
+    def clean_nickname(self):
+        nickname = self.cleaned_data.get('nickname')
+        if not nickname:
+            raise ValidationError('닉네임을 입력하세요.')
+        if nickname and User.objects.filter(nickname=nickname).exists():
+            raise ValidationError('이미 사용 중인 닉네임입니다.')
+
+        return nickname
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        if not password:
+            raise ValidationError('비밀번호를 입력하세요.')
+        return password
 
 class LoginForm(forms.Form):
     email=forms.CharField()

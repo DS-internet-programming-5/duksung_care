@@ -17,7 +17,7 @@ class HospitalResource(resources.ModelResource):
         # 어떤 필드를 넣을지 정의 (전부 다 넣음)
         fields = ('id', 'place_name', 'distance', 'place_url', 'category_name', 'address_name', 'road_address_name',
                   'hospital_id', 'hospital_phone', 'category_group_code', 'category_group_name', 'x', 'y',
-                  'operation_time','average_rating','has_female_doctor','has_evening_hours','has_holiday_hours','is_partnership','bookmarks')
+                  'operation_time','average_rating','has_female_doctor','has_evening_hours','has_holiday_hours','is_partnership','bookmarks','partnership_description')
         export_order = fields
 
 # admin 페이지에서 어떻게 보일지 정의
@@ -26,7 +26,7 @@ class HospitalAdmin(ImportExportModelAdmin):
     fields = ('place_name', 'distance', 'place_url', 'category_name', 'address_name', 'road_address_name',
               'hospital_id', 'hospital_phone', 'category_group_code', 'category_group_name', 'x', 'y',
               'operation_time', 'average_rating', 'has_female_doctor', 'has_evening_hours', 'has_holiday_hours',
-              'is_partnership', 'bookmarks')
+              'is_partnership', 'bookmarks','partnership_description')
     list_display = ('id', 'place_name', 'category_name', 'distance', 'address_name', 'road_address_name',
               'hospital_phone', 'operation_time')
     resource_class = HospitalResource

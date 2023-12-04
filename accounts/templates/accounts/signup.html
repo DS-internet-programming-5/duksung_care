@@ -6,13 +6,6 @@
 <title>Signup</title>
 
 <style>
-  #content {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
-    width: 460px;
-  }
-
   .image-container {
     text-align: center;
     border-radius: 70%;
@@ -24,6 +17,12 @@
     border-radius: 70%;
     border: 1px solid #ccc;
   }
+
+  .form-errors {
+        color: red;
+        text-align:end;
+      margin-top: 5px;
+    }
 </style>
 
 <script>
@@ -40,23 +39,22 @@
 </script>
 
 <!-- leftside -->
-<div class="content">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
+<div class="content h-100">
+  <div class="container h-100 m-0 p-0 mw-100">
+    <div class="row h-100 w-100">
+      <div class="col-md-6 d-flex align-items-center justify-content-center m-0 p-0" style="background-color: #FFF0CE;">
         <div id="image">
           <img src="{% static 'accounts/images/image_1.svg' %}" alt="Image" class="img-fluid">
         </div>
       </div>
 
       <!-- rightside -->
-      <div class="col-md-6">
-        <div id="header">
-          회원가입
-        </div>
-
+      <div class="col-md-6 m-0" style="height: fit-content;">
         <!-- wrapper -->
-        <div id="wrapper">
+        <div id="wrapper" class="d-grid justify-content-center align-items-center h-100">
+            <div class="text-center" id="header">
+              회원가입
+            </div>
           <!-- content-->
           <div id="content">
             <form action="{% url 'signup' %}" method="POST" enctype="multipart/form-data">
@@ -78,16 +76,39 @@
                   </label>
                 </div>
               </div>
-
               <!-- Email -->
               <div>
                 <h3 class="join_title">
                   <label for="email">이메일</label>
                 </h3>
                 <span class="box int_email">
-                  <input type="text" name="email" class="int" maxlength="20">
-                  <span class="step_url">@duksung.ac.kr</span>
+                  <input type="text" name="email" class="int" placeholder="@duksung.ac.kr">
+{#                  <span class="step_url">@duksung.ac.kr</span>#}
                 </span>
+                  {% if form.email.errors %}
+                  {% for error in form.email.errors %}
+                      {% if 'This field is required.' in error %}
+                      <div class="form-errors">
+                        <p>이메일을 입력해주세요.</p>
+                      </div>
+                    {% endif %}
+                      {% if '이미 등록된 이메일 주소입니다.' in error %}
+                      <div class="form-errors">
+                        <p>{{ error }}</p>
+                      </div>
+                    {% endif %}
+                      {% if '학교 이메일로 가입해주세요.' in error %}
+                      <div class="form-errors">
+                        <p>{{ error }}</p>
+                      </div>
+                    {% endif %}
+                      {% if 'Enter a valid email address.' in error %}
+                      <div class="form-errors">
+                        <p>이메일이 유효하지 않습니다.</p>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
               </div>
 
               <!-- PW -->
@@ -96,6 +117,15 @@
                 <span class="box int_pass">
                   <input type="password" name="password" class="int" maxlength="20">
                 </span>
+                  {% if form.password.errors %}
+                  {% for error in form.password.errors %}
+                      {% if 'This field is required.' in error %}
+                      <div class="form-errors">
+                        <p>비밀번호를 입력해주세요.</p>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
               </div>
 
               <!-- NICKNAME -->
@@ -104,6 +134,20 @@
                 <span class="box int_nickname">
                   <input type="text" name="nickname" class="int" maxlength="20">
                 </span>
+                  {% if form.nickname.errors %}
+                  {% for error in form.nickname.errors %}
+                    {% if '이미 사용 중인 닉네임입니다.' in error %}
+                      <div class="form-errors">
+                        <p>{{ error }}</p>
+                      </div>
+                    {% endif %}
+                      {% if 'This field is required.' in error %}
+                      <div class="form-errors">
+                        <p>닉네임을 입력해주세요.</p>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
               </div>
 
               <!-- GROUP: Personal Information -->
@@ -126,6 +170,15 @@
                   </span>
                 </div>
               </div>
+                {% if form.username.errors %}
+                      {% for error in form.username.errors %}
+                          {% if 'This field is required.' in error %}
+                          <div class="form-errors">
+                            <p>이름을 입력해주세요.</p>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
 
               <!-- PHONE -->
               <div>

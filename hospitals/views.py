@@ -321,3 +321,8 @@ def hospital_bookmark(request, pk):
         return JsonResponse({'bookmarked': bookmarked})
 
     return JsonResponse({}, status=400)
+
+# 제휴 병원 상세 정보
+def partnership_detail(request, hospital_id):
+    hospital = get_object_or_404(Hospital, hospital_id=hospital_id, is_partnership=True)
+    return render(request, 'hospitals/partnership_detail.html', {'hospital': hospital})
