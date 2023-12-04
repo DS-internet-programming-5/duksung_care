@@ -6,6 +6,7 @@ selenium
 pandas
 markdown
 django-cors-headers
+django-ckeditor
 
 django-phonenumber-field[phonenumbers]
 django-phonenumber-field[phonenumberslite]
