@@ -18,7 +18,7 @@
 {% include 'navbar.html' %}
 
 <div class="centered-content my-5" style="max-width: 70%; margin: auto;">
-    <h1 class="mb-3 text-center" style="font-size:30px; font-weight:bold;">건강 뉴스</h1>
+    <h1 class="mb-5 text-center" style="font-size:30px; font-weight:bold;">건강 뉴스</h1>
 
     <div class="row">
         {% for post in page_obj %}
@@ -26,11 +26,11 @@
                 <div class="col-12 mb-4">
                     <div class="card d-flex flex-row" style="height: 300px;">
                         {% if post.head_image %}
-                            <div class="col-4">
+                            <div class="col-6">
                                 <img src="{{ post.head_image.url }}" class="card-img-top" alt="Post Image" style="height: 100%; object-fit: cover;">
                             </div>
                         {% endif %}
-                        <div class="card-body col-8 d-flex flex-column justify-content-center align-items-start">
+                        <div class="card-body col-6 d-flex flex-column justify-content-center align-items-start">
                             <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">
                                 <h5 class="card-title" style="font-size: 1.5rem; color: #5B7FFF;">{{ post.post_title }}</h5>
                                 <p class="card-text" style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{ post.post_content }}</p>
@@ -59,9 +59,7 @@
         {% endfor %}
     </div>
 
-    <div class="mb-5"></div>
-
-    <nav aria-label="Page navigation example">
+    <nav aria-label="Page navigation example" class="mt-5">
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
                 <li class="page-item">
