@@ -1,17 +1,21 @@
 {% extends 'health_tips/base.html' %}
 
-{% block head_title %}
-    Create Post
-{% endblock %}
 
 {% block main_area %}
-    <h1> Create New Post</h1>
+    <h1>Create New Post</h1>
     <hr>
-        <form method ="post" enctype="multipart/form-data">
+
+   <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-                <table>
-                    {{ form }}
-                </table>
-                <button type="submit" class="btn btn-primary float-right">Submit</button>
+            {{ form.media }}
+            {{ form.as_p|safe }}
+            <input type="submit" class="btn btn-dark" value="저장"/>
         </form>
+<script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/translations/ko.js"></script>
+<script>
+  ClassicEditor.create( document.querySelector( '#editor' ), {
+    language: "ko"
+  } );
+</script>
 {% endblock %}
