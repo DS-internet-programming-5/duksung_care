@@ -1,6 +1,7 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import CreateView, UpdateView, DetailView
+from django.views.generic import CreateView, UpdateView, DetailView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 
@@ -8,22 +9,16 @@ from .forms import CommentForm
 from .models import Post, Comment
 
 
+@login_required
 def post_list(request):
-    posts = Post.objects.all().order_by('-created_at')
+    posts = Post.objects.order_by('-created_at')
+    paginator = Paginator(posts, 5)
 
-    posts_per_page = 5
-    paginator = Paginator(posts, posts_per_page)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'health_tips/post_list.html', {'page_obj': page_obj})
 
-    page = request.GET.get('page')
 
-    try:
-        posts = paginator.page(page)
-    except PageNotAnInteger:
-        posts = paginator.page(1)
-    except EmptyPage:
-        posts = paginator.page(paginator.num_pages)
-
-    return render(request, 'health_tips/post_list.html', {'post_list': posts})
 class PostCreate(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     model = Post
     fields = ['post_title',  'post_content', 'head_image', 'file_upload', 'post_author']
