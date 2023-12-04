@@ -5,6 +5,7 @@ requests
 selenium
 pandas
 markdown
+django-cors-headers
 
 django-phonenumber-field[phonenumbers]
 django-phonenumber-field[phonenumberslite]
