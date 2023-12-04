@@ -37,7 +37,7 @@
                         <div class="card-body col-6 d-flex flex-column justify-content-center align-items-start">
                             <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">
                                 <h5 class="card-title" style="font-size: 1.5rem; color: #5B7FFF;">{{ post.post_title }}</h5>
-                                <p class="card-text" style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{ post.post_content }}</p>
+                                <p class="card-text">{{ post.post_content|safe|slice:":20" }}{% if post.post_content|length > 20 %}...{% endif %}</p>
                             </a>
                             <a href="{% url 'post_detail' post.pk %}" class="btn px-0 mt-3">Read more <i class="fas fa-caret-right"></i></a>
                         </div>
@@ -53,7 +53,7 @@
                         <div class="card-body d-flex flex-column align-items-start">
                             <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">
                                 <h5 class="card-title" style="color: #5B7FFF;">{{ post.post_title }}</h5>
-                                <p class="card-text" style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{ post.post_content }}</p>
+                                <p class="card-text" style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{ post.post_content|safe|slice:":20" }}{% if post.post_content|length > 20 %}...{% endif %}</p>
                             </a>
                             <a href="{% url 'post_detail' post.pk %}" class="btn px-0 mt-3">Read more <i class="fas fa-caret-right"></i></a>
                         </div>
