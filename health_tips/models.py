@@ -2,15 +2,16 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
+from accounts.models import User
 
 class Post(models.Model):
-    post_title = models.CharField(max_length=30)
+    post_title = models.CharField(max_length=100)
     post_content = RichTextUploadingField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     head_image = models.ImageField(upload_to='health/images/%Y/%m/%d/', null=True, blank=True)
-    file_upload = models.FileField(upload_to='health/files/%Y/%m/%d/', blank=True)
-    post_author = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
+    file_upload = models.FileField(upload_to='health/files/%Y/%m/%d/', blank=True, null=True)
+    post_author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_post', blank=True)
     hits = models.PositiveIntegerField(default=0)
     is_banner = models.BooleanField(default=False, null=True, blank=False)
@@ -29,10 +30,9 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    text = models.TextField()
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    comment_content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-
     def __str__(self):
-        return f'{self.user}::{self.text}'
+        return f'{self.user}::{self.comment_content}'

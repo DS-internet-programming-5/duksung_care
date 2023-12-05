@@ -59,9 +59,11 @@
     <div class="row">
         <article>
         <section class="mt-5 mb-5">
-            <h3 class="mb-3 fw-bold">우대 혜택</h3>
+            <h3 class="mb-3 fw-bold" style="color: #0C356A">우대 혜택</h3>
             <div class="card fs-5 p-5">
+                {% if hospital.partnership_description %}
                 {{ hospital.partnership_description |mark }}
+                {% endif %}
             </div>
         </section>
         </article>
