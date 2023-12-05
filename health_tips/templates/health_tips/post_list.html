@@ -29,12 +29,15 @@
             {% if forloop.counter == 1 %}
                 <div class="col-12 mb-4">
                     <div class="card d-flex flex-row" style="height: 300px;">
-                        {% if post.head_image %}
                             <div class="col-6">
+                                {% if post.head_image %}
                                 <img src="{{ post.head_image.url }}" class="card-img" alt="Post Image"
                                      style="height: 100%; object-fit: cover; border-bottom-right-radius:0; border-top-right-radius:0">
+                                {% else %}
+                                <img class="card-img" src="{% static 'imgs/default_head_image.png' %}" alt="Post Image"
+                                     style="height: 100%; object-fit: cover; border-bottom-right-radius:0; border-top-right-radius:0"/>
+                                {% endif %}
                             </div>
-                        {% endif %}
                         <div class="card-body col-6 d-flex flex-column justify-content-center align-items-start">
                             <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">
                                 <h5 class="card-title" style="font-size: 1.5rem; color: #5B7FFF;">{{ post.post_title }}</h5>
@@ -50,6 +53,8 @@
                     <div class="card">
                         {% if post.head_image %}
                             <img src="{{ post.head_image.url }}" class="card-img-top" alt="Post Image" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <img class="card-img-top" src="{% static 'imgs/default_head_image.png' %}" alt="Post Image" style="height: 200px; object-fit: cover;"/>
                         {% endif %}
                         <div class="card-body d-flex flex-column align-items-start">
                             <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">

@@ -1,4 +1,5 @@
 {% extends 'health_tips/base.html' %}
+{% load static %}
 
 {% block main_area %}
     <!-- Post content-->
@@ -32,6 +33,8 @@
                 <div>
                     {% if post.head_image %}
                         <img class="img-fluid" src="{{ post.head_image.url }}" alt="..."/>
+                    {% else %}
+                        <img class="img-fluid" src="{% static 'imgs/default_head_image.png' %}" alt="..."/>
                     {% endif %}
                     <p class="mb-4">{{ post.post_content|safe }}</p>
                 </div>
