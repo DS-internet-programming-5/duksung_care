@@ -14,7 +14,7 @@ class Post(models.Model):
     post_author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_post', blank=True)
     hits = models.PositiveIntegerField(default=0)
-    is_banner = models.BooleanField(default=False, null=True, blank=False)
+    is_banner = models.BooleanField(default=False, null=True, blank=True)
 
     def increase_hits(self):
         if not hasattr(self, '_likes_increase'):

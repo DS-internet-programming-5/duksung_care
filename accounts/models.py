@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
-from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.translation import gettext_lazy as _
-from duksung_care import settings
-
 
 class UserManager(BaseUserManager):
     def create_user(self, email, username, nickname="", date_of_birth=None, phone=None, profileImg=None, password=None):

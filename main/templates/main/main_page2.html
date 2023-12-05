@@ -118,17 +118,24 @@
         <!-- banner-->
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
+                {% if posts %}
                 {% for post in posts %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <a href="{% url 'post_detail' pk=post.id %}">
+                    <a href="{% url 'post_detail' pk=post.pk %}">
+                        {% if post.head_image %}
                         <img src="{{ post.head_image.url }}" class="d-block mx-auto" alt="Banner Image"
                              style="width: 1200px; height: 390px;">
+                        {% else %}
+                        <img src="{% static 'imgs/default_head_image.png' %}" class="d-block mx-auto" alt="Banner Image"
+                         style="width: 1200px; height: 390px;">
+                        {% endif %}
                         <div class="carousel-caption d-none d-md-block custom-caption">
                             <h3>{{ post.post_title }}</h3>
                         </div>
                     </a>
                 </div>
                 {% endfor %}
+                {% endif %}
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
                     data-bs-slide="prev">

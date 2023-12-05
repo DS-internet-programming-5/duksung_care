@@ -1,15 +1,15 @@
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import CreateView, UpdateView, DetailView, ListView
+from django.views.generic import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.core.checks import messages
 from django.urls import reverse
-from django.views.decorators.http import require_POST
 from django.core.exceptions import PermissionDenied
-from .forms import CommentForm, PostForm
+from .forms import CommentForm
 from .models import Post, Comment
 from django.contrib import messages
+from django.http import JsonResponse
 
 # 게시글 목록
 @login_required
@@ -41,19 +41,26 @@ def post_detail(request, pk):
 
     post.increase_hits()
 
-    # 좋아요 버튼 처리
-    if request.method == 'POST' and request.user.is_authenticated:
-        if 'like' in request.POST:
-            if request.user not in post.likes.all():
-                post.likes.add(request.user)
-                post.save()
-        elif 'unlike' in request.POST:
-            if request.user in post.likes.all():
-                post.likes.remove(request.user)
-                post.save()
+    return render(request, 'health_tips/post_detail.html', {'post': post, 'comments': comments, 'form': form})
 
-    is_liked = request.user in post.likes.all()
-    return render(request, 'health_tips/post_detail.html', {'post': post, 'comments': comments, 'form': form, 'is_liked': is_liked})
+# 좋아요 기능
+def likes_post(request, pk):
+    if request.method == 'POST' and request.user.is_authenticated:
+        post = get_object_or_404(Post, pk=pk)
+        user = request.user
+
+        if user in post.likes.all():
+            post.likes.remove(user)
+            liked = False
+        else:
+            post.likes.add(user)
+            liked = True
+
+        post.save()
+
+        return JsonResponse({'liked': liked, 'count_likes': post.likes.count()})
+
+    return JsonResponse({}, status=400)
 
 # 게시글 작성
 class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):

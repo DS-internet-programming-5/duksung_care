@@ -42,16 +42,15 @@
 
         <div class="d-flex justify-content-center">
             <!-- 좋아요 버튼 -->
-            <form method="post" action="{% url 'post_detail' pk=post.pk %}" id="like-form">
-                {% csrf_token %}
-                <input type="hidden" name="like_action" id="like-action"
-                       value="{% if is_liked %}unlike{% else %}like{% endif %}">
-                <button type="submit" class="btn {% if is_liked %}btn-outline-danger{% else %}btn-outline-primary{% endif %}"
-                        id="like-button">
-                    <i class="far fa-thumbs-{% if is_liked %}down{% else %}up{% endif %}"></i>
-                    {% if is_liked %}Unlike{% else %}Like{% endif %}
-                </button>
-            </form>
+            <button class="like-btn" data-post-pk="{{ post.pk }}" style="border: none; background-color: transparent;">
+                {% if request.user in post.likes.all %}
+                    <i class="fa-regular fa-thumbs-up fs-4" style="color: orange;"></i>
+                    <span style="color: gray">{{ post.likes.count }} likes</span>
+                {% else %}
+                    <i class="fa-regular fa-thumbs-up fs-4" style="color: gray;"></i>
+                    <span style="color: gray">{{ post.likes.count }} likes</span>
+                {% endif %}
+            </button>
         </div>
             <!-- 다운로드 버튼 생성-->
             {% if post.file_upload %}
@@ -97,9 +96,9 @@
                         <div class="d-flex align-items-center mb-2 justify-content-between">
                             <div>
                             <img class="rounded-circle img-fluid" src="{{ comment.user.profileImg.url }}"
-                                 alt="{{ comment.user.username }}" style="width: 50px; height: 50px">
+                                 alt="{{ comment.user.nickname }}" style="width: 50px; height: 50px">
                             <!-- 댓글 edit 버튼이 로그인 되어 있고, 작성자 본인 일때만 보이게 -->
-                            <strong class="ms-2">{{ comment.user.username }}</strong>
+                            <strong class="ms-2">{{ comment.user.nickname }}</strong>
                             <small class="text-muted ms-2">{{ comment.created_at | date:'Y.m.d. H:i' }}</small>
                             </div>
                             {% if user.is_authenticated and comment.user == user %}
@@ -151,39 +150,49 @@
                 </div>
             {% endfor %}
         {% endif %}
-    <script>
-
-        document.getElementById('like-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-            var likeActionInput = document.getElementById('like-action');
-            var likeButton = document.getElementById('like-button');
-
-            if (likeActionInput.value === 'like') {
-                likeActionInput.value = 'unlike';
-                likeButton.classList.remove('btn-primary');
-                likeButton.classList.add('btn-danger');
-                likeButton.innerHTML = '<i class="far fa-thumbs-down"></i> Unlike';
-            } else {
-                likeActionInput.value = 'like';
-                likeButton.classList.remove('btn-danger');
-                likeButton.classList.add('btn-primary');
-                likeButton.innerHTML = '<i class="far fa-thumbs-up"></i> Like';
-            }
-        });
-
-        function toggleCommentForm(commentId) {
-            var commentForm = document.getElementById('comment-form-' + commentId);
-            var commentContent = document.getElementById('comment-content-' + commentId);
-            var commentEditBtn = document.getElementById('comment-' + commentId + '-update-btn');
-            if (commentForm.style.display === 'none' || !commentForm.style.display) {
-                commentForm.style.display = 'block';
-                commentContent.style.display = 'none';
-                commentEditBtn.style.display = 'none';
-            } else {
-                commentForm.style.display = 'none';
-                commentContent.style.display = 'block';
-                commentEditBtn.style.display = 'block';
-            }
+{% endblock %}
+{% block extra_js %}
+<script>
+    function toggleCommentForm(commentId) {
+        var commentForm = document.getElementById('comment-form-' + commentId);
+        var commentContent = document.getElementById('comment-content-' + commentId);
+        var commentEditBtn = document.getElementById('comment-' + commentId + '-update-btn');
+        if (commentForm.style.display === 'none' || !commentForm.style.display) {
+            commentForm.style.display = 'block';
+            commentContent.style.display = 'none';
+            commentEditBtn.style.display = 'none';
+        } else {
+            commentForm.style.display = 'none';
+            commentContent.style.display = 'block';
+            commentEditBtn.style.display = 'block';
         }
-    </script>
+    }
+
+    $(document).ready(function() {
+        $('.like-btn').click(function () {
+            const button = $(this);
+            const postId = button.data('post-pk');
+
+            $.ajax({
+                type: 'POST',
+                url: `/health_tips/like_post/${postId}/`,
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    button.find('span').text(response.count_likes + ' likes');
+
+                    if (response.liked) {
+                        button.find('i').css({color: 'orange'});
+                    } else {
+                        button.find('i').css({color: 'gray'});
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}

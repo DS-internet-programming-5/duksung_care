@@ -43,7 +43,7 @@
                                 <h5 class="card-title" style="font-size: 1.5rem; color: #5B7FFF;">{{ post.post_title }}</h5>
                                 <p class="card-text">{{ post.post_content|safe|slice:":30" }}{% if post.post_content|length > 30 %}...{% endif %}</p>
                             </a>
-                            <a href="{% url 'post_detail' post.pk %}" class="btn px-0 mt-3">Read more <i class="fas fa-caret-right"></i></a>
+                            <a href="{% url 'post_detail' post.pk %}" class="btn px-0 mt-3 border-0">Read more <i class="fas fa-caret-right"></i></a>
                         </div>
                     </div>
                     <hr />
@@ -61,7 +61,7 @@
                                 <h5 class="card-title" style="color: #5B7FFF;">{{ post.post_title }}</h5>
                                 <p class="card-text" style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{ post.post_content|safe|slice:":20" }}{% if post.post_content|length > 20 %}...{% endif %}</p>
                             </a>
-                            <a href="{% url 'post_detail' post.pk %}" class="btn px-0 mt-3">Read more <i class="fas fa-caret-right"></i></a>
+                            <a href="{% url 'post_detail' post.pk %}" class="btn px-0 mt-3 border-0">Read more <i class="fas fa-caret-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}"> < </a>
                 </li>
             {% endif %}
             {% for num in page_obj.paginator.page_range %}
@@ -85,7 +85,7 @@
             {% endfor %}
             {% if page_obj.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}"> > </a>
                 </li>
             {% endif %}
         </ul>
