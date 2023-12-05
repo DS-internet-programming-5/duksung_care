@@ -95,7 +95,8 @@
                         <!-- 작성자 이름과 댓글 생성 날짜 -->
                         <div class="d-flex align-items-center mb-2 justify-content-between">
                             <div>
-                            <img class="rounded-circle img-fluid" src="{{ comment.user.profileImg.url }}"
+                            <img class="rounded-circle img-fluid"
+                                 src="{% if comment.user.profileImg %}{{ comment.user.profileImg.url }}{% else %}{% static 'imgs/default_profile.png' %}{% endif %}"
                                  alt="{{ comment.user.nickname }}" style="width: 50px; height: 50px">
                             <!-- 댓글 edit 버튼이 로그인 되어 있고, 작성자 본인 일때만 보이게 -->
                             <strong class="ms-2">{{ comment.user.nickname }}</strong>
