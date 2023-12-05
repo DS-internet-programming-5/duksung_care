@@ -11,6 +11,7 @@ from .forms import CommentForm, PostForm
 from .models import Post, Comment
 from django.contrib import messages
 
+# 게시글 목록
 @login_required
 def post_list(request):
     posts = Post.objects.order_by('-created_at')
@@ -20,53 +21,7 @@ def post_list(request):
     page_obj = paginator.get_page(page_number)
     return render(request, 'health_tips/post_list.html', {'page_obj': page_obj})
 
-
-# class PostCreate(LoginRequiredMixin,UserPassesTestMixin,CreateView):
-#     try:
-#         posts = paginator.page(page)
-#     except PageNotAnInteger:
-#         posts = paginator.page(1)
-#     except EmptyPage:
-#         posts = paginator.page(paginator.num_pages)
-#
-#     return render(request, 'health_tips/post_list.html', {'post_list': posts})
-class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
-    model = Post
-    fields = ['post_title',  'post_content', 'head_image', 'file_upload', 'post_author']
-
-    def test_func(self):
-        return self.request.user.is_superuser or self.request.user.is_staff
-    def form_valid(self, form):
-        current_user = self.request.user
-        if current_user.is_authenticated and (current_user.is_staff or current_user.is_superuser):
-            form.instance.author = current_user
-            return super(PostCreate, self).form_valid(form)
-        else:
-            return redirect('http://127.0.0.1:8000/health_tips/post/')
-@login_required
-def create_post(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=True)
-            post.post_author = request.user
-            post.save()
-            return redirect('post_list')  # 작성 후 포스트 목록 페이지로 이동하도록 설정
-    else:
-        form = PostForm()
-
-    return render(request, 'health_tips/post_form.html', {'form': form})
-class PostUpdate(LoginRequiredMixin, UpdateView):
-    model = Post
-    fields = ['post_title',  'post_content', 'head_image', 'file_upload', 'post_author']
-    template_name = 'health_tips/post_update_form.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated and request.user == self.get_object().post_author:
-            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
-        else:
-            raise PermissionDenied
-
+# 게시글 상세
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     comments = Comment.objects.filter(post=post)
@@ -77,6 +32,7 @@ def post_detail(request, pk):
             comment = form.save(commit=False)
             comment.post = post
             comment.user = request.user
+            comment.comment_content = CommentForm(request.POST)
             comment.save()
 
             return redirect('post_detail', pk=pk)
@@ -99,6 +55,41 @@ def post_detail(request, pk):
     is_liked = request.user in post.likes.all()
     return render(request, 'health_tips/post_detail.html', {'post': post, 'comments': comments, 'form': form, 'is_liked': is_liked})
 
+# 게시글 작성
+class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = Post
+    fields = ['post_title', 'post_content', 'head_image','is_banner']
+    template_name = 'health_tips/post_form.html'
+
+    def test_func(self):
+        return self.request.user.is_superuser or self.request.user.is_staff
+    def form_valid(self, form):
+        current_user = self.request.user
+        if current_user.is_authenticated and (current_user.is_staff or current_user.is_superuser):
+            post = form.save(commit=False)
+            post.post_author = current_user
+
+            if 'head_image' not in self.request.FILES:
+                post.head_image = None
+
+            post.save()
+            return redirect('/health_tips/post/')
+        else:
+            return redirect('/health_tips/post/')
+
+# 게시글 수정
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['post_title', 'post_content', 'head_image', 'file_upload', 'is_banner']
+    template_name = 'health_tips/post_update_form.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user == self.get_object().post_author:
+            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
+
+# 댓글 작성
 def new_comment(request, pk):
     if request.user.is_authenticated:
         post = get_object_or_404(Post, pk=pk)
@@ -111,12 +102,11 @@ def new_comment(request, pk):
                 comment.user = request.user
                 comment.save()
                 return redirect('post_detail', pk=pk)
-        # POST 요청이 아니면 게시물 상세 페이지로 이동
         return redirect('post_detail', pk=pk)
     else:
         raise PermissionDenied
 
-
+# 댓글 삭제
 @login_required
 def delete_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
@@ -130,7 +120,7 @@ def delete_comment(request, pk):
 
     return redirect(post.get_absolute_url())
 
-
+# 댓글 수정
 class CommentUpdate(LoginRequiredMixin, UpdateView):
     model = Comment
     form_class = CommentForm

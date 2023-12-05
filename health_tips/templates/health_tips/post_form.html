@@ -1,21 +1,121 @@
 {% extends 'health_tips/base.html' %}
 
+{% block head_title %}
+    게시글 작성
+{% endblock %}
 
 {% block main_area %}
-    <h1>Create New Post</h1>
-    <hr>
-
-   <form method="POST" enctype="multipart/form-data">
+    <article class="mb-lg-4">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.media }}
-            {{ form.as_p|safe }}
-            <input type="submit" class="btn btn-dark" value="저장"/>
+            <!-- Post header-->
+            <header class="mb-4">
+                <h1 class="text-center mt-5 fw-semibold" style="color: #0C356A">게시글 작성</h1>
+                <hr>
+                <!-- Post title-->
+                <div class="d-flex align-items-center">
+                    <h5 class="text-center mb-0 fw-semibold" style="width: 5%">제목</h5>
+                    <input type="text" name="post_title" class="my-lg-3 w-100 px-2 rounded-2 ms-3" value=""
+                       style="height: 40px; border: 1px solid gray;">
+                </div>
+                <!-- Show validation errors if any -->
+                {% if errors.post_title %}
+                    <ul class="errors">
+                        {% for error in errors.post_title %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </header>
+
+            <!-- Post content-->
+            <section class="mb-5 d-flex justify-content-center">
+                <div style="min-width: 100%">
+                    <div id="preview-card" class="card object-fit-cover d-flex justify-content-center align-items-center" alt="Preview-card" src="#" style="width: 100%; height: 250px;">
+                        <label for="id_head_image" class="btn"><i class="fa-solid fa-circle-arrow-up fs-1" style="color: darkgray"></i></label>
+                    </div>
+                    <img id="preview" class="img-fluid object-fit-cover" alt="Preview" src="#" style="display: none; width: 1200px; height: 390px;"/>
+                    <div class="d-flex flex-column justify-content-center mb-4">
+                    <label for="id_head_image" class="btn btn-outline-dark mt-4 mx-auto" id="head_image_btn" style="display: none">
+                        헤드 이미지 선택
+                    </label>
+                    <input type="file" id="id_head_image" name="head_image" accept="image/*"
+                           onchange="previewImage(event)" style="display: none"/>
+                    <!-- Show validation errors if any -->
+                    {% if errors.head_image %}
+                        <ul class="errors">
+                            {% for error in errors.head_image %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    </div>
+                    <textarea id="id_content" name="post_content"></textarea>
+                    <!-- Show validation errors if any -->
+                    {% if errors.post_content %}
+                        <ul class="errors">
+                            {% for error in errors.post_content %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </section>
+            <div class="d-grid justify-content-center">
+                <div class="form-check mb-4">
+                  <input class="form-check-input" type="checkbox" name="is_banner" id="isBanner" {% if post.is_banner %} checked {% endif %}>
+                  <label class="form-check-label" for="isBanner">
+                    배너로 적용
+                  </label>
+                </div>
+                <input type="submit" class="btn btn-dark btn-lg" value="저장"/>
+            </div>
         </form>
-<script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/translations/ko.js"></script>
-<script>
-  ClassicEditor.create( document.querySelector( '#editor' ), {
-    language: "ko"
-  } );
-</script>
+    </article>
+    {% if form.errors %}
+        {% for error in form.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/translations/ko.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            ClassicEditor
+                .create(document.querySelector('#id_content'), {
+                    language: 'ko',
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var imgElement = document.getElementById('preview');
+                var cardElement = document.getElementById('preview-card');
+                var headBtnElement = document.getElementById('head_image_btn');
+                console.log(cardElement);
+                cardElement.style.visibility = 'hidden';
+                cardElement.style.height = '0px';
+                headBtnElement.style.display = 'inline-block';
+                imgElement.src = reader.result;
+                imgElement.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        const checkbox = document.getElementById('isBanner');
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                this.value = 'True';
+            } else {
+                this.value = 'False';
+            }
+        });
+    </script>
 {% endblock %}

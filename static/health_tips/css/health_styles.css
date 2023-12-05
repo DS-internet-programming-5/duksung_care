@@ -1,4 +1,12 @@
-/* static/css/comment_styles.css */
+/* 게시글 */
+.post-edit-btn a:hover{
+    color: #0056b3!important;
+}
+
+/* ckeditor */
+.ck-content {
+    min-height: 500px;
+}
 
 /* 댓글 폼 스타일 */
 #comment-form {
