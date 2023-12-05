@@ -101,23 +101,49 @@
                             </div>
                             {% if user.is_authenticated and comment.user == user %}
                                 <div>
-                                    <a role="button"
-                                       class="btn btn-sm btn-outline-secondary"
+                                    <a class="text-decoration-none text-muted edit-btn"
                                        id="comment-{{ comment.pk }}-update-btn"
-                                       href="/health_tips/update_comment/{{ comment.pk }}/">
-                                        edit
+                                       onclick="toggleCommentForm({{ comment.pk }})"
+                                        style="cursor: pointer">
+                                        수정
                                     </a>
-                                    <a role="button"
-                                       class="btn btn-sm btn-outline-danger"
+                                    <a class="text-decoration-none text-muted delete-btn"
                                        id="comment-{{ comment.pk }}-delete-btn"
-                                       href="{% url 'delete_comment' pk=comment.pk %}">
-                                        delete
+                                       data-bs-toggle="modal" data-bs-target="#commentDeleteModal"
+                                        style="cursor: pointer">
+                                        삭제
                                     </a>
+                                    <div class="modal fade" id="commentDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                          <div class="modal-body my-4 text-center fs-5">
+                                            댓글을 삭제하시겠습니까?
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">취소</button>
+                                            <a type="button" href="{% url 'delete_comment' pk=comment.pk %}" class="btn btn-outline-danger">삭제</a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
                                 </div>
                             {% endif %}
                         </div>
                         <!-- 댓글 내용 -->
-                        <p>{{ comment.comment_content}}</p>
+                        <div class="comment-content-box my-3 px-2">
+                            <p class="m-0" id="comment-content-{{ comment.pk }}">{{ comment.comment_content}}</p>
+                            <!-- 댓글 수정 폼 -->
+                            <form id="comment-form-{{ comment.pk }}" method="post" action="{% url 'update_comment' pk=comment.pk %}" style="display: none;">
+                                {% csrf_token %}
+                                {{ comment_form.comment_content.label_tag }}
+                                <textarea class="form-control" rows="5" name="comment_content"
+                                          id="id_comment_content_{{ comment.pk }}"
+                                          placeholder="댓글을 입력하세요">{{ comment.comment_content }}</textarea>
+                                <div class="d-flex justify-content-end mt-2">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">수정</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
@@ -141,5 +167,20 @@
                 likeButton.innerHTML = '<i class="far fa-thumbs-up"></i> Like';
             }
         });
+
+        function toggleCommentForm(commentId) {
+            var commentForm = document.getElementById('comment-form-' + commentId);
+            var commentContent = document.getElementById('comment-content-' + commentId);
+            var commentEditBtn = document.getElementById('comment-' + commentId + '-update-btn');
+            if (commentForm.style.display === 'none' || !commentForm.style.display) {
+                commentForm.style.display = 'block';
+                commentContent.style.display = 'none';
+                commentEditBtn.style.display = 'none';
+            } else {
+                commentForm.style.display = 'none';
+                commentContent.style.display = 'block';
+                commentEditBtn.style.display = 'block';
+            }
+        }
     </script>
 {% endblock %}
