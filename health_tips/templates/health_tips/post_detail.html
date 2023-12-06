@@ -1,0 +1,199 @@
+{% extends 'health_tips/base.html' %}
+{% load static %}
+
+{% block main_area %}
+    <!-- Post content-->
+        <article class="mb-lg-4">
+            <!-- Post header-->
+            <header class="mb-4">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page"><a class="text-muted text-decoration-none" href="/health_tips/post/">< 건강뉴스</a></li>
+                  </ol>
+                </nav>
+                <!-- Post title-->
+                <h1 class="fw-bolder mb-md-4 mt-4" style="color: #0C356A"> {{ post.post_title }} </h1>
+
+                {% if post.hook_text %}
+                    <h5 class="text-muted"> {{ post.hook_text|safe }} </h5>
+                {% endif %}
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <!-- 작성일자 -->
+                    <div>
+                        <div class="text-muted mb-2">by {{ post.post_author.nickname }} &#x2022; {{ post.created_at | date:'Y-m-d, H:i' }}</div>
+                    </div>
+                    <!-- 조회수 표시 -->
+                    <p class="text-muted">{{ post.hits }} views</p>
+                </div>
+            </header>
+
+            <!-- Post content-->
+            <section class="mb-5 d-flex justify-content-center">
+                <div>
+                    {% if post.head_image %}
+                        <img class="img-fluid" src="{{ post.head_image.url }}" alt="..."/>
+                    {% else %}
+                        <img class="img-fluid" src="{% static 'imgs/default_head_image.png' %}" alt="..."/>
+                    {% endif %}
+                    <p class="mb-4">{{ post.post_content|safe }}</p>
+                </div>
+            </section>
+
+        <div class="d-flex justify-content-center">
+            <!-- 좋아요 버튼 -->
+            <button class="like-btn" data-post-pk="{{ post.pk }}" style="border: none; background-color: transparent;">
+                {% if request.user in post.likes.all %}
+                    <i class="fa-regular fa-thumbs-up fs-4" style="color: orange;"></i>
+                    <span style="color: gray">{{ post.likes.count }} likes</span>
+                {% else %}
+                    <i class="fa-regular fa-thumbs-up fs-4" style="color: gray;"></i>
+                    <span style="color: gray">{{ post.likes.count }} likes</span>
+                {% endif %}
+            </button>
+        </div>
+            <!-- 다운로드 버튼 생성-->
+            {% if post.file_upload %}
+                <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button" download>Download</a>
+            {% endif %}
+        </article>
+        <hr/>
+        <!-- Post update link -->
+            <div class="d-flex justify-content-end post-edit-btn">
+            {% if user.is_authenticated and user == post.post_author %}
+                <a href="/health_tips/update_post/{{ post.pk }}"
+                   style="color: gray; text-decoration: none">게시글 수정</a>
+            {% endif %}
+            </div>
+
+        <!-- Comments -->
+        <div id="comment-area">
+            <h4 class="my-md-4">댓글</h4>
+            <!-- Comments Form -->
+            <div class="card my-4">
+                <div class="card-body">
+                    <form method="post" action="{% url 'new_comment' post.pk %}">
+                        {% csrf_token %}
+                        {{ comment_form.comment_content.label_tag }}
+                        <textarea class="form-control" rows="5" name="comment_content"
+                                  id="id_comment_content"
+                                  placeholder="댓글을 입력하세요"></textarea>
+                        <div class="d-flex justify-content-end mt-2">
+                            <button type="submit" class="btn btn-outline-secondary">작성</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- 해당 포스트에 댓글이 있다면 -->
+        {% if post.comment_set.exists %}
+            {% for comment in post.comment_set.iterator %}
+                <!-- Single Comment -->
+                <div class="card mb-4" id="comment-{{ comment.pk }}">
+                    <div class="card-body">
+                        <!-- 작성자 이름과 댓글 생성 날짜 -->
+                        <div class="d-flex align-items-center mb-2 justify-content-between">
+                            <div>
+                            <img class="rounded-circle img-fluid"
+                                 src="{% if comment.user.profileImg %}{{ comment.user.profileImg.url }}{% else %}{% static 'imgs/default_profile.png' %}{% endif %}"
+                                 alt="{{ comment.user.nickname }}" style="width: 50px; height: 50px">
+                            <!-- 댓글 edit 버튼이 로그인 되어 있고, 작성자 본인 일때만 보이게 -->
+                            <strong class="ms-2">{{ comment.user.nickname }}</strong>
+                            <small class="text-muted ms-2">{{ comment.created_at | date:'Y.m.d. H:i' }}</small>
+                            </div>
+                            {% if user.is_authenticated and comment.user == user %}
+                                <div>
+                                    <a class="text-decoration-none text-muted edit-btn"
+                                       id="comment-{{ comment.pk }}-update-btn"
+                                       onclick="toggleCommentForm({{ comment.pk }})"
+                                        style="cursor: pointer">
+                                        수정
+                                    </a>
+                                    <a class="text-decoration-none text-muted delete-btn"
+                                       id="comment-{{ comment.pk }}-delete-btn"
+                                       data-bs-toggle="modal" data-bs-target="#commentDeleteModal"
+                                        style="cursor: pointer">
+                                        삭제
+                                    </a>
+                                    <div class="modal fade" id="commentDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                          <div class="modal-body my-4 text-center fs-5">
+                                            댓글을 삭제하시겠습니까?
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">취소</button>
+                                            <a type="button" href="{% url 'delete_comment' pk=comment.pk %}" class="btn btn-outline-danger">삭제</a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <!-- 댓글 내용 -->
+                        <div class="comment-content-box my-3 px-2">
+                            <p class="m-0" id="comment-content-{{ comment.pk }}">{{ comment.comment_content}}</p>
+                            <!-- 댓글 수정 폼 -->
+                            <form id="comment-form-{{ comment.pk }}" method="post" action="{% url 'update_comment' pk=comment.pk %}" style="display: none;">
+                                {% csrf_token %}
+                                {{ comment_form.comment_content.label_tag }}
+                                <textarea class="form-control" rows="5" name="comment_content"
+                                          id="id_comment_content_{{ comment.pk }}"
+                                          placeholder="댓글을 입력하세요">{{ comment.comment_content }}</textarea>
+                                <div class="d-flex justify-content-end mt-2">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">수정</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+{% endblock %}
+{% block extra_js %}
+<script>
+    function toggleCommentForm(commentId) {
+        var commentForm = document.getElementById('comment-form-' + commentId);
+        var commentContent = document.getElementById('comment-content-' + commentId);
+        var commentEditBtn = document.getElementById('comment-' + commentId + '-update-btn');
+        if (commentForm.style.display === 'none' || !commentForm.style.display) {
+            commentForm.style.display = 'block';
+            commentContent.style.display = 'none';
+            commentEditBtn.style.display = 'none';
+        } else {
+            commentForm.style.display = 'none';
+            commentContent.style.display = 'block';
+            commentEditBtn.style.display = 'block';
+        }
+    }
+
+    $(document).ready(function() {
+        $('.like-btn').click(function () {
+            const button = $(this);
+            const postId = button.data('post-pk');
+
+            $.ajax({
+                type: 'POST',
+                url: `/health_tips/like_post/${postId}/`,
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    button.find('span').text(response.count_likes + ' likes');
+
+                    if (response.liked) {
+                        button.find('i').css({color: 'orange'});
+                    } else {
+                        button.find('i').css({color: 'gray'});
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

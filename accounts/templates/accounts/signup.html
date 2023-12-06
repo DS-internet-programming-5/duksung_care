@@ -1,0 +1,204 @@
+{% extends "accounts/base.html" %}
+
+{% block content %}
+{% load static %}
+
+<title>Signup</title>
+
+<style>
+  .image-container {
+    text-align: center;
+    border-radius: 70%;
+  }
+
+  #preview {
+    height: 145px;
+    width: 145px;
+    border-radius: 70%;
+    border: 1px solid #ccc;
+  }
+
+  .form-errors {
+        color: red;
+        text-align:end;
+      margin-top: 5px;
+    }
+</style>
+
+<script>
+  function previewImage(input) {
+    var preview = document.getElementById('preview');
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        preview.src = e.target.result;
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
+
+<!-- leftside -->
+<div class="content h-100">
+  <div class="container h-100 m-0 p-0 mw-100">
+    <div class="row h-100 w-100">
+      <div class="col-md-6 d-flex align-items-center justify-content-center m-0 p-0" style="background-color: #FFF0CE;">
+        <div id="image">
+          <img src="{% static 'accounts/images/image_1.svg' %}" alt="Image" class="img-fluid">
+        </div>
+      </div>
+
+      <!-- rightside -->
+      <div class="col-md-6 m-0" style="height: fit-content;">
+        <!-- wrapper -->
+        <div id="wrapper" class="d-grid justify-content-center align-items-center h-100">
+            <div class="text-center" id="header">
+              회원가입
+            </div>
+          <!-- content-->
+          <div id="content">
+            <form action="{% url 'signup' %}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <!-- PROFILE PICTURE -->
+              <div>
+                <div class="image-container">
+                  {% if not user.profileImg %}
+                  <img id="preview" src="{% static 'imgs/default_profile.png' %}" alt="{{ user.username }}" class="avatar">
+                  {% else %}
+                  <img id="preview" src="{{ user.profileImg.url }}">
+                  {% endif %}
+                </div>
+
+                <div class="profile" style="text-align:center;">
+                  <label for="profileImg" style="font-size: 13px; cursor: pointer; display: inline-block; padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px; margin: 10px 0 0px;">
+                    프로필 사진 선택하기
+                    <input type="file" id="profileImg" name="profileImg" accept="image/*" onchange="previewImage(this)" style="display: none;">
+                  </label>
+                </div>
+              </div>
+              <!-- Email -->
+              <div>
+                <h3 class="join_title">
+                  <label for="email">이메일</label>
+                </h3>
+                <span class="box int_email">
+                  <input type="text" name="email" class="int" placeholder="@duksung.ac.kr">
+{#                  <span class="step_url">@duksung.ac.kr</span>#}
+                </span>
+                  {% if form.email.errors %}
+                  {% for error in form.email.errors %}
+                      {% if 'This field is required.' in error %}
+                      <div class="form-errors">
+                        <p>이메일을 입력해주세요.</p>
+                      </div>
+                    {% endif %}
+                      {% if '이미 등록된 이메일 주소입니다.' in error %}
+                      <div class="form-errors">
+                        <p>{{ error }}</p>
+                      </div>
+                    {% endif %}
+                      {% if '학교 이메일로 가입해주세요.' in error %}
+                      <div class="form-errors">
+                        <p>{{ error }}</p>
+                      </div>
+                    {% endif %}
+                      {% if 'Enter a valid email address.' in error %}
+                      <div class="form-errors">
+                        <p>이메일이 유효하지 않습니다.</p>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              </div>
+
+              <!-- PW -->
+              <div>
+                <h3 class="join_title"><label for="pswd">비밀번호</label></h3>
+                <span class="box int_pass">
+                  <input type="password" name="password" class="int" maxlength="20">
+                </span>
+                  {% if form.password.errors %}
+                  {% for error in form.password.errors %}
+                      {% if 'This field is required.' in error %}
+                      <div class="form-errors">
+                        <p>비밀번호를 입력해주세요.</p>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              </div>
+
+              <!-- NICKNAME -->
+              <div>
+                <h3 class="join_title"><label for="nickname">닉네임</label></h3>
+                <span class="box int_nickname">
+                  <input type="text" name="nickname" class="int" maxlength="20">
+                </span>
+                  {% if form.nickname.errors %}
+                  {% for error in form.nickname.errors %}
+                    {% if '이미 사용 중인 닉네임입니다.' in error %}
+                      <div class="form-errors">
+                        <p>{{ error }}</p>
+                      </div>
+                    {% endif %}
+                      {% if 'This field is required.' in error %}
+                      <div class="form-errors">
+                        <p>닉네임을 입력해주세요.</p>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+              </div>
+
+              <!-- GROUP: Personal Information -->
+              <div class="personal-info-group">
+                <h3 class="join_title"><label for="personal-info">개인정보</label></h3>
+
+                <!-- USERNAME -->
+                <div>
+                  <span class="box int_username">
+                    <label for="username" class="label-text">이름</label>
+                    <input type="text" name="username" class="int">
+                  </span>
+                </div>
+
+                <!-- BIRTH -->
+                <div>
+                  <span class="box int_bd">
+                    <label for="username" class="label-text">생년월일</label>
+                    <input type="date" name="date_of_birth" class="int" placeholder="연도-월-일">
+                  </span>
+                </div>
+              </div>
+                {% if form.username.errors %}
+                      {% for error in form.username.errors %}
+                          {% if 'This field is required.' in error %}
+                          <div class="form-errors">
+                            <p>이름을 입력해주세요.</p>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+
+              <!-- PHONE -->
+              <div>
+                <h3 class="join_title"><label for="phoneNo">휴대전화</label></h3>
+                <span class="box int_phone">
+                  <input type="tel" name="phone" class="int" maxlength="16" placeholder="전화번호 입력">
+                </span>
+              </div>
+
+              <!-- JOIN BTN-->
+              <div class="btn_area">
+                <button type="submit" id="btnJoin">
+                  <span>가입하기</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,299 @@
+@font-face {
+    font-family: 'NEXON Lv2 Gothic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+/* body */
+.body {
+    font-family: 'NanumSquareRound', sans-serif;
+}
+
+/* navbar */
+.navbar {
+    font-family: 'NanumSquareRound', sans-serif;
+    font-size: 20px;
+}
+
+.navbar-brand {
+    font-size: 24px;
+}
+
+#navbarNavDropdown {
+    justify-content: space-between;
+}
+
+.nav-item {
+    margin: 0 20px;
+}
+
+/* ############# */
+/* hospital_list */
+/* ############# */
+#hospital_list {
+    font-family: 'NanumSquareRound', sans-serif;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    height: calc(100% - 60px);
+    /*padding-top: 60px;*/
+    z-index: 2; /* hospital_list를 오프캔버스 위에 표시 */
+    border-right: 1px solid lightgray;
+}
+
+.bookmark-btn {
+    --bs-btn-active-bg: #FFF0CE;
+    --bs-btn-hover-bg: #FFF0CE;
+}
+
+.list-group::-webkit-scrollbar {
+    width: 10px;
+}
+
+.list-group::-webkit-scrollbar:horizontal{
+    display: none;
+}
+
+.list-group::-webkit-scrollbar-button {
+    display: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background: lightgrey; /* 스크롤바 막대 색상 */
+    border-radius: 12px 12px 12px 12px;
+}
+
+/* 페이지네이션 */
+.page-item.active .page-link {
+    background-color: #FFF0CE; /* 활성 페이지의 배경색 */
+    border-color: var(--bs-border-color); /* 활성 페이지의 배경색 */
+    color: black;
+}
+
+.page-link {
+    color: black; /* 페이지 링크의 색상 */
+}
+
+/* 페이지네이션 hover 시 text color 변경 방지 */
+.page-item:not(.active) .page-link:hover {
+    color: black !important;
+}
+
+.rating-avg i {
+    color: #FFC436;
+}
+
+.rating-back i {
+    color: lightgray;
+}
+
+.rating-avg .star-avg-wrap, .rating-back .star-wrap-back  {
+    display: inline-block;
+    overflow: hidden;
+}
+
+.rating-avg .star-avg {
+    width: 0%;
+    overflow: hidden;
+}
+
+/* ############### */
+/* hospital_detail */
+/* ############### */
+.div-detail {
+    font-family: 'NanumSquareRound', sans-serif;
+}
+
+.detail-canvas {
+    margin-left: 380px;
+    margin-top: 62px;
+    z-index: 0;
+}
+
+#reviewTab button {
+    width: 190px;
+    color: black;
+}
+
+#detail-tab-pane i {
+    margin: 0 15px;
+}
+
+.div-detail::-webkit-scrollbar {
+    display: none;
+}
+
+.rating i {
+    color: lightgrey;
+}
+/* 수정 & 삭제 모달 */
+.modal {
+    font-family: 'NanumSquareRound', sans-serif;
+}
+
+.update-link, .delete-link {
+    color: gray;
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.update-link:hover, .delete-link:hover {
+    color: black; /* 호버 시 색상 변경 */
+    text-decoration: underline; /* 호버 시 밑줄 추가 */
+}
+
+/* ### */
+/* map */
+/* ### */
+.map_wrap, .map_wrap * {
+    margin: 0;
+    padding: 0;
+    font-family: 'NEXON Lv2 Gothic', dotum, 'NEXON Lv2 Gothic', sans-serif;
+    font-size: 14px;
+}
+
+.map_wrap {
+    position: absolute;
+    top: 0;
+    left: 380px;
+    width: calc(100% - 380px);
+    height: 100%;
+    z-index: -1;
+}
+
+#category {
+    position: absolute;
+    top: 65px;
+    right: 10px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    background: #fff;
+    overflow: hidden;
+    z-index: 2;
+}
+
+#category li {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    float: left;
+    list-style: none;
+    padding: 6px 0;
+    text-align: center;
+}
+
+#category li.on {
+    background: #eee;
+}
+
+#category li span {
+    display: block;
+    margin: 0 auto;
+    width: auto;
+    align-self: center;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+/* 기본적으로 수평 정렬되도록 수정 */
+#category li select {
+    vertical-align: middle;
+    margin: 0 5px;
+    white-space: nowrap;
+    padding-left: 5px;
+    padding-right: 20px; /* 오른쪽 패딩을 설정하여 화살표와 겹치지 않도록 함 */
+    -webkit-appearance: none; /* 웹킷 기반 브라우저에서 기본 화살표 숨김 */
+    -moz-appearance: none; /* Firefox 브라우저에서 기본 화살표 숨김 */
+    appearance: none; /* 기본 화살표 숨김 */
+    background-position: right 2px center;
+    background-repeat: no-repeat;
+}
+
+#category li .form-check {
+    display: flex;
+    align-items: center;
+}
+#category li .form-check-input{
+    display: inline-block;
+    margin: 0 5px;
+    white-space: nowrap;
+}
+
+.placeinfo_wrap {
+    position: absolute;
+    bottom: 28px;
+    left: -100px;
+    width: 200px;
+}
+
+.placeinfo {
+    position: relative;
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    background: #fff;
+    padding: 5px 10px;
+}
+
+.placeinfo:nth-of-type(n) {
+    border: 0;
+    box-shadow: 0px 1px 2px #888;
+}
+
+.placeinfo_wrap .after {
+    content: '';
+    position: relative;
+    margin-left: -12px;
+    left: 50%;
+    width: 22px;
+    height: 12px;
+    background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+}
+
+.placeinfo a, .placeinfo a:hover, .placeinfo a:active {
+    color: #fff;
+    text-decoration: none;
+}
+
+.placeinfo a, .placeinfo span {
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.placeinfo span {
+    margin: 5px 5px 0 5px;
+    cursor: default;
+    font-size: 13px;
+}
+
+.placeinfo .title {
+    font-weight: bold;
+    font-size: 14px;
+    border-radius: 6px 6px 0 0;
+    margin: -1px -1px 0 -1px;
+    padding: 10px;
+    color: #fff;
+    background: #d95050;
+    background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;
+}
+
+.placeinfo .tel {
+    color: #0f7833;
+}
+
+.placeinfo .jibun {
+    color: #999;
+    font-size: 11px;
+    margin-top: 0;
+}

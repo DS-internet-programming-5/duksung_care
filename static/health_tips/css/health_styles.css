@@ -1,0 +1,21 @@
+/* 게시글 */
+.post-edit-btn a:hover{
+    color: #0056b3!important;
+}
+
+/* ckeditor */
+.ck-content {
+    min-height: 500px;
+}
+
+.breadcrumb-item a:hover{
+    color: #0056b3!important;
+}
+
+/* 댓글 폼 스타일 */
+.edit-btn:hover{
+    color: #0174BE!important;
+}
+.delete-btn:hover{
+    color: #0174BE!important;
+}

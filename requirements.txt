@@ -1,0 +1,13 @@
+django
+django-import-export
+Pillow
+beautifulsoup4
+requests
+selenium
+pandas
+markdown
+django-cors-headers
+django-ckeditor
+
+django-phonenumber-field[phonenumbers]
+django-phonenumber-field[phonenumberslite]

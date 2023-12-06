@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+{% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}" media="screen">
+    <script src="https://kit.fontawesome.com/bdcda05bfe.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="{% static 'common_style.css' %}">
+    <link rel="stylesheet"  href="{% static 'main/css/style.css' %}">
+    <title>mainpage1</title>
+<style>
+    body {
+        background-image: url('{% static 'imgs/duksung_symbol.png' %}');
+        background-size: 300px 300px;
+        background-position:50% 23%;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin: 0;
+    }
+
+    .centered-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .nav-item-hospital {
+    margin: 10px 20px 0;
+    }
+</style>
+
+
+</head>
+
+<body>
+<!-- NavBar -->
+{% include 'navbar.html' %}
+
+<div class="centered-content">
+    <img src="{% static 'imgs\hospital.png' %}" alt="Your Alt Text">
+    <h1>주변 병원 찾기</h1>
+    <h5>학교 주변 병원을 찾아보세요!</h5>
+
+    <!-- 메뉴바 -->
+    <div class="d-flex justify-content-sm-center align-items-center custom-container">
+        <a href="{% url 'main_page1' %}" role="button" class="btn btn-primary-search btn-lg px-4 gap-3 custom-button"
+           aria-pressed="true">이름/후기(으)로 찾기</a>
+        <a href="{% url 'main_page2' %}" role="button" class="btn btn-secondary-search btn-lg px-4 custom-outline-button"
+           aria-pressed="true">종류별로 찾기</a>
+    </div>
+
+    <!-- search -->
+    <form class="d-flex justify-content-center" style="margin-bottom:90px;">
+        <div class="search-container">
+            <input type="search" placeholder="병원명/후기 검색" id="searchQuery">
+            <button type="button" onclick="searchHospitals()"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+
+    <hr>
+
+    <div class="news">
+        <!-- 메뉴바2 -->
+        <div class="nav-container">
+            <ul class="nav" style="text-align: left;">
+                <h2>소식 모아보기</h2>
+                <li class="nav-item-hospital">
+                    <a class="nav-link-hospital" href="#hospital" data-toggle="tab">학교 제휴 병원</a>
+                </li>
+                <li class="nav-item-hospital">
+                    <a class="nav-link-hospital" href="#health_tips" data-toggle="tab">건강 상식</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <!-- banner-->
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% if posts %}
+                {% for post in posts %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <a href="{% url 'post_detail' pk=post.pk %}">
+                        {% if post.head_image %}
+                        <img src="{{ post.head_image.url }}" class="d-block mx-auto" alt="Banner Image"
+                             style="width: 1200px; height: 390px;">
+                        {% else %}
+                        <img src="{% static 'imgs/default_head_image.png' %}" class="d-block mx-auto" alt="Banner Image"
+                         style="width: 1200px; height: 390px;">
+                        {% endif %}
+                        <div class="carousel-caption d-none d-md-block custom-caption">
+                            <h3>{{ post.post_title }}</h3>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+    <!--제휴병원-->
+
+        <div class="card-container">
+            <h4 id="hospital">학교 제휴 병원
+                <span style="font-size:15px; color: #888;">
+                우리 학교 진료협약 의료 기관</span>
+            </h4>
+
+            <div class="row row-cols-md-3">
+                <div class="col-sm-6" style="padding-bottom:50px;height: 100%;">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fa-regular fa-hospital"
+                               style="font-size: 2em; color: #FFC436;"></i>
+                            <div>
+                                <h5 class="card-title">경희의료원</h5>
+                                <p class="card-text">동서건강검진, 치과종합검진 등 할인</p>
+                                <a href="/hospital/partnership_detail/8182000/" class="btn btn-primary-card">병원 정보</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" style="padding-bottom:50px;height: 100%;">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fa-regular fa-hospital"
+                               style="font-size: 2em; color: #FFC436;"></i>
+                            <div>
+                                <h5 class="card-title">대림성모병원</h5>
+                                <p class="card-text">전담창구 운영, 진료비 감면 혜택</p>
+                                <a href="/hospital/partnership_detail/7818824/" class="btn btn-primary-card">병원 정보</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" style="padding-bottom:50px;height: 100%;">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fa-regular fa-hospital"
+                               style="font-size: 2em; color: #FFC436;"></i>
+                            <div>
+                                <h5 class="card-title">한일병원</h5>
+                                <p class="card-text">입원비, 외래진료, 각종 검진 할인</p>
+                                <a href="/hospital/partnership_detail/27529125/" class="btn btn-primary-card">병원 정보</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" style="padding-bottom:30px;height: 100%;">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fa-solid fa-syringe"
+                               style="font-size: 2em; color: #FFC436;"></i>
+                            <div>
+                                <h5 class="card-title">서울베스트의료의원</h5>
+                                <p class="card-text">대학생 건강검진과
+                                    가다실9가 추가 접종 할인 혜택
+                                </p>
+                                <a href="/hospital/partnership_detail/1116298756/" class="btn btn-primary-card">병원 정보</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" style="padding-bottom:30px;height: 100%;">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fa-solid fa-eye"
+                               style="font-size: 2em; color: #FFC436;"></i>
+                            <div>
+                                <h5 class="card-title">강남서울밝은안과의원</h5>
+                                <p class="card-text">라식, 라섹, 스마일, 렌즈삽입술, 노안교정
+                                    70여가지 사전검사 비용 지원
+                                </p>
+                                <a href="/hospital/partnership_detail/12508362/" class="btn btn-primary-card">병원 정보</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="{% static 'hospital/js/search_scripts.js' %}"></script>
+</body>
+</html>
