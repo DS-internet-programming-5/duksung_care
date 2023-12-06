@@ -1,4 +1,5 @@
 {% load static %}
+{% load markdown_filter %}
 <link rel="stylesheet" href="{% static 'hospital/css/hospital_styles.css' %}">
 
 <div class="offcanvas-header justify-content-end">
@@ -96,6 +97,9 @@
                                                               style="color: #000000;"></i>{{ hospital.hospital_phone }}
             </p>
             <hr>
+            {% if hospital.partnership_description %}
+            <div> {{ hospital.partnership_description |mark }}</div>
+            {% endif %}
         </div>
         <!-- 리뷰 탭 -->
         <div class="tab-pane fade pt-3" id="review-tab-pane" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
