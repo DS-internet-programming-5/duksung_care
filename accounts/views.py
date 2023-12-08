@@ -29,7 +29,13 @@ def modify(request):
         else:
             user.profileImg = request.FILES.get('profile_image', user.profileImg)
 
-        user.nickname = request.POST.get('nickname')
+        new_nickname = request.POST.get('nickname')
+        existing_user = User.objects.filter(nickname=new_nickname).exclude(pk=user.pk).first()
+        if existing_user:
+            messages.error(request, '이미 존재하는 닉네임입니다.')
+            return render(request, 'accounts/modify.html')
+
+        user.nickname = new_nickname
         user.date_of_birth = request.POST.get('date_of_birth')
         user.phone = request.POST.get('phone')
 
