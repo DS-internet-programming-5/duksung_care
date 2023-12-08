@@ -54,7 +54,7 @@
                         <input type="text" class="form-control mb-3" id="exampleFormControlInput2" name="nickname" value="{{ user.nickname }}" required>
 
                         <label class="form-label">개인정보</label>
-                        <div class="personal-group mb-3">
+                        <div class="default-input-group mb-3">
                             <div class="nameInput px-2.5 py-1">
                                 <div class="row align-items-center">
                                     <div class="col-auto inputLabel">
@@ -65,19 +65,45 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="birthInput px-2.5 py-1">
+                            <div class="groupMemberInput">
                                 <div class="row align-items-center">
                                     <div class="col-auto inputLabel">
                                         <label for="exampleFormControlInput4" class="form-label">생년월일</label>
                                     </div>
                                     <div class="col-auto">
-                                        <input type="date" class="form-control" id="exampleFormControlInput4" class="birthInput" name="date_of_birth" value="{{ user.date_of_birth|date:'Y-m-d' }}" style="border:none" required>
+                                        <input type="date" class="form-control" id="exampleFormControlInput4" name="date_of_birth" value="{{ user.date_of_birth|date:'Y-m-d' }}" style="border:none" required>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <label for="exampleFormControlInput5" class="form-label">휴대폰번호</label>
                         <input type="tel" class="form-control mb-3" id="exampleFormControlInput5" name="phone" value="{{ user.phone }}" required>
+
+
+                        <label class="form-label">비밀번호 변경</label>
+                        <div class="default-input-group mb-3">
+                            <div class="groupMemberInput" style="border-bottom: var(--bs-border-width) solid var(--bs-border-color);">
+                                <div class="row align-items-center">
+                                    <div class="col-auto inputLabel">
+                                        <label for="password" class="form-label">기존 비밀번호</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="password" class="form-control" id="password" name="password" style="border:none" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="groupMemberInput">
+                                <div class="row align-items-center">
+                                    <div class="col-auto inputLabel">
+                                        <label for="new_password" class="form-label">새 비밀번호</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <input type="password" class="form-control" id="new_password" name="new_password" style="border:none" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="my-5">
@@ -106,6 +132,11 @@
             document.getElementById('profileImg').src = "{% static 'imgs/default_profile.png' %}";
             document.getElementById('defaultProfileImage').value = "default";
         }
+        {% if messages %}
+            {% for message in messages %}
+            alert("{{ message }}");
+            {% endfor %}
+        {% endif %}
     </script>
 </body>
 
