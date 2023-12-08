@@ -35,30 +35,31 @@ driver = webdriver.Chrome(service=webdriver_service, options=chrome_options)
 data = []
 
 for hospital in hospitals:
-    url = hospital.place_url + '?openhour=1'
-    driver.get(url)
+    if not hospital.operation_time:
+        url = hospital.place_url + '?openhour=1'
+        driver.get(url)
 
-    try:
-        # WebDriverWait를 사용하여 해당 요소가 나타날 때까지 대기
-        wait = WebDriverWait(driver, 2)  # 최대 2초간 대기
-        operation_times = wait.until(EC.presence_of_all_elements_located(
-            (By.XPATH, '//*[@id="mArticle"]/div[1]/div[2]/div[2]/div/div[2]/div/div[1]/ul/li')))
+        try:
+            # WebDriverWait를 사용하여 해당 요소가 나타날 때까지 대기
+            wait = WebDriverWait(driver, 2)  # 최대 2초간 대기
+            operation_times = wait.until(EC.presence_of_all_elements_located(
+                (By.XPATH, '//*[@id="mArticle"]/div[1]/div[2]/div[2]/div/div[2]/div/div[1]/ul/li')))
 
-        operation_info = []
-        for time in operation_times:
-            day = time.text # 요일 정보 추출
-            # operation_time = time.find_element(By.CLASS_NAME, 'time_operation').text  # 진료 시간 정보 추출
-            # operation_info.append(f'{day}: {operation_time}')
-            operation_info.append(f'{day}')
-    except Exception as e:
-        # 요소를 찾을 수 없거나 다른 예외 발생 시, operation_info를 빈 리스트로 추가
-        operation_info = []
+            operation_info = []
+            for time in operation_times:
+                day = time.text # 요일 정보 추출
+                # operation_time = time.find_element(By.CLASS_NAME, 'time_operation').text  # 진료 시간 정보 추출
+                # operation_info.append(f'{day}: {operation_time}')
+                operation_info.append(f'{day}')
+        except Exception as e:
+            # 요소를 찾을 수 없거나 다른 예외 발생 시, operation_info를 빈 리스트로 추가
+            operation_info = []
 
-    data.append({
-        'hospital_id': hospital.hospital_id,  # Hospital 모델의 hospital_id 필드
-        'place_name': hospital.place_name,
-        'operation_time': '\n'.join(operation_info)  # 영업시간을 리스트로 저장하여 문자열로 변환
-    })
+        data.append({
+            'hospital_id': hospital.hospital_id,  # Hospital 모델의 hospital_id 필드
+            'place_name': hospital.place_name,
+            'operation_time': '\n'.join(operation_info)  # 영업시간을 리스트로 저장하여 문자열로 변환
+        })
 
 # WebDriver 종료
 driver.quit()
@@ -74,9 +75,9 @@ for index, row in df.iterrows():
     hospital.save()  # 변경 사항 저장
 
 print("영업시간 정보를 Hospital 모델의 operation_time 필드에 업데이트했습니다.")
-
-# 데이터프레임을 엑셀 파일로 저장
-excel_file_path = 'hospital_hours_data.xlsx'  # 엑셀 파일 경로 지정
-df.to_excel(excel_file_path)  # 데이터프레임을 엑셀 파일로 저장
-
-print(f"데이터프레임을 '{excel_file_path}' 파일로 저장했습니다.")
+#
+# # 데이터프레임을 엑셀 파일로 저장
+# excel_file_path = 'hospital_hours_data.xlsx'  # 엑셀 파일 경로 지정
+# df.to_excel(excel_file_path)  # 데이터프레임을 엑셀 파일로 저장
+#
+# print(f"데이터프레임을 '{excel_file_path}' 파일로 저장했습니다.")

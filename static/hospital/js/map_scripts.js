@@ -38,7 +38,7 @@ kakao.maps.event.addListener(map, 'click', function() {
 });
 
 function displayPlaceInfo (place_name, y, x) {
-    var content = '<div class="placeinfo text-center">'+place_name+'</div>';
+    var content = '<div class="placeinfo text-center fw-bold">'+place_name+'</div>';
     content += '<div class="after"></div>';
 
     contentNode.innerHTML = content;

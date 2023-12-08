@@ -78,6 +78,8 @@ class HospitalList(ListView):  # 병원 목록
                     hospitals = hospitals.filter(has_holiday_hours=True)
                 elif condition == 'is_partnership':
                     hospitals = hospitals.filter(is_partnership=True)
+                elif condition == 'tb_test':
+                    hospitals = hospitals.filter(tb_test=True)
                 elif condition == 'bookmark':  # 북마크 필터링 추가
                     user = self.request.user
                     hospitals = hospitals.filter(bookmarks=user)
@@ -129,6 +131,11 @@ def category_page(request, slug):
                 hospitals = hospitals.filter(has_holiday_hours=True)
             elif condition == 'is_partnership':
                 hospitals = hospitals.filter(is_partnership=True)
+            elif condition == 'tb_test':
+                hospitals = hospitals.filter(tb_test=True)
+            elif condition == 'bookmark':
+                user = request.user
+                hospitals = hospitals.filter(bookmarks=user)
 
     # 정렬
     order_condition = request.GET.get('order', None)

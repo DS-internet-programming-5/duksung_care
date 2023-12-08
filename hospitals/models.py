@@ -41,6 +41,7 @@ class Hospital(models.Model):
     has_evening_hours = models.BooleanField(default=False)  # 야간 진료 여부
     has_holiday_hours = models.BooleanField(default=False)  # 휴일 진료 여부
     is_partnership = models.BooleanField(default=False)  # 학교 제휴 여부
+    tb_test = models.BooleanField(default=False)  # 결핵 검사 여부
     bookmarks = models.ManyToManyField(User, related_name='bookmarked_hospitals', blank=True, null=True)  # 북마크한 유저들
 
     partnership_description = models.TextField(blank=True, null=True)  # 제휴 설명
