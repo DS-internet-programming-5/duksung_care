@@ -19,19 +19,6 @@
 
     <div class="centered-content my-5">
         <h1 class="mb-3">마이 페이지</h1>
-
-        <!-- 메뉴바 -->
-        <ul class="nav justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#basic-info" data-toggle="tab">기본정보</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#favorites" data-toggle="tab">즐겨찾기</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#reviews" data-toggle="tab">내가 쓴 후기</a>
-            </li>
-        </ul>
         <hr>
 
         <form action="/accounts/modify/" method="POST" enctype="multipart/form-data">
@@ -92,14 +79,6 @@
                         <label for="exampleFormControlInput5" class="form-label">휴대폰번호</label>
                         <input type="tel" class="form-control mb-3" id="exampleFormControlInput5" name="phone" value="{{ user.phone }}" required>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="favorites">
-                    <h3>즐겨찾기</h3>
-                    <!-- 즐겨찾기 내용 -->
-                </div>
-                <div class="tab-pane fade" id="reviews">
-                    <h3>내가 쓴 후기</h3>
-                    <!-- 내가 쓴 후기 내용 -->
                 </div>
                 <div class="my-5">
                     <button type="submit" class="btn btn-lg btn-outline-dark">수정하기</button>
