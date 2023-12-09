@@ -97,11 +97,13 @@ fetch('/hospital/get_hospital_list') // 서버에서 hospital_list를 반환하�
                             if (isOffcanvasOpen) {
                                 // Offcanvas가 열려있으면 offcanvas 내용 업데이트
                                 $('.offcanvas').html(data);
+                                displayRatings();
                             } else {
                                 // Offcanvas가 닫혀있으면 offcanvas 열고 내용 업데이트
                                 $('.offcanvas').html(data);
                                 var myOffcanvas = new bootstrap.Offcanvas(offcanvasElement);
                                 myOffcanvas.show();
+                                displayRatings();
                             }
                         },
                         error: function (xhr, status, error) {

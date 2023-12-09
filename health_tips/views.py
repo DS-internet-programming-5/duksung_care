@@ -121,7 +121,7 @@ def delete_comment(request, pk):
 
     if request.user == comment.user:
         comment.delete()
-        messages.add_message(request, messages.SUCCESS, '댓글이 성공적으로 삭제되었습니다.')
+        # messages.add_message(request, messages.SUCCESS, '댓글이 성공적으로 삭제되었습니다.')
     else:
         messages.add_message(request, messages.ERROR, '댓글을 삭제할 권한이 없습니다.')
 

@@ -163,7 +163,7 @@
                                 <i class="fas fa-star"></i>
                             </div>
                             <!-- 리뷰 내용 -->
-                            <p class="r-content mt-2 mb-0" style="white-space:pre;">{{ r.content }}</p>
+                            <p class="r-content mt-2 mb-0" style="white-space:pre-wrap;">{{ r.content }}</p>
                             <!-- 수정, 삭제 버튼 -->
                             {% if r.author == request.user or request.user.is_superuser%}
                             <div class="d-flex justify-content-end">

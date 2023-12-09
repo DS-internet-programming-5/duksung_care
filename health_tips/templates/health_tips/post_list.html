@@ -20,10 +20,11 @@
 <div class="centered-content my-5" style="max-width: 70%; margin: auto;">
     <h1 class="mb-5 text-center" style="font-weight:bold; color: #0C356A">건강 뉴스</h1>
 
-    <div class="mb-4 d-flex justify-content-end">
-        <a href="{% url 'create_post' %}" class="btn btn-outline-dark">글 작성하기</a>
-    </div>
-
+    {% if request.user.is_superuser or request.user.is_staff %}
+        <div class="mb-4 d-flex justify-content-end">
+            <a href="{% url 'create_post' %}" class="btn btn-outline-dark">글 작성하기</a>
+        </div>
+    {% endif %}
     <div class="row">
         {% for post in page_obj %}
             {% if forloop.counter == 1 %}
