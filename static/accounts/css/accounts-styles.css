@@ -63,7 +63,7 @@ a {
     border: var(--bs-border-width) solid var(--bs-border-color);
 }
 
-.personal-group {
+.default-input-group {
     display: flex;
     flex-direction: column;
     border: var(--bs-border-width) solid var(--bs-border-color);
@@ -83,7 +83,7 @@ a {
     border-bottom: var(--bs-border-width) solid var(--bs-border-color);
 }
 
-.birthInput {
+.groupMemberInput {
     padding: 0.375rem 0.75rem !important;
     width: 100%;
 }

@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from accounts.models import User
 from hospitals.models import Review
 from .forms import SignupForm, LoginForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib import auth
 
 
@@ -24,14 +24,32 @@ def modify(request):
         default_profile_image = request.POST.get('default_profile_image')
         if default_profile_image == 'default':
             if user.profileImg:
-                user.profileImg.delete()  # 이 부분 추가
+                user.profileImg.delete()
             user.profileImg = None
         else:
             user.profileImg = request.FILES.get('profile_image', user.profileImg)
-        user.nickname = request.POST.get('nickname')
+
+        new_nickname = request.POST.get('nickname')
+        existing_user = User.objects.filter(nickname=new_nickname).exclude(pk=user.pk).first()
+        if existing_user:
+            messages.error(request, '이미 존재하는 닉네임입니다.')
+            return render(request, 'accounts/modify.html')
+
+        user.nickname = new_nickname
         user.date_of_birth = request.POST.get('date_of_birth')
         user.phone = request.POST.get('phone')
-        user.save()
+
+        password = request.POST.get('password')
+        new_password = request.POST.get('new_password')
+        if password and new_password:
+            if user.check_password(password):
+                user.set_password(new_password)
+                user.save()
+                update_session_auth_hash(request, user) # 로그인 유지
+            else:
+                messages.error(request, '기존 비밀번호와 일치하지 않습니다.')
+                return render(request, 'accounts/modify.html')
+
         return redirect('accounts-user', pk=user.pk)
     else:
         return render(request, 'accounts/modify.html')

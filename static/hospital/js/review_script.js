@@ -14,7 +14,7 @@ $(document).ready(function () {
             url: url,
             data: formData,
             success: function (data) {
-                const defaultProfileImg = '../../static/imgs/default_profile.png';
+                const defaultProfileImg = '../../../static/imgs/default_profile.png';
                 var createdAt = new Date();
                 console.log(createdAt.toLocaleString('ko-KR', {timeZone: 'Asia/Seoul'}));
                 var formattedDate = createdAt.toLocaleString('ko-KR', {
@@ -54,7 +54,7 @@ $(document).ready(function () {
                             <div class="rating" data-rate="${data.hospital_rating}">
                                 ${getStars(data.hospital_rating)}
                             </div>
-                            <p class="r-content mt-2 mb-0" style="white-space:pre;">${data.content}</p>
+                            <p class="r-content mt-2 mb-0" style="white-space:pre-wrap;">${data.content}</p>
                             <!-- 수정, 삭제 버튼 -->
                             ${data.author_pk === data.user_pk || data.is_superuser ?
                                 `<div class="d-flex justify-content-end">

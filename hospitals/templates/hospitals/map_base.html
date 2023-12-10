@@ -43,26 +43,29 @@
     <!-- 지도 -->
     <div class="map_wrap col-md-9" style="display: flex">
         <div id="map" style="width:100%;height:100%;overflow:hidden;"></div>
-        <ul id="category" class="d-flex list-unstyled">
+        <ul id="category" class="d-flex list-unstyled row" style="width: 550px">
+            <div>
+                <li class="me-3 ms-3">
+                    <span>진료과목:</span>
+                    <select class="form-select category-select" id="categorySelect">
+                        <option value="" {% if not category %}selected{% endif %}>전체보기</option>
+                        {% for c in categories %}
+                        <option value="{{ c }}" {% if category and c == category %}selected{% endif %}>{{ c }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li class="me-3 ms-3">
+                    <span>정렬기준:</span>
+                    <select class="form-select order-select">
+                        <option selected>정렬기준</option>
+                        <option value="distance">거리가까운순</option>
+                        <option value="rating">별점높은순</option>
+                        <option value="review">리뷰많은순</option>
+                    </select>
+                </li>
+            </div>
+            <div>
             <li class="me-3 ms-3">
-                <span>진료과목:</span>
-                <select class="form-select category-select" id="categorySelect">
-                    <option value="" {% if not category %}selected{% endif %}>전체보기</option>
-                    {% for c in categories %}
-                    <option value="{{ c }}" {% if category and c == category %}selected{% endif %}>{{ c }}</option>
-                    {% endfor %}
-                </select>
-            </li>
-            <li class="me-3">
-                <span>정렬기준:</span>
-                <select class="form-select order-select">
-                    <option selected>정렬기준</option>
-                    <option value="distance">거리가까운순</option>
-                    <option value="rating">별점높은순</option>
-                    <option value="review">리뷰많은순</option>
-                </select>
-            </li>
-            <li class="me-3">
                 <span>상세설정:</span>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="false" id="has_female_doctor">
@@ -80,7 +83,12 @@
                     <input class="form-check-input" type="checkbox" value="false" id="is_partnership">
                     <label class="form-check-label" for="is_partnership">학교제휴병원</label>
                 </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="false" id="tb_test">
+                    <label class="form-check-label" for="tb_test">결핵검사병원</label>
+                </div>
             </li>
+            </div>
         </ul>
     </div>
 </div>
